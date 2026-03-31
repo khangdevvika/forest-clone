@@ -20,9 +20,10 @@ export default function Home() {
     () => true,
     () => false,
   )
-  const { coins, addCoins, selectedTreeId } = useUser()
+  const { coins, addCoins, addSession, selectedTreeId } = useUser()
 
   const activeTree = STORE_TREES.find((t) => t.id === selectedTreeId) || STORE_TREES[0]
+
   const [mode, setMode] = useState<TimerMode>(TimerMode.TIMER)
   const [minutes, setMinutes] = useState(TIME_DEFAULT)
   const [isActive, setIsActive] = useState(false)
@@ -52,12 +53,23 @@ export default function Home() {
         setElapsedSeconds((prev) => {
           const next = prev + 1
           if (mode === TimerMode.TIMER && next >= minutes * 60) {
+            const coinsEarned = Math.floor(minutes / 5)
             setIsActive(false)
-            addCoins(Math.floor(minutes / 5))
+            addCoins(coinsEarned)
+            addSession({
+              id: crypto.randomUUID(),
+              completedAt: new Date().toISOString(),
+              durationMinutes: minutes,
+              treeId: activeTree.id,
+              treeName: activeTree.name,
+              treeImage: activeTree.image,
+              coinsEarned,
+              mode: "timer",
+            })
             setDialogState({
               isOpen: true,
               title: "Session complete",
-              description: `Great work! You stayed focused for ${minutes} minutes and earned ${Math.floor(minutes / 5)} coins.`,
+              description: `Great work! You stayed focused for ${minutes} minutes and earned ${coinsEarned} coins.`,
               confirmText: "Continue",
               showCancel: false,
             })
@@ -70,7 +82,7 @@ export default function Home() {
     return () => {
       if (interval) clearInterval(interval)
     }
-  }, [isActive, mode, minutes, addCoins])
+  }, [isActive, mode, minutes, addCoins, addSession, activeTree])
 
   const handleStart = () => {
     setElapsedSeconds(0)

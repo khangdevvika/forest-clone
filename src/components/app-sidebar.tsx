@@ -1,44 +1,31 @@
 "use client"
 
 import * as React from "react"
-import { Home, Leaf, User, Coins, Flame, ShoppingBag, TreePine } from "lucide-react"
+import { Home, Leaf, User, Coins, Flame, ShoppingBag, TreePine, TreeDeciduous } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useUser } from "@/hooks/use-user"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarFooter,
-  SidebarHeader,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  SidebarGroup,
-  SidebarGroupContent,
-} from "@/components/ui/sidebar"
+import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarGroup, SidebarGroupContent } from "@/components/ui/sidebar"
 
 const navMain = [
-  { title: "Home",    url: "/",        icon: Home },
-  { title: "Garden",  url: "/garden",  icon: Leaf },
-  { title: "Store",   url: "/store",   icon: ShoppingBag },
+  { title: "Home", url: "/", icon: Home },
+  { title: "Garden", url: "/garden", icon: Leaf },
+  { title: "Store", url: "/store", icon: ShoppingBag },
   { title: "Profile", url: "/profile", icon: User },
 ]
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const { coins } = useUser()
+  const { coins, streak } = useUser()
   const pathname = usePathname()
 
   return (
-    <Sidebar
-      className="border-r-0 bg-[#164f33] text-white"
-      {...props}
-    >
+    <Sidebar className="border-r-0 bg-[#164f33] text-white" {...props}>
       {/* ── Brand ── */}
       <SidebarHeader className="px-5 py-5 border-b border-white/8">
         <div className="flex items-center gap-3">
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10 border border-white/10">
-            <TreePine className="h-4 w-4 text-green-300" />
+            <TreeDeciduous className="h-4 w-4 text-green-300" />
           </div>
           <div>
             <span className="text-white font-semibold text-base leading-none">Forest</span>
@@ -59,24 +46,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                     <SidebarMenuButton
                       asChild
                       isActive={isActive}
-                      className={cn(
-                        "h-10 px-3 rounded-lg transition-all duration-150 gap-3",
-                        isActive
-                          ? "bg-white/10 text-white"
-                          : "text-white/50 hover:text-white/80 hover:bg-white/5"
-                      )}
+                      className={cn("h-10 px-3 rounded-lg transition-all duration-150 gap-3", isActive ? "bg-white/10 text-white" : "text-white/50 hover:text-white/80 hover:bg-white/5")}
                     >
                       <Link href={item.url} className="flex items-center gap-3">
-                        <item.icon
-                          className={cn(
-                            "h-4 w-4 shrink-0",
-                            isActive ? "text-green-300" : "text-white/40"
-                          )}
-                        />
+                        <item.icon className={cn("h-4 w-4 shrink-0", isActive ? "text-green-300" : "text-white/40")} />
                         <span className="text-sm font-medium">{item.title}</span>
-                        {isActive && (
-                          <div className="ml-auto h-1.5 w-1.5 rounded-full bg-green-400" />
-                        )}
+                        {isActive && <div className="ml-auto h-1.5 w-1.5 rounded-full bg-green-400" />}
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
@@ -103,7 +78,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               <Flame className="h-3.5 w-3.5" />
               <span className="text-xs font-medium uppercase tracking-wider">Streak</span>
             </div>
-            <span className="text-sm font-semibold text-white tabular-nums">12</span>
+            <span className="text-sm font-semibold text-white tabular-nums">{streak}</span>
           </div>
         </div>
 
