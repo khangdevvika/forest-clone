@@ -114,7 +114,7 @@ export function CircularTimer({ mode, minutes, onChange, onDragStart, onDragEnd,
       {mode === TimerMode.TIMER && (
         <svg className="absolute inset-[-6%] -rotate-90 pointer-events-none z-10" viewBox="0 0 100 100" style={{ width: "112%", height: "112%" }}>
           {/* Ghost track */}
-          <circle cx="50" cy="50" r="44" fill="none" stroke="white" strokeWidth="1.5" className="opacity-10" />
+          <circle cx="50" cy="50" r="44" fill="none" stroke="white" strokeWidth="1" className="opacity-15" />
           {/* Active progress */}
           <circle
             cx="50"
@@ -122,47 +122,44 @@ export function CircularTimer({ mode, minutes, onChange, onDragStart, onDragEnd,
             r="44"
             fill="none"
             stroke="white"
-            strokeWidth="3.5"
+            strokeWidth="3"
             strokeLinecap="round"
             pathLength="100"
             strokeDasharray="100"
             strokeDashoffset={100 - (minutes / TIME_MAX) * 100}
-            className={cn("transition-all duration-300 ease-out", isDragging ? "opacity-90" : "opacity-60")}
+            className={cn("transition-all duration-300 ease-out", isDragging ? "opacity-100" : "opacity-70")}
           />
         </svg>
       )}
 
       {/* Main Circle Container (The Tree) */}
-      <div className="absolute inset-0 rounded-full border-10 border-[#D9D19E] shadow-2xl overflow-hidden bg-[#D1EAC1] z-0 pointer-events-none flex items-center justify-center">
-        <div className="relative w-[110%] h-[110%] flex items-center justify-center group">
+      <div className="absolute inset-0 rounded-full border-8 border-white/15 shadow-2xl overflow-hidden bg-[#c4e0b8] z-0 pointer-events-none flex items-center justify-center">
+        <div className="relative w-[110%] h-[110%] flex items-center justify-center">
           <Image
             src={treeImage}
             alt="Selected Tree"
             width={500}
             height={500}
-            className={cn("w-full h-full object-contain transition-transform duration-500", mode === TimerMode.TIMER && isDragging ? "scale-105 brightness-105" : "")}
+            className={cn("w-full h-full object-contain transition-transform duration-500", mode === TimerMode.TIMER && isDragging ? "scale-105" : "")}
             priority
             unoptimized={treeImage.startsWith("http")}
           />
         </div>
       </div>
 
-      {/* Drag Handle Indicator */}
+      {/* Drag Handle — visible only while dragging */}
       {mode === TimerMode.TIMER && (
         <div
-          className={cn("absolute inset-0 pointer-events-none z-20 transition-opacity duration-300", isDragging ? "opacity-100" : "opacity-0")}
-          style={{
-            transform: `rotate(${(minutes / TIME_MAX) * 360}deg)`,
-          }}
+          className={cn(
+            "absolute inset-0 pointer-events-none z-20 transition-opacity duration-200",
+            isDragging ? "opacity-100" : "opacity-0"
+          )}
+          style={{ transform: `rotate(${(minutes / TIME_MAX) * 360}deg)` }}
         >
-          {/* Radius calculation: 
-              SVG radius is 44 units of 100 units.
-              SVG size is 112% of container.
-              Radius relative to container = 44/100 * 1.12 = 0.4928 (normalized to container width)
-              Center is at 0.5.
-              Handle Y center = 0.5 - 0.4928 = 0.0072 = 0.72% from top.
-          */}
-          <div className="absolute left-1/2 w-6 h-6 bg-white rounded-full shadow-lg border-2 border-forest-teal -translate-x-1/2 -translate-y-1/2" style={{ top: "0.72%" }} />
+          <div
+            className="absolute left-1/2 w-5 h-5 bg-white rounded-full shadow-md border-2 border-green-500 -translate-x-1/2 -translate-y-1/2"
+            style={{ top: "0.72%" }}
+          />
         </div>
       )}
     </div>

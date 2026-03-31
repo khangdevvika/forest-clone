@@ -1,9 +1,7 @@
 "use client"
 
-import { Clock, Leaf } from "lucide-react"
+import { Clock, Timer } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { Separator } from "@/components/ui/separator"
 import { TimerMode } from "@/features/timer/enum/timer"
 import { useCallback } from "react"
 
@@ -13,36 +11,48 @@ interface ModeToggleProps {
 }
 
 export function ModeToggle({ mode, onChange }: ModeToggleProps) {
-  const handleChange = useCallback(() => {
-    onChange(mode === TimerMode.TIMER ? TimerMode.STOPWATCH : TimerMode.TIMER)
-  }, [mode, onChange])
+  const handleChange = useCallback(
+    (next: TimerMode) => {
+      if (mode !== next) onChange(next)
+    },
+    [mode, onChange],
+  )
+
   return (
-    <div className="flex items-center gap-1 bg-black/10 backdrop-blur-sm p-1 rounded-full border border-white/5">
-      <Button
-        variant="ghost"
-        size="icon"
-        onClick={handleChange}
+    <div
+      className="flex items-center gap-0.5 bg-black/15 border border-white/10 backdrop-blur-sm rounded-lg p-0.5"
+      role="group"
+      aria-label="Timer mode"
+    >
+      <button
+        id="mode-timer"
+        onClick={() => handleChange(TimerMode.TIMER)}
+        aria-pressed={mode === TimerMode.TIMER}
         className={cn(
-          "h-9 w-9 rounded-full transition-all duration-300 hover:bg-white/10",
-          mode === TimerMode.TIMER ? "bg-white/20 shadow-sm text-white hover:bg-white/25" : "text-white/40 hover:text-white/60",
+          "flex items-center gap-1.5 h-8 px-3 rounded-md text-xs font-medium transition-all duration-150",
+          mode === TimerMode.TIMER
+            ? "bg-white/20 text-white shadow-sm"
+            : "text-white/45 hover:text-white/65",
         )}
       >
-        <Clock className="h-5 w-5" />
-      </Button>
+        <Clock className="h-3.5 w-3.5" />
+        <span>Timer</span>
+      </button>
 
-      <Separator orientation="vertical" className="h-4 bg-white/10 mx-1" />
-
-      <Button
-        variant="ghost"
-        size="icon"
-        onClick={handleChange}
+      <button
+        id="mode-stopwatch"
+        onClick={() => handleChange(TimerMode.STOPWATCH)}
+        aria-pressed={mode === TimerMode.STOPWATCH}
         className={cn(
-          "h-9 w-9 rounded-full transition-all duration-300 hover:bg-white/10",
-          mode === TimerMode.STOPWATCH ? "bg-white/20 shadow-sm text-white hover:bg-white/25" : "text-white/40 hover:text-white/60",
+          "flex items-center gap-1.5 h-8 px-3 rounded-md text-xs font-medium transition-all duration-150",
+          mode === TimerMode.STOPWATCH
+            ? "bg-white/20 text-white shadow-sm"
+            : "text-white/45 hover:text-white/65",
         )}
       >
-        <Leaf className="h-5 w-5" />
-      </Button>
+        <Timer className="h-3.5 w-3.5" />
+        <span>Stopwatch</span>
+      </button>
     </div>
   )
 }

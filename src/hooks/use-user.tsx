@@ -3,9 +3,9 @@ import { atomWithStorage } from "jotai/utils"
 import { Tree } from "@/features/timer/constants/trees"
 
 // Atoms with persistence
-export const coinsAtom = atomWithStorage<number>("forest-coins", 1240)
-export const unlockedTreesAtom = atomWithStorage<string[]>("forest-trees", ["basic-tree", "cedar"])
-export const selectedTreeIdAtom = atomWithStorage<string>("forest-selected-tree", "basic-tree")
+export const coinsAtom = atomWithStorage<number>("forest-coins", 3119)
+export const unlockedTreesAtom = atomWithStorage<string[]>("forest-trees", ["balloon-flower", "golden-trumpet"])
+export const selectedTreeIdAtom = atomWithStorage<string>("forest-selected-tree", "balloon-flower")
 
 // Hook to maintain the same API as before
 export const useUser = () => {
@@ -23,11 +23,11 @@ export const useUser = () => {
   }
 
   const sellTree = (tree: Tree) => {
-    if (unlockedTrees.includes(tree.id) && tree.id !== "basic-tree") {
+    if (unlockedTrees.includes(tree.id) && tree.id !== "balloon-flower") {
       setCoins((prev) => prev + Math.floor(tree.price * 0.5))
       setUnlockedTrees((prev) => prev.filter((id) => id !== tree.id))
       if (selectedTreeId === tree.id) {
-        setSelectedTreeId("basic-tree")
+        setSelectedTreeId("balloon-flower")
       }
     }
   }

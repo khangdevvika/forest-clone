@@ -1,39 +1,28 @@
 "use client"
 
 import * as React from "react"
-import { Home, Leaf, User, Coins, Flame } from "lucide-react"
-
+import { Home, Leaf, User, Coins, Flame, ShoppingBag, TreePine } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useUser } from "@/hooks/use-user"
-import { ShoppingBag } from "lucide-react"
-
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-
-import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarGroup, SidebarGroupContent } from "@/components/ui/sidebar"
-import { Button } from "@/components/ui/button"
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarGroup,
+  SidebarGroupContent,
+} from "@/components/ui/sidebar"
 
 const navMain = [
-  {
-    title: "Home",
-    url: "/",
-    icon: Home,
-  },
-  {
-    title: "Garden",
-    url: "/garden",
-    icon: Leaf,
-  },
-  {
-    title: "Profile",
-    url: "/profile",
-    icon: User,
-  },
-  {
-    title: "Store",
-    url: "/store",
-    icon: ShoppingBag,
-  },
+  { title: "Home",    url: "/",        icon: Home },
+  { title: "Garden",  url: "/garden",  icon: Leaf },
+  { title: "Store",   url: "/store",   icon: ShoppingBag },
+  { title: "Profile", url: "/profile", icon: User },
 ]
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -41,22 +30,28 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const pathname = usePathname()
 
   return (
-    <Sidebar className="border-r-0 bg-forest-dark-teal text-white" {...props}>
-      <SidebarHeader className="p-6 pb-2">
+    <Sidebar
+      className="border-r-0 bg-[#164f33] text-white"
+      {...props}
+    >
+      {/* ── Brand ── */}
+      <SidebarHeader className="px-5 py-5 border-b border-white/8">
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/20 text-white shadow-sm backdrop-blur-sm">
-            <Leaf className="h-6 w-6" />
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10 border border-white/10">
+            <TreePine className="h-4 w-4 text-green-300" />
           </div>
-          <div className="flex flex-col leading-tight">
-            <span className="text-2xl font-bold text-white tracking-tight">Forest</span>
-            <span className="text-[10px] uppercase tracking-[0.2em] text-white/60 font-bold">Focus Timer</span>
+          <div>
+            <span className="text-white font-semibold text-base leading-none">Forest</span>
+            <div className="text-[9px] text-white/40 uppercase tracking-widest font-medium mt-0.5">Focus Timer</div>
           </div>
         </div>
       </SidebarHeader>
-      <SidebarContent className="px-4 py-4">
+
+      {/* ── Navigation ── */}
+      <SidebarContent className="px-3 py-4">
         <SidebarGroup>
           <SidebarGroupContent>
-            <SidebarMenu className="gap-2">
+            <SidebarMenu className="gap-0.5">
               {navMain.map((item) => {
                 const isActive = pathname === item.url
                 return (
@@ -65,14 +60,23 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                       asChild
                       isActive={isActive}
                       className={cn(
-                        "h-12 px-4 rounded-2xl transition-all duration-200",
-                        "data-[active=true]:bg-white/20 data-[active=true]:text-white! data-[active=true]:hover:bg-white/30",
-                        "hover:bg-white/10 text-white/70 hover:text-white",
+                        "h-10 px-3 rounded-lg transition-all duration-150 gap-3",
+                        isActive
+                          ? "bg-white/10 text-white"
+                          : "text-white/50 hover:text-white/80 hover:bg-white/5"
                       )}
                     >
-                      <Link href={item.url} className="flex items-center gap-4">
-                        <item.icon className={cn("h-5 w-5", isActive ? "text-white!" : "text-white/70")} />
-                        <span className="text-base font-semibold">{item.title}</span>
+                      <Link href={item.url} className="flex items-center gap-3">
+                        <item.icon
+                          className={cn(
+                            "h-4 w-4 shrink-0",
+                            isActive ? "text-green-300" : "text-white/40"
+                          )}
+                        />
+                        <span className="text-sm font-medium">{item.title}</span>
+                        {isActive && (
+                          <div className="ml-auto h-1.5 w-1.5 rounded-full bg-green-400" />
+                        )}
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
@@ -82,24 +86,33 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter className="p-6 mt-auto gap-8">
-        <div className="space-y-4 px-2">
-          <div className="flex items-center justify-between text-sm">
-            <div className="flex items-center gap-3 text-white/60 font-bold uppercase tracking-wider text-[10px]">
-              <Coins className="h-4 w-4" />
-              <span>Coins</span>
+
+      {/* ── Footer stats ── */}
+      <SidebarFooter className="px-5 py-5 border-t border-white/8 space-y-4">
+        {/* Stats */}
+        <div className="space-y-2.5">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2 text-white/40">
+              <Coins className="h-3.5 w-3.5" />
+              <span className="text-xs font-medium uppercase tracking-wider">Coins</span>
             </div>
-            <span className="font-bold text-white text-base">{coins.toLocaleString()}</span>
+            <span className="text-sm font-semibold text-white tabular-nums">{coins.toLocaleString()}</span>
           </div>
-          <div className="flex items-center justify-between text-sm">
-            <div className="flex items-center gap-3 text-white/60 font-bold uppercase tracking-wider text-[10px]">
-              <Flame className="h-4 w-4" />
-              <span>Streak</span>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2 text-white/40">
+              <Flame className="h-3.5 w-3.5" />
+              <span className="text-xs font-medium uppercase tracking-wider">Streak</span>
             </div>
-            <span className="font-bold text-white text-base">12</span>
+            <span className="text-sm font-semibold text-white tabular-nums">12</span>
           </div>
         </div>
-        <Button className="w-full h-12 bg-white text-[#2D5A43] hover:bg-white/90 font-bold rounded-2xl shadow-lg shadow-black/10 transition-all active:scale-[0.98]">Start Session</Button>
+
+        {/* CTA */}
+        <Link href="/">
+          <button className="w-full h-10 bg-white/10 hover:bg-white/15 border border-white/10 rounded-lg text-white text-sm font-semibold transition-all duration-150 cursor-pointer">
+            Start Session
+          </button>
+        </Link>
       </SidebarFooter>
     </Sidebar>
   )
