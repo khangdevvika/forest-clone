@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { useSidebar } from "@/components/ui/sidebar"
 import { ModeToggle } from "@/features/timer/components/mode-toggle"
 import { CircularTimer } from "@/features/timer/components/circular-timer"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useSyncExternalStore } from "react"
 import { TimerMode } from "@/features/timer/enum/timer"
 import { cn } from "@/lib/utils"
 import { useUser } from "@/hooks/use-user"
@@ -15,6 +15,11 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 
 export default function Home() {
   const { toggleSidebar } = useSidebar()
+  const mounted = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false,
+  )
   const { coins, addCoins, selectedTreeId } = useUser()
 
   const activeTree = STORE_TREES.find((t) => t.id === selectedTreeId) || STORE_TREES[0]
@@ -62,7 +67,9 @@ export default function Home() {
         })
       }, 1000)
     }
-    return () => { if (interval) clearInterval(interval) }
+    return () => {
+      if (interval) clearInterval(interval)
+    }
   }, [isActive, mode, minutes, addCoins])
 
   const handleStart = () => {
@@ -106,19 +113,14 @@ export default function Home() {
     return `${m.toString().padStart(2, "0")}:${s.toString().padStart(2, "0")}`
   }
 
-  const progressPercent = mode === TimerMode.TIMER && isActive
-    ? ((minutes * 60 - elapsedSeconds) / (minutes * 60)) * 100
-    : mode === TimerMode.TIMER ? 100 : 0
+  const progressPercent = mode === TimerMode.TIMER && isActive ? ((minutes * 60 - elapsedSeconds) / (minutes * 60)) * 100 : mode === TimerMode.TIMER ? 100 : 0
+
+  if (!mounted) return null
 
   return (
-    <div
-      className="relative min-h-screen w-full flex flex-col items-center select-none overflow-hidden"
-      style={{ background: "linear-gradient(160deg, #1a6440 0%, #2d9e65 50%, #3ab870 100%)" }}
-    >
+    <div className="relative min-h-screen w-full flex flex-col items-center select-none overflow-hidden" style={{ background: "linear-gradient(160deg, #1a6440 0%, #2d9e65 50%, #3ab870 100%)" }}>
       {/* Subtle texture overlay */}
-      <div className="absolute inset-0 opacity-[0.03] pointer-events-none"
-        style={{ backgroundImage: "radial-gradient(circle at 1px 1px, white 1px, transparent 0)", backgroundSize: "32px 32px" }}
-      />
+      <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: "radial-gradient(circle at 1px 1px, white 1px, transparent 0)", backgroundSize: "32px 32px" }} />
 
       {/* ── Header ── */}
       <header className="w-full flex items-center justify-between px-5 pt-5 pb-2 z-50">
@@ -131,7 +133,7 @@ export default function Home() {
             className={cn(
               "flex h-9 w-9 items-center justify-center rounded-lg transition-all duration-150",
               "bg-white/10 hover:bg-white/20 text-white disabled:opacity-40 disabled:cursor-not-allowed",
-              "border border-white/10"
+              "border border-white/10",
             )}
             aria-label="Open menu"
           >
@@ -157,10 +159,7 @@ export default function Home() {
         </div>
 
         {/* Right: Coin counter */}
-        <div
-          className="flex items-center gap-1.5 bg-white/10 border border-white/10 rounded-lg px-3 py-1.5 cursor-pointer hover:bg-white/20 transition-colors duration-150"
-          id="coin-counter"
-        >
+        <div className="flex items-center gap-1.5 bg-white/10 border border-white/10 rounded-lg px-3 py-1.5 cursor-pointer hover:bg-white/20 transition-colors duration-150" id="coin-counter">
           <div className="h-4 w-4 rounded-sm bg-yellow-400 flex items-center justify-center">
             <Coins className="h-2.5 w-2.5 text-yellow-900" />
           </div>
@@ -172,10 +171,7 @@ export default function Home() {
       <main className="flex-1 w-full flex flex-col items-center justify-center gap-6 px-6 z-10">
         {/* Status label */}
         <p className="text-white/60 text-sm font-medium tracking-wide text-center">
-          {isActive
-            ? mode === TimerMode.TIMER ? "Stay focused — your tree is growing" : "Time is running…"
-            : "Set your focus time and plant"
-          }
+          {isActive ? (mode === TimerMode.TIMER ? "Stay focused — your tree is growing" : "Time is running…") : "Set your focus time and plant"}
         </p>
 
         {/* Tree & circular slider */}
@@ -192,10 +188,7 @@ export default function Home() {
         {/* Timer display + tree name */}
         <div className="flex flex-col items-center gap-3">
           {/* Big time */}
-          <div
-            className="text-[88px] md:text-[108px] font-light tracking-tight leading-none text-white font-mono"
-            style={{ textShadow: "0 2px 24px rgba(0,0,0,0.15)" }}
-          >
+          <div className="text-[88px] md:text-[108px] font-light tracking-tight leading-none text-white font-mono" style={{ textShadow: "0 2px 24px rgba(0,0,0,0.15)" }}>
             {formatTime()}
           </div>
 
@@ -210,10 +203,7 @@ export default function Home() {
           {/* Session progress bar (only when active in timer mode) */}
           {isActive && mode === TimerMode.TIMER && (
             <div className="w-48 h-1 bg-white/10 rounded-full overflow-hidden">
-              <div
-                className="h-full bg-white/60 rounded-full transition-all duration-1000 ease-linear"
-                style={{ width: `${progressPercent}%` }}
-              />
+              <div className="h-full bg-white/60 rounded-full transition-all duration-1000 ease-linear" style={{ width: `${progressPercent}%` }} />
             </div>
           )}
         </div>
@@ -226,10 +216,12 @@ export default function Home() {
             <button
               id="plant-button"
               onClick={handleStart}
-              className="w-full h-13 rounded-xl bg-white text-green-800 font-semibold text-base tracking-wide
-                         border-b-[3px] border-green-200/60 shadow-sm
-                         hover:bg-white/95 active:translate-y-0.5 active:border-b-0
-                         transition-all duration-100 cursor-pointer"
+              className={cn(
+                "w-full h-13 rounded-xl bg-white text-green-800 font-semibold text-base tracking-wide",
+                "border-b-[3px] border-green-200/60 shadow-sm",
+                "hover:bg-white/95 active:translate-y-0.5 active:border-b-0",
+                "transition-all duration-100 cursor-pointer",
+              )}
             >
               Plant
             </button>
@@ -249,10 +241,12 @@ export default function Home() {
                 <button
                   id="giveup-button"
                   onClick={handleGiveUp}
-                  className="w-full h-13 rounded-xl text-white font-semibold text-base tracking-wide
-                             bg-red-500/80 hover:bg-red-500 border border-red-400/30 border-b-[3px] border-b-red-700/60
-                             active:translate-y-0.5 active:border-b-0
-                             transition-all duration-100 cursor-pointer"
+                  className={cn(
+                    "w-full h-13 rounded-xl text-white font-semibold text-base tracking-wide",
+                    "bg-red-500/80 hover:bg-red-500 border border-red-400/30 border-b-[3px] border-b-red-700/60",
+                    "active:translate-y-0.5 active:border-b-0",
+                    "transition-all duration-100 cursor-pointer",
+                  )}
                 >
                   Give up
                 </button>
@@ -267,33 +261,18 @@ export default function Home() {
         <DialogContent className="bg-white border border-gray-100 shadow-xl rounded-xl max-w-sm p-0 overflow-hidden">
           <div className="flex items-start gap-4 p-6">
             {/* Icon */}
-            <div className={cn(
-              "mt-0.5 shrink-0 h-9 w-9 rounded-lg flex items-center justify-center",
-              dialogState.variant === "destructive" ? "bg-red-50" : "bg-green-50"
-            )}>
-              {dialogState.variant === "destructive"
-                ? <AlertTriangle className="h-5 w-5 text-red-500" />
-                : <CheckCircle2 className="h-5 w-5 text-green-500" />
-              }
+            <div className={cn("mt-0.5 shrink-0 h-9 w-9 rounded-lg flex items-center justify-center", dialogState.variant === "destructive" ? "bg-red-50" : "bg-green-50")}>
+              {dialogState.variant === "destructive" ? <AlertTriangle className="h-5 w-5 text-red-500" /> : <CheckCircle2 className="h-5 w-5 text-green-500" />}
             </div>
             <DialogHeader className="flex-1 gap-1 text-left">
-              <DialogTitle className="text-gray-900 font-semibold text-base leading-tight">
-                {dialogState.title}
-              </DialogTitle>
-              <DialogDescription className="text-gray-500 text-sm leading-relaxed">
-                {dialogState.description}
-              </DialogDescription>
+              <DialogTitle className="text-gray-900 font-semibold text-base leading-tight">{dialogState.title}</DialogTitle>
+              <DialogDescription className="text-gray-500 text-sm leading-relaxed">{dialogState.description}</DialogDescription>
             </DialogHeader>
           </div>
 
           <DialogFooter className="flex flex-row gap-2 px-6 pb-6 pt-0">
             {dialogState.showCancel && (
-              <Button
-                id="dialog-cancel"
-                variant="ghost"
-                onClick={closeDialog}
-                className="flex-1 h-10 rounded-lg text-gray-600 hover:bg-gray-100 text-sm font-medium border border-gray-200"
-              >
+              <Button id="dialog-cancel" variant="ghost" onClick={closeDialog} className="flex-1 h-10 rounded-lg text-gray-600 hover:bg-gray-100 text-sm font-medium border border-gray-200">
                 {dialogState.cancelText || "Cancel"}
               </Button>
             )}
@@ -302,9 +281,7 @@ export default function Home() {
               onClick={dialogState.onConfirm || closeDialog}
               className={cn(
                 "flex-1 h-10 rounded-lg text-sm font-semibold transition-colors",
-                dialogState.variant === "destructive"
-                  ? "bg-red-500 hover:bg-red-600 text-white border-0"
-                  : "bg-green-600 hover:bg-green-700 text-white border-0"
+                dialogState.variant === "destructive" ? "bg-red-500 hover:bg-red-600 text-white border-0" : "bg-green-600 hover:bg-green-700 text-white border-0",
               )}
             >
               {dialogState.confirmText || "OK"}
