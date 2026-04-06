@@ -1,16 +1,6 @@
-export interface GrowthStage {
-  label: string
-  image: string
-}
+import type { Tree } from "@/features/timer/types/tree"
 
-export interface Tree {
-  id: string
-  name: string
-  price: number
-  image: string
-  description: string
-  growthStages: GrowthStage[]
-}
+export type { Tree, GrowthStage } from "@/features/timer/types/tree"
 
 export const STORE_TREES: Tree[] = [
   {

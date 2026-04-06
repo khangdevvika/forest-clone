@@ -4,6 +4,8 @@ import { Clock, Timer } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { TimerMode } from "@/features/timer/enum/timer"
 import { useCallback } from "react"
+import { motion } from "framer-motion"
+import { springSnappy as spring } from "@/lib/animations"
 
 interface ModeToggleProps {
   mode: TimerMode
@@ -18,41 +20,57 @@ export function ModeToggle({ mode, onChange }: ModeToggleProps) {
     [mode, onChange],
   )
 
+  const tabs = [
+    { id: TimerMode.TIMER, label: "Timer", icon: Clock },
+    { id: TimerMode.STOPWATCH, label: "Stopwatch", icon: Timer },
+  ]
+
   return (
     <div
-      className="flex items-center gap-0.5 bg-black/15 border border-white/10 backdrop-blur-sm rounded-lg p-0.5"
+      className="relative flex items-center p-1 rounded-2xl backdrop-blur-sm self-center mx-auto"
+      style={{
+        background: "var(--timer-glass)",
+        border: "1px solid var(--timer-glass-border)",
+      }}
       role="group"
       aria-label="Timer mode"
     >
-      <button
-        id="mode-timer"
-        onClick={() => handleChange(TimerMode.TIMER)}
-        aria-pressed={mode === TimerMode.TIMER}
-        className={cn(
-          "flex items-center gap-1.5 h-8 px-3 rounded-md text-xs font-medium transition-all duration-150",
-          mode === TimerMode.TIMER
-            ? "bg-white/20 text-white shadow-sm"
-            : "text-white/45 hover:text-white/65",
-        )}
-      >
-        <Clock className="h-3.5 w-3.5" />
-        <span>Timer</span>
-      </button>
+      {tabs.map((tab) => {
+        const isActive = mode === tab.id
+        return (
+          <button
+            key={tab.id}
+            id={`mode-${tab.id}`}
+            onClick={() => handleChange(tab.id)}
+            aria-pressed={isActive}
+            className={cn(
+              "relative group flex items-center gap-2 h-10 px-5 rounded-xl text-[14px] font-medium font-sans transition-all duration-300 isolation-auto select-none",
+              isActive 
+                ? "text-[--timer-text]" 
+                : "text-[--timer-text] opacity-40 hover:opacity-60"
+            )}
+          >
+            {/* Active Pill — Animates width/position smoothly across buttons */}
+            {isActive && (
+              <motion.div
+                layoutId="mode-pill"
+                className="absolute inset-0 bg-white/90 shadow-[0_1px_4px_rgba(0,0,0,0.06)] z-0 dark:bg-white/10"
+                style={{ borderRadius: "inherit" }}
+                transition={spring}
+              />
+            )}
 
-      <button
-        id="mode-stopwatch"
-        onClick={() => handleChange(TimerMode.STOPWATCH)}
-        aria-pressed={mode === TimerMode.STOPWATCH}
-        className={cn(
-          "flex items-center gap-1.5 h-8 px-3 rounded-md text-xs font-medium transition-all duration-150",
-          mode === TimerMode.STOPWATCH
-            ? "bg-white/20 text-white shadow-sm"
-            : "text-white/45 hover:text-white/65",
-        )}
-      >
-        <Timer className="h-3.5 w-3.5" />
-        <span>Stopwatch</span>
-      </button>
+            <tab.icon 
+              className={cn(
+                "h-4 w-4 shrink-0 z-10 transition-colors duration-200",
+                isActive ? "text-[--timer-text]" : "text-[--timer-text]/70"
+              )} 
+              strokeWidth={1.25} 
+            />
+            <span className="relative z-10 leading-none">{tab.label}</span>
+          </button>
+        )
+      })}
     </div>
   )
 }

@@ -1,23 +1,41 @@
 import type { Metadata } from "next"
-import { Geist, Geist_Mono } from "next/font/google"
+import { Outfit, Inter, Geist_Mono } from "next/font/google"
 import "./globals.css"
 import { Providers } from "./providers"
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/app-sidebar"
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+/**
+ * Outfit — display/timer font
+ * Weights loaded: 100 (ultra-light timer), 200, 300, 400, 600
+ */
+const outfit = Outfit({
+  variable: "--font-outfit",
   subsets: ["latin"],
+  weight: ["100", "200", "300", "400", "600"],
+  display: "swap",
+})
+
+/**
+ * Inter — UI/body font
+ * Weights loaded: 400 (body), 500 (labels), 600 (headings/buttons)
+ */
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  display: "swap",
 })
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  display: "swap",
 })
 
 export const metadata: Metadata = {
-  title: "Forest Clone",
-  description: "A beautiful focus timer inspired by nature",
+  title: "Forest — Focus Timer",
+  description: "A calm, nature-inspired focus timer. Plant your tree, stay present.",
 }
 
 export default function RootLayout({
@@ -27,13 +45,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body className={`${outfit.variable} ${inter.variable} ${geistMono.variable} antialiased`}>
         <Providers>
           <SidebarProvider defaultOpen={false}>
             <AppSidebar />
-            <SidebarInset className="bg-muted/30">
-              <main className="flex-1 overflow-auto">{children}</main>
-            </SidebarInset>
+            <SidebarInset className="bg-muted/30 overflow-hidden">{children}</SidebarInset>
           </SidebarProvider>
         </Providers>
       </body>

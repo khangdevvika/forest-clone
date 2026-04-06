@@ -1,195 +1,366 @@
 @import "tailwindcss";
-@import "tw-animate-css";
-@import "shadcn/tailwind.css";
-
-@custom-variant dark (&:is(.dark *));
 
 :root {
-  /* ─── Core Palette ─────────────────────────────────── */
-  /* Green — the ONLY primary accent */
-  --green-50:  #f0faf4;
-  --green-100: #dcf3e7;
-  --green-200: #bbe8d0;
-  --green-300: #86d4ac;
-  --green-400: #4db882;
-  --green-500: #2d9e65;   /* primary */
-  --green-600: #218051;
-  --green-700: #1a6440;
-  --green-800: #164f33;
-  --green-900: #12402a;
+  /* ─────────────────────────────────────────────────────────
+     FOREST CLONE — ADVANCED THEME ENGINE (SEMANTIC TOKENS)
+     Direction: Zen Organic Nature Moods
+  ───────────────────────────────────────────────────────── */
 
-  /* Neutral Gray — layout, text, borders */
-  --gray-50:  #f9fafb;
-  --gray-100: #f3f4f6;
-  --gray-200: #e5e7eb;
-  --gray-300: #d1d5db;
-  --gray-400: #9ca3af;
-  --gray-500: #6b7280;
-  --gray-600: #4b5563;
-  --gray-700: #374151;
-  --gray-800: #1f2937;
-  --gray-900: #111827;
+  /* ── Palette Base (Sage & Cream) ───────────────────────── */
+  --sage-50: #f4f7f3;
+  --sage-100: #e6ede4;
+  --sage-200: #c8d9c5;
+  --sage-300: #a3be9e;
+  --sage-400: #7ba87b;
+  --sage-500: #6b8f6b;
+  --sage-600: #5a7a5a;
+  --sage-700: #4a6649;
+  --sage-800: #3a5038;
+  --sage-900: #2a3d27;
 
-  /* ─── Semantic Tokens ──────────────────────────────── */
-  --background:        #ffffff;
-  --foreground:        var(--gray-900);
+  --cream-50: #fafaf7;
+  --cream-100: #f5f5f0;
+  --cream-200: #efefea;
+  --cream-300: #e8e8e2;
+  --cream-400: #d4d4cc;
+  --cream-500: #b0b0a8;
+  --cream-600: #8a9e86;
+  --cream-700: #4a5e47;
+  --cream-800: #2d3e2b;
+  --cream-900: #1b2b1a;
 
-  --primary:           var(--green-500);
-  --primary-hover:     var(--green-600);
+  /* ── Shared Fixed Constants ────────────────────────────── */
+  --radius: 0.8rem;
+  --sidebar: #1b2b1a;
+  --sidebar-active: rgba(255, 255, 255, 0.08);
+  --sidebar-border: rgba(255, 255, 255, 0.06);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   MOOD 1: SAGE CREAM (Original Light)
+   Class: .sage or default :root
+───────────────────────────────────────────────────────────── */
+.sage,
+:root {
+  --background: var(--cream-100);
+  --foreground: var(--cream-900);
+  --primary: var(--sage-500);
+  --primary-hover: var(--sage-600);
   --primary-foreground: #ffffff;
+  --secondary: var(--cream-200);
+  --secondary-foreground: var(--cream-700);
+  --muted: var(--cream-200);
+  --muted-foreground: var(--cream-600);
+  --accent: var(--sage-100);
+  --accent-foreground: var(--sage-900);
+  --border: rgba(107, 143, 107, 0.15);
+  --input: rgba(107, 143, 107, 0.15);
+  --ring: var(--sage-500);
+  --card: var(--cream-50);
+  --card-foreground: var(--cream-900);
+  --popover: var(--cream-50);
+  --popover-foreground: var(--cream-900);
 
-  --secondary:         var(--gray-100);
-  --secondary-foreground: var(--gray-700);
-
-  --muted:             var(--gray-100);
-  --muted-foreground:  var(--gray-500);
-
-  --card:              #ffffff;
-  --card-foreground:   var(--gray-900);
-
-  --popover:           #ffffff;
-  --popover-foreground: var(--gray-900);
-
-  --border:            var(--gray-200);
-  --input:             var(--gray-200);
-  --ring:              var(--green-500);
-
-  --accent:            var(--gray-100);
-  --accent-foreground: var(--gray-900);
-
-  --destructive:       oklch(0.577 0.245 27.325);
-
-  /* ─── Radius System (8px base, restrained) ─────────── */
-  --radius:    0.5rem;   /* 8px */
-
-  /* ─── Sidebar ──────────────────────────────────────── */
-  --sidebar:                   var(--green-800);
-  --sidebar-foreground:        #ffffff;
-  --sidebar-primary:           var(--green-500);
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent:            var(--green-700);
-  --sidebar-accent-foreground: #ffffff;
-  --sidebar-border:            var(--green-700);
-  --sidebar-ring:              var(--green-500);
-
-  /* ─── Forest Theme (kept for backward compat) ──────── */
-  --forest-teal:      var(--green-500);
-  --forest-dark-teal: var(--green-800);
-  --forest-sidebar-bg: var(--green-700);
+  /* Timer Page */
+  --timer-bg-from: #d6e5d3;
+  --timer-bg-mid: #c2d8be;
+  --timer-bg-to: #b0c9ab;
+  --timer-text: #1b2b1a;
+  --timer-muted: rgba(27, 43, 26, 0.55);
+  --timer-glass: rgba(255, 255, 255, 0.45);
+  --timer-glass-border: rgba(255, 255, 255, 0.6);
 }
 
-/* ─── Theme Mapping ──────────────────────────────────── */
-@theme inline {
-  --color-background:        var(--background);
-  --color-foreground:        var(--foreground);
-
-  --color-primary:           var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-primary-hover:     var(--primary-hover);
-
-  --color-secondary:         var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-
-  --color-muted:             var(--muted);
-  --color-muted-foreground:  var(--muted-foreground);
-
-  --color-card:              var(--card);
-  --color-card-foreground:   var(--card-foreground);
-
-  --color-popover:           var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-
-  --color-border:            var(--border);
-  --color-input:             var(--input);
-  --color-ring:              var(--ring);
-
-  --color-accent:            var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-
-  --color-destructive:       var(--destructive);
-
-  /* Radius scale */
-  --radius-sm:   calc(var(--radius) * 0.5);   /* 4px */
-  --radius-md:   var(--radius);               /* 8px */
-  --radius-lg:   calc(var(--radius) * 1.5);   /* 12px */
-  --radius-xl:   calc(var(--radius) * 2);     /* 16px */
-  --radius-2xl:  calc(var(--radius) * 2.5);   /* 20px */
-  --radius-3xl:  calc(var(--radius) * 3);     /* 24px */
-
-  /* Sidebar */
-  --color-sidebar:                   var(--sidebar);
-  --color-sidebar-foreground:        var(--sidebar-foreground);
-  --color-sidebar-primary:           var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent:            var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border:            var(--sidebar-border);
-  --color-sidebar-ring:              var(--sidebar-ring);
-
-  /* Legacy forest tokens */
-  --color-forest-teal:      var(--forest-teal);
-  --color-forest-dark-teal: var(--forest-dark-teal);
-  --color-forest-sidebar:   var(--forest-sidebar-bg);
-
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-/* ─── Dark Mode ──────────────────────────────────────── */
+/* ─────────────────────────────────────────────────────────────
+   MOOD 2: FOREST FLOOR (Original Dark)
+   Class: .forest or .dark (for compatibility)
+───────────────────────────────────────────────────────────── */
+.forest,
 .dark {
-  --background:        var(--gray-900);
-  --foreground:        var(--gray-50);
-  --card:              var(--gray-800);
-  --card-foreground:   var(--gray-50);
-  --popover:           var(--gray-800);
-  --popover-foreground: var(--gray-50);
-  --primary:           var(--green-400);
-  --primary-hover:     var(--green-300);
-  --primary-foreground: var(--gray-900);
-  --secondary:         var(--gray-700);
-  --secondary-foreground: var(--gray-100);
-  --muted:             var(--gray-800);
-  --muted-foreground:  var(--gray-400);
-  --accent:            var(--gray-700);
-  --accent-foreground: var(--gray-100);
-  --border:            var(--gray-700);
-  --input:             var(--gray-700);
-  --ring:              var(--green-400);
+  --background: #1b261a;
+  --foreground: #e8ede6;
+  --primary: var(--sage-400);
+  --primary-hover: var(--sage-300);
+  --primary-foreground: #1b261a;
+  --secondary: #2a3d27;
+  --secondary-foreground: #9ebd98;
+  --muted: #22311f;
+  --muted-foreground: #5c7a58;
+  --accent: #2a3d27;
+  --accent-foreground: #e8ede6;
+  --border: rgba(107, 168, 107, 0.12);
+  --input: rgba(107, 168, 107, 0.12);
+  --ring: var(--sage-400);
+  --card: #22311f;
+  --card-foreground: #e8ede6;
+  --popover: #22311f;
+  --popover-foreground: #e8ede6;
+
+  /* Timer Page - Deep Woods */
+  --timer-bg-from: #1b2b1a;
+  --timer-bg-mid: #22311f;
+  --timer-bg-to: #1a2818;
+  --timer-text: #e8ede6;
+  --timer-muted: rgba(232, 237, 230, 0.5);
+  --timer-glass: rgba(255, 255, 255, 0.06);
+  --timer-glass-border: rgba(255, 255, 255, 0.1);
 }
 
-/* ─── Base Styles ────────────────────────────────────── */
+/* ─────────────────────────────────────────────────────────────
+   MOOD 3: SUNSET AMBER
+   Class: .sunset
+───────────────────────────────────────────────────────────── */
+.sunset {
+  --background: #faf7f2;
+  --foreground: #4a3728;
+  --primary: #d48c45;
+  --primary-hover: #c37b34;
+  --primary-foreground: #ffffff;
+  --secondary: #f0e6da;
+  --secondary-foreground: #8a6b55;
+  --muted: #f0e6da;
+  --muted-foreground: #a68c7a;
+  --accent: #f8efe4;
+  --accent-foreground: #4a3728;
+  --border: rgba(212, 140, 69, 0.15);
+  --input: rgba(212, 140, 69, 0.15);
+  --ring: #d48c45;
+  --card: #ffffff;
+  --card-foreground: #4a3728;
+
+  /* Timer Page - Warm Dusk */
+  --timer-bg-from: #f8e8d5;
+  --timer-bg-mid: #f2d5b5;
+  --timer-bg-to: #eec79a;
+  --timer-text: #4a3728;
+  --timer-muted: rgba(74, 55, 40, 0.5);
+  --timer-glass: rgba(255, 255, 255, 0.5);
+  --timer-glass-border: rgba(255, 255, 255, 0.7);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   MOOD 4: MIDNIGHT OCEAN
+   Class: .midnight
+───────────────────────────────────────────────────────────── */
+.midnight {
+  --background: #0f172a;
+  --foreground: #e2e8f0;
+  --primary: #38bdf8;
+  --primary-hover: #7dd3fc;
+  --primary-foreground: #0f172a;
+  --secondary: #1e293b;
+  --secondary-foreground: #94a3b8;
+  --muted: #1e293b;
+  --muted-foreground: #64748b;
+  --accent: #334155;
+  --accent-foreground: #f1f5f9;
+  --border: rgba(56, 189, 248, 0.12);
+  --input: rgba(56, 189, 248, 0.12);
+  --ring: #38bdf8;
+  --card: #141d2e;
+  --card-foreground: #e2e8f0;
+
+  /* Timer Page - Deep Ocean */
+  --timer-bg-from: #0f172a;
+  --timer-bg-mid: #141d2e;
+  --timer-bg-to: #0c1221;
+  --timer-text: #e2e8f0;
+  --timer-muted: rgba(226, 232, 240, 0.5);
+  --timer-glass: rgba(255, 255, 255, 0.05);
+  --timer-glass-border: rgba(255, 255, 255, 0.08);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   MOOD 5: ROSE QUARTZ
+   Class: .rose
+───────────────────────────────────────────────────────────── */
+.rose {
+  --background: #fdf8f9;
+  --foreground: #5a4b4f;
+  --primary: #d4a5b2;
+  --primary-hover: #c38e9c;
+  --primary-foreground: #ffffff;
+  --secondary: #fcecef;
+  --secondary-foreground: #9e8a8e;
+  --muted: #fcecef;
+  --muted-foreground: #b8a6a9;
+  --accent: #fff4f6;
+  --accent-foreground: #5a4b4f;
+  --border: rgba(212, 165, 178, 0.2);
+  --input: rgba(212, 165, 178, 0.2);
+  --ring: #d4a5b2;
+  --card: #ffffff;
+  --card-foreground: #5a4b4f;
+
+  /* Timer Page - Cherry Blossom */
+  --timer-bg-from: #fceef2;
+  --timer-bg-mid: #f9dfe7;
+  --timer-bg-to: #f4cfda;
+  --timer-text: #5a4b4f;
+  --timer-muted: rgba(90, 75, 79, 0.55);
+  --timer-glass: rgba(255, 255, 255, 0.55);
+  --timer-glass-border: rgba(255, 255, 255, 0.7);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   MOOD 6: EMERALD LUSH
+   Class: .emerald
+───────────────────────────────────────────────────────────── */
+.emerald {
+  --background: #06281a;
+  --foreground: #e1f3ec;
+  --primary: #10b981;
+  --primary-hover: #059669;
+  --primary-foreground: #06281a;
+  --secondary: #0d3d29;
+  --secondary-foreground: #a7d9c6;
+  --muted: #0d3d29;
+  --muted-foreground: #60a88c;
+  --accent: #115e45;
+  --accent-foreground: #ecfdf5;
+  --border: rgba(16, 185, 129, 0.15);
+  --input: rgba(16, 185, 129, 0.15);
+  --ring: #10b981;
+  --card: #0d3d29;
+  --card-foreground: #e1f3ec;
+
+  /* Timer Page - Tropical Lush */
+  --timer-bg-from: #06281a;
+  --timer-bg-mid: #0b3d29;
+  --timer-bg-to: #052618;
+  --timer-text: #e1f3ec;
+  --timer-muted: rgba(225, 243, 236, 0.5);
+  --timer-glass: rgba(255, 255, 255, 0.05);
+  --timer-glass-border: rgba(255, 255, 255, 0.1);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-ring: var(--ring);
+
+  /* Radius */
+  --radius-xl: var(--radius);
+  --radius-lg: calc(var(--radius) * 0.8);
+  --radius-md: calc(var(--radius) * 0.5);
+
+  /* Sidebar fallback */
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: #e8ede6;
+  --color-sidebar-primary: var(--primary);
+  --color-sidebar-border: var(--sidebar-border);
+}
+
+/* ─── Base Styles ────────────────────────────────────────── */
+* {
+  transition:
+    background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 html {
   scroll-behavior: smooth;
+  height: 100%;
 }
 
 body {
-  overflow-x: hidden;
+  @apply bg-background text-foreground h-full;
+  font-family: var(--font-inter), sans-serif;
+  overflow: hidden;
 }
 
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
-  html {
-    @apply font-sans;
-  }
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  background-repeat: repeat;
 }
 
-/* ─── Scrollbar ──────────────────────────────────────── */
+.timer-bg {
+  background:
+    radial-gradient(ellipse at 72% 8%, var(--primary) 0.08, transparent 55%), radial-gradient(ellipse at 20% 90%, var(--primary) 0.05, transparent 45%),
+    linear-gradient(160deg, var(--timer-bg-from) 0%, var(--timer-bg-mid) 50%, var(--timer-bg-to) 100%);
+}
+
+@keyframes bg-breathe {
+  0%,
+  100% {
+    background-position:
+      72% 8%,
+      20% 90%,
+      center;
+  }
+  50% {
+    background-position:
+      67% 12%,
+      24% 86%,
+      center;
+  }
+}
+.timer-bg-animate {
+  animation: bg-breathe 60s ease-in-out infinite;
+}
+
+/* ───────────────────────────────────────────────────────────── */
+/* Used in page.tsx via className="timer-bg" */
+.timer-bg {
+  background:
+    radial-gradient(ellipse at 72% 8%, rgba(107, 143, 107, 0.2) 0%, transparent 55%), radial-gradient(ellipse at 20% 90%, rgba(107, 143, 107, 0.12) 0%, transparent 45%),
+    linear-gradient(160deg, var(--timer-bg-from) 0%, var(--timer-bg-mid) 50%, var(--timer-bg-to) 100%);
+}
+
+/* Slow-motion breathing — 60s cycle, only used when .timer-bg-animate is added */
+@keyframes bg-breathe {
+  0% {
+    background-position:
+      72% 8%,
+      20% 90%,
+      center;
+  }
+  50% {
+    background-position:
+      67% 12%,
+      24% 86%,
+      center;
+  }
+  100% {
+    background-position:
+      72% 8%,
+      20% 90%,
+      center;
+  }
+}
+.timer-bg-animate {
+  animation: bg-breathe 60s ease-in-out infinite;
+}
+
+/* ─── Scrollbar ──────────────────────────────────────────── */
 ::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
+  display: none;
 }
-::-webkit-scrollbar-track {
-  background: transparent;
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
 }
-::-webkit-scrollbar-thumb {
-  background: var(--gray-300);
-  border-radius: 10px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--gray-400);
+
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }

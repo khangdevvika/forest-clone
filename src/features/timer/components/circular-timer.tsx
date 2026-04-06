@@ -27,17 +27,12 @@ export function CircularTimer({ mode, minutes, onChange, onDragStart, onDragEnd,
       const centerX = rect.left + rect.width / 2
       const centerY = rect.top + rect.height / 2
 
-      // Calculate angle in radians, 0 at top
       const dx = clientX - centerX
       const dy = clientY - centerY
       let angle = Math.atan2(dx, -dy) * (180 / Math.PI)
       if (angle < 0) angle += 360
 
-      // Map angle to TIME_MAX minutes
-      // 360 degrees = TIME_MAX minutes => 3 degrees per minute (if TIME_MAX=120)
       let newMinutes = Math.round((angle / 360) * TIME_MAX)
-
-      // Snap to TIME_STEP minute steps, min TIME_MIN, max TIME_MAX
       newMinutes = Math.max(TIME_MIN, Math.min(TIME_MAX, Math.round(newMinutes / TIME_STEP) * TIME_STEP))
       onChange(newMinutes)
     },
@@ -61,9 +56,7 @@ export function CircularTimer({ mode, minutes, onChange, onDragStart, onDragEnd,
 
   const handleMouseMove = useCallback(
     (e: MouseEvent) => {
-      if (isDragging) {
-        calculateMinutes(e.clientX, e.clientY)
-      }
+      if (isDragging) calculateMinutes(e.clientX, e.clientY)
     },
     [isDragging, calculateMinutes],
   )
@@ -110,30 +103,37 @@ export function CircularTimer({ mode, minutes, onChange, onDragStart, onDragEnd,
       onTouchStart={handleTouchStart}
       className={cn("relative w-64 h-64 md:w-80 md:h-80 transition-transform duration-700", mode === TimerMode.TIMER ? "cursor-pointer touch-none" : "")}
     >
-      {/* Progress Ring (SVG) */}
+      {/* Progress Ring */}
       {mode === TimerMode.TIMER && (
         <svg className="absolute inset-[-6%] -rotate-90 pointer-events-none z-10" viewBox="0 0 100 100" style={{ width: "112%", height: "112%" }}>
           {/* Ghost track */}
-          <circle cx="50" cy="50" r="44" fill="none" stroke="white" strokeWidth="1" className="opacity-15" />
-          {/* Active progress */}
+          <circle cx="50" cy="50" r="44" fill="none" stroke="rgba(107,143,107,0.25)" strokeWidth="1" />
+          {/* Active progress — sage */}
           <circle
             cx="50"
             cy="50"
             r="44"
             fill="none"
-            stroke="white"
-            strokeWidth="3"
+            stroke="rgba(74,102,73,0.7)"
+            strokeWidth="2.5"
             strokeLinecap="round"
             pathLength="100"
             strokeDasharray="100"
             strokeDashoffset={100 - (minutes / TIME_MAX) * 100}
-            className={cn("transition-all duration-300 ease-out", isDragging ? "opacity-100" : "opacity-70")}
+            className={cn("transition-all duration-300 ease-out", isDragging ? "opacity-100" : "opacity-80")}
           />
         </svg>
       )}
 
-      {/* Main Circle Container (The Tree) */}
-      <div className="absolute inset-0 rounded-full border-8 border-white/15 shadow-2xl overflow-hidden bg-[#c4e0b8] z-0 pointer-events-none flex items-center justify-center">
+      {/* Main Circle — earthy cream/sage background */}
+      <div
+        className="absolute inset-0 rounded-full overflow-hidden z-0 pointer-events-none flex items-center justify-center"
+        style={{
+          background: "linear-gradient(140deg, #d6e5d3 0%, #c0d9bc 60%, #afd0ab 100%)",
+          boxShadow: "0 8px 32px rgba(27,43,26,0.15), 0 2px 8px rgba(27,43,26,0.08)",
+          border: "6px solid rgba(255,255,255,0.55)",
+        }}
+      >
         <div className="relative w-[110%] h-[110%] flex items-center justify-center">
           <Image
             src={treeImage}
@@ -147,18 +147,19 @@ export function CircularTimer({ mode, minutes, onChange, onDragStart, onDragEnd,
         </div>
       </div>
 
-      {/* Drag Handle — visible only while dragging */}
+      {/* Drag Handle */}
       {mode === TimerMode.TIMER && (
         <div
-          className={cn(
-            "absolute inset-0 pointer-events-none z-20 transition-opacity duration-200",
-            isDragging ? "opacity-100" : "opacity-0"
-          )}
+          className={cn("absolute inset-0 pointer-events-none z-20 transition-opacity duration-200", isDragging ? "opacity-100" : "opacity-0")}
           style={{ transform: `rotate(${(minutes / TIME_MAX) * 360}deg)` }}
         >
           <div
-            className="absolute left-1/2 w-5 h-5 bg-white rounded-full shadow-md border-2 border-green-500 -translate-x-1/2 -translate-y-1/2"
-            style={{ top: "0.72%" }}
+            className="absolute left-1/2 w-4 h-4 bg-white rounded-full shadow -translate-x-1/2 -translate-y-1/2"
+            style={{
+              top: "0.72%",
+              boxShadow: "0 2px 8px rgba(27,43,26,0.2)",
+              border: "2px solid rgba(107,143,107,0.6)",
+            }}
           />
         </div>
       )}

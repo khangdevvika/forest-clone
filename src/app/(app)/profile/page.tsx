@@ -3,8 +3,9 @@
 import { useMemo } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { Clock, TreePine, Flame, Coins as CoinsIcon, ChevronRight, Leaf } from "lucide-react"
+import { Clock, TreePine, Flame, Coins as CoinsIcon, ChevronRight, Leaf, Settings } from "lucide-react"
 import { useUser } from "@/hooks/use-user"
+import { ThemeToggle } from "@/components/theme-toggle"
 import { STORE_TREES } from "@/features/timer/constants/trees"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { format, parseISO } from "date-fns"
@@ -74,7 +75,7 @@ export default function ProfilePage() {
   ]
 
   return (
-    <div className="relative min-h-screen flex flex-col bg-gray-50">
+    <div className="relative h-full flex flex-col bg-gray-50">
       {/* ── Sticky header ──────────────────────────── */}
       <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-gray-100">
         <div className="max-w-2xl mx-auto px-5 h-14 flex items-center">
@@ -191,6 +192,23 @@ export default function ProfilePage() {
                 })}
               </div>
             )}
+          </section>
+
+          {/* ── Settings ───────────────────────────── */}
+          <section className="space-y-3">
+            <h2 className="text-sm font-semibold text-gray-400 uppercase tracking-wider px-1">Settings</h2>
+            <div className="bg-white border border-gray-100 rounded-xl px-4 py-3 flex items-center justify-between shadow-sm">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-lg bg-gray-50 flex items-center justify-center">
+                  <Settings className="h-4 w-4 text-gray-400" strokeWidth={1.5} />
+                </div>
+                <div>
+                  <p className="text-sm font-semibold text-gray-800">Appearance</p>
+                  <p className="text-[10px] text-gray-400">Choose your favorite color palette</p>
+                </div>
+              </div>
+              <ThemeToggle variant="outline" className="border-gray-100 bg-gray-50/50" />
+            </div>
           </section>
         </div>
       </ScrollArea>
