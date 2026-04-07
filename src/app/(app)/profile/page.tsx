@@ -52,9 +52,9 @@ export default function ProfilePage() {
       icon: TreePine,
       label: "Trees Planted",
       value: sessions.length.toString(),
-      color: "text-green-600",
-      bg: "bg-green-50",
-      border: "border-green-100",
+      color: "text-primary",
+      bg: "bg-muted",
+      border: "border-border",
     },
     {
       icon: Flame,
@@ -75,11 +75,11 @@ export default function ProfilePage() {
   ]
 
   return (
-    <div className="relative h-full flex flex-col bg-gray-50">
+    <div className="relative h-full flex flex-col bg-background">
       {/* ── Sticky header ──────────────────────────── */}
-      <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-gray-100">
+      <header className="sticky top-0 z-40 bg-card/90 backdrop-blur-md border-b border-border">
         <div className="max-w-2xl mx-auto px-5 h-14 flex items-center">
-          <h1 className="text-base font-semibold text-gray-900">Profile</h1>
+          <h1 className="text-base font-semibold text-foreground">Profile</h1>
         </div>
       </header>
 
@@ -107,16 +107,16 @@ export default function ProfilePage() {
 
           {/* ── Stats grid ────────────────────────── */}
           <section className="space-y-3">
-            <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wider px-1">Stats</h2>
+            <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider px-1">Stats</h2>
             <div className="grid grid-cols-2 gap-3">
               {stats.map((stat) => (
-                <div key={stat.label} className={`bg-white border ${stat.border} rounded-xl p-4 space-y-2`}>
+                <div key={stat.label} className={`bg-card border ${stat.border} rounded-xl p-4 space-y-2`}>
                   <div className={`w-8 h-8 rounded-lg ${stat.bg} flex items-center justify-center`}>
                     <stat.icon className={`h-4 w-4 ${stat.color}`} />
                   </div>
                   <div>
-                    <p className="text-2xl font-bold text-gray-900 leading-none">{stat.value}</p>
-                    <p className="text-xs text-gray-400 mt-1">{stat.label}</p>
+                    <p className="text-2xl font-bold text-foreground leading-none">{stat.value}</p>
+                    <p className="text-xs text-muted-foreground mt-1">{stat.label}</p>
                   </div>
                 </div>
               ))}
@@ -126,23 +126,23 @@ export default function ProfilePage() {
           {/* ── My Collection ─────────────────────── */}
           <section className="space-y-3">
             <div className="flex items-center justify-between px-1">
-              <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wider">Collection</h2>
-              <Link href="/store" className="text-xs text-green-600 font-medium hover:text-green-700">
+              <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">Collection</h2>
+              <Link href="/store" className="text-xs text-primary font-medium hover:text-primary/80">
                 Browse store →
               </Link>
             </div>
             {ownedTrees.length === 0 ? (
-              <div className="bg-white border border-gray-100 rounded-xl p-6 text-center text-gray-400">
+              <div className="bg-card border border-border rounded-xl p-6 text-center text-muted-foreground">
                 <p className="text-sm">No trees yet. Visit the store!</p>
               </div>
             ) : (
               <div className="grid grid-cols-4 gap-3">
                 {ownedTrees.map((tree) => (
                   <div key={tree.id} className="flex flex-col items-center gap-1.5">
-                    <div className="w-16 h-16 rounded-xl bg-green-50 border border-green-100 flex items-center justify-center overflow-hidden">
+                    <div className="w-16 h-16 rounded-xl bg-muted border border-border flex items-center justify-center overflow-hidden">
                       <Image src={tree.image} alt={tree.name} width={48} height={48} className="w-12 h-12 object-contain" unoptimized={tree.image.startsWith("http")} />
                     </div>
-                    <p className="text-[10px] text-gray-500 font-medium text-center leading-tight line-clamp-2">{tree.name}</p>
+                    <p className="text-[10px] text-muted-foreground font-medium text-center leading-tight line-clamp-2">{tree.name}</p>
                   </div>
                 ))}
               </div>
@@ -152,19 +152,19 @@ export default function ProfilePage() {
           {/* ── Recent Sessions ───────────────────── */}
           <section className="space-y-3">
             <div className="flex items-center justify-between px-1">
-              <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wider">Recent Sessions</h2>
+              <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">Recent Sessions</h2>
               {sessions.length > 5 && (
-                <Link href="/garden" className="text-xs text-green-600 font-medium hover:text-green-700 flex items-center gap-0.5">
+                <Link href="/garden" className="text-xs text-primary font-medium hover:text-primary/80 flex items-center gap-0.5">
                   View all <ChevronRight className="h-3 w-3" />
                 </Link>
               )}
             </div>
 
             {recentSessions.length === 0 ? (
-              <div className="bg-white border border-gray-100 rounded-xl p-6 text-center">
-                <Leaf className="h-8 w-8 text-gray-200 mx-auto mb-2" />
-                <p className="text-sm text-gray-400">No sessions yet.</p>
-                <Link href="/" className="text-xs text-green-600 font-medium hover:text-green-700 mt-1 block">
+              <div className="bg-card border border-border rounded-xl p-6 text-center">
+                <Leaf className="h-8 w-8 text-muted-foreground/30 mx-auto mb-2" />
+                <p className="text-sm text-muted-foreground">No sessions yet.</p>
+                <Link href="/" className="text-xs text-primary font-medium hover:text-primary/80 mt-1 block">
                   Start your first session →
                 </Link>
               </div>
@@ -173,19 +173,19 @@ export default function ProfilePage() {
                 {recentSessions.map((session) => {
                   const tree = STORE_TREES.find((t) => t.id === session.treeId)
                   return (
-                    <div key={session.id} className="flex items-center gap-3 bg-white border border-gray-100 rounded-xl px-4 py-3">
-                      <div className="shrink-0 w-9 h-9 rounded-lg bg-green-50 border border-green-100 flex items-center justify-center overflow-hidden">
+                    <div key={session.id} className="flex items-center gap-3 bg-card border border-border rounded-xl px-4 py-3">
+                      <div className="shrink-0 w-9 h-9 rounded-lg bg-muted border border-border flex items-center justify-center overflow-hidden">
                         {tree && <Image src={tree.image} alt={tree.name} width={28} height={28} className="w-7 h-7 object-contain" unoptimized={tree.image.startsWith("http")} />}
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-gray-800 truncate">{session.treeName}</p>
-                        <p className="text-xs text-gray-400">
+                        <p className="text-sm font-medium text-foreground truncate">{session.treeName}</p>
+                        <p className="text-xs text-muted-foreground">
                           {session.durationMinutes} min · {format(parseISO(session.completedAt), "MMM d, HH:mm")}
                         </p>
                       </div>
                       <div className="flex items-center gap-1 shrink-0">
                         <CoinsIcon className="h-3 w-3 text-yellow-500" />
-                        <span className="text-xs font-semibold text-gray-600">{session.coinsEarned}</span>
+                        <span className="text-xs font-semibold text-secondary-foreground">{session.coinsEarned}</span>
                       </div>
                     </div>
                   )
@@ -196,18 +196,18 @@ export default function ProfilePage() {
 
           {/* ── Settings ───────────────────────────── */}
           <section className="space-y-3">
-            <h2 className="text-sm font-semibold text-gray-400 uppercase tracking-wider px-1">Settings</h2>
-            <div className="bg-white border border-gray-100 rounded-xl px-4 py-3 flex items-center justify-between shadow-sm">
+            <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider px-1">Settings</h2>
+            <div className="bg-card border border-border rounded-xl px-4 py-3 flex items-center justify-between shadow-sm">
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-lg bg-gray-50 flex items-center justify-center">
-                  <Settings className="h-4 w-4 text-gray-400" strokeWidth={1.5} />
+                <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center">
+                  <Settings className="h-4 w-4 text-muted-foreground" strokeWidth={1.5} />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-gray-800">Appearance</p>
-                  <p className="text-[10px] text-gray-400">Choose your favorite color palette</p>
+                  <p className="text-sm font-semibold text-foreground">Appearance</p>
+                  <p className="text-[10px] text-muted-foreground">Choose your favorite color palette</p>
                 </div>
               </div>
-              <ThemeToggle variant="outline" className="border-gray-100 bg-gray-50/50" />
+              <ThemeToggle variant="outline" />
             </div>
           </section>
         </div>

@@ -12,7 +12,7 @@ interface StoreTabBarProps {
 
 export function StoreTabBar({ activeTab, onChange }: StoreTabBarProps) {
   return (
-    <div className="flex items-center gap-1 bg-gray-100 rounded-lg p-1 w-fit">
+    <div className="flex items-center gap-1 bg-muted rounded-lg p-1 w-fit">
       {TABS.map((tab) => (
         <button
           key={tab}
@@ -20,7 +20,7 @@ export function StoreTabBar({ activeTab, onChange }: StoreTabBarProps) {
           onClick={() => onChange(tab)}
           className={cn(
             "relative px-5 py-1.5 rounded-md text-sm font-medium transition-all duration-200 focus:outline-none",
-            activeTab === tab ? "bg-white text-gray-900 shadow-sm" : "text-gray-500 hover:text-gray-700",
+            activeTab === tab ? "bg-card text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground",
           )}
         >
           {tab}

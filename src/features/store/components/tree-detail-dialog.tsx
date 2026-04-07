@@ -38,7 +38,7 @@ export function TreeDetailDialog({ tree, onClose }: TreeDetailDialogProps) {
 
   return (
     <Dialog open={!!tree} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent showCloseButton={false} className="max-w-sm p-0 border-gray-200 bg-white rounded-2xl shadow-2xl overflow-visible">
+      <DialogContent showCloseButton={false} className="max-w-sm p-0 border-border bg-card rounded-2xl shadow-2xl overflow-visible">
         <div className="relative flex flex-col">
           {/* Close button */}
           <div className="absolute -top-3 -right-3 z-50">
@@ -48,7 +48,7 @@ export function TreeDetailDialog({ tree, onClose }: TreeDetailDialogProps) {
           </div>
 
           {/* Image header */}
-          <div className="w-full h-44 bg-green-50 rounded-t-2xl flex items-center justify-center overflow-hidden relative">
+          <div className="w-full h-44 bg-muted rounded-t-2xl flex items-center justify-center overflow-hidden relative">
             <motion.div key={tree.id} initial={{ scale: 0.92, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ duration: 0.2 }}>
               <Image src={tree.image} alt={tree.name} width={140} height={140} className="w-32 h-32 object-contain drop-shadow-md" unoptimized />
             </motion.div>
@@ -57,28 +57,28 @@ export function TreeDetailDialog({ tree, onClose }: TreeDetailDialogProps) {
 
           {/* Info */}
           <div className="px-6 pt-5 pb-4 text-center space-y-2">
-            <p className="text-[10px] font-bold text-green-600 uppercase tracking-widest">Botanical Specimen</p>
-            <DialogTitle className="text-xl font-bold text-gray-900 leading-tight">{tree.name}</DialogTitle>
-            <DialogDescription className="text-sm text-gray-500 leading-relaxed">{tree.description}</DialogDescription>
+            <p className="text-[10px] font-bold text-primary uppercase tracking-widest">Botanical Specimen</p>
+            <DialogTitle className="text-xl font-bold text-foreground leading-tight">{tree.name}</DialogTitle>
+            <DialogDescription className="text-sm text-muted-foreground leading-relaxed">{tree.description}</DialogDescription>
           </div>
 
           {/* Growth stages */}
           <div className="px-6 pb-6 pt-2">
-            <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-widest mb-3 text-center">Growth stages</p>
+            <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-widest mb-3 text-center">Growth stages</p>
             <div className="grid grid-cols-4 gap-3">
               {tree.growthStages.map((stage, idx) => (
                 <div key={idx} className="flex flex-col items-center gap-1.5">
-                  <div className="w-10 h-10 rounded-lg bg-green-50 border border-green-100 flex items-center justify-center overflow-hidden">
+                  <div className="w-10 h-10 rounded-lg bg-muted border border-border flex items-center justify-center overflow-hidden">
                     <Image src={stage.image} alt={stage.label} width={32} height={32} className="w-8 h-8 object-contain" unoptimized />
                   </div>
-                  <span className="text-[10px] font-semibold text-gray-500 tabular-nums">{GROWTH_LABELS[idx]}</span>
+                  <span className="text-[10px] font-semibold text-muted-foreground tabular-nums">{GROWTH_LABELS[idx]}</span>
                 </div>
               ))}
             </div>
           </div>
 
           {/* CTA */}
-          <div className="border-t border-gray-100 px-6 py-4">
+          <div className="border-t border-border px-6 py-4">
             {isUnlocked ? (
               <Button
                 id="dialog-equip-btn"
@@ -86,7 +86,7 @@ export function TreeDetailDialog({ tree, onClose }: TreeDetailDialogProps) {
                 disabled={isSelected}
                 className={cn(
                   "w-full h-10 rounded-lg text-sm font-semibold transition-all",
-                  isSelected ? "bg-gray-100 text-gray-400 cursor-not-allowed border-0" : "bg-green-600 hover:bg-green-700 text-white border-0",
+                  isSelected ? "bg-muted text-muted-foreground cursor-not-allowed border-0" : "bg-primary hover:bg-primary/90 text-primary-foreground border-0",
                 )}
               >
                 {isSelected ? (
@@ -102,7 +102,7 @@ export function TreeDetailDialog({ tree, onClose }: TreeDetailDialogProps) {
                 id="dialog-buy-btn"
                 onClick={handleBuy}
                 disabled={coins < tree.price}
-                className="w-full h-10 rounded-lg text-sm font-semibold bg-green-600 hover:bg-green-700 text-white border-0 flex items-center justify-center gap-2 disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed"
+                className="w-full h-10 rounded-lg text-sm font-semibold bg-primary hover:bg-primary/90 text-primary-foreground border-0 flex items-center justify-center gap-2 disabled:bg-muted disabled:text-muted-foreground disabled:cursor-not-allowed"
               >
                 <Coins className="h-3.5 w-3.5" />
                 Buy for {tree.price.toLocaleString()} coins

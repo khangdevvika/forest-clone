@@ -8,13 +8,13 @@ export type CrystalButtonSize = "sm" | "md" | "lg" | "xl" | "icon"
 export type CrystalButtonRadius = "none" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "full"
 
 const variantStyles: Record<CrystalButtonVariant, { face: string; shadow: string }> = {
-  primary: { face: "bg-green-500 text-white", shadow: "bg-green-700" },
+  primary: { face: "bg-primary text-primary-foreground", shadow: "bg-primary/70" },
   secondary: { face: "bg-violet-500 text-white", shadow: "bg-violet-800" },
   warning: { face: "bg-amber-400 text-amber-900", shadow: "bg-amber-600" },
   danger: { face: "bg-red-500 text-white", shadow: "bg-red-800" },
   ghost: { face: "bg-white/15 text-white", shadow: "bg-black/40" },
   blue: { face: "bg-blue-500 text-white", shadow: "bg-blue-800" },
-  outline: { face: "bg-white text-gray-800 border border-gray-300", shadow: "bg-gray-300" },
+  outline: { face: "bg-card text-foreground border border-border", shadow: "bg-border" },
   brown: { face: "bg-amber-800 text-amber-100", shadow: "bg-amber-950" },
 }
 

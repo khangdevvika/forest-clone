@@ -20,12 +20,12 @@ export function DayGroup({ dateKey, sessions }: DayGroupProps) {
     <section className="space-y-2">
       {/* Day header */}
       <div className="flex items-baseline justify-between px-1">
-        <h2 className="text-sm font-semibold text-gray-700">{label}</h2>
+        <h2 className="text-sm font-semibold text-secondary-foreground">{label}</h2>
         <div className="flex items-center gap-3">
-          <span className="text-xs text-gray-400">{totalMinutes} min</span>
+          <span className="text-xs text-muted-foreground">{totalMinutes} min</span>
           <div className="flex items-center gap-1">
             <Coins className="h-3 w-3 text-yellow-500" />
-            <span className="text-xs font-medium text-gray-500">{totalCoins}</span>
+            <span className="text-xs font-medium text-muted-foreground">{totalCoins}</span>
           </div>
         </div>
       </div>

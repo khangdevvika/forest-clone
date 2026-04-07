@@ -36,14 +36,16 @@ export function FeaturedTreeCard({ onSelect }: FeaturedTreeCardProps) {
   return (
     <section className="space-y-4">
       <div className="flex items-center gap-2">
-        <Badge className="bg-green-50 text-green-700 border-green-200 text-[10px] uppercase tracking-wider font-semibold px-2 py-0.5 rounded-md">Featured</Badge>
+        <Badge className="bg-accent text-accent-foreground border-border text-[10px] uppercase tracking-wider font-semibold px-2 py-0.5 rounded-md">
+          Featured
+        </Badge>
       </div>
-      <h2 className="text-xl font-semibold text-gray-900 -mt-1">Today&apos;s specimen</h2>
+      <h2 className="text-xl font-semibold text-foreground -mt-1">Today&apos;s specimen</h2>
 
       <motion.div layout whileHover={{ y: -2 }} transition={{ duration: 0.15 }} onClick={() => onSelect(featuredTree)} className="cursor-pointer" id={`tree-featured-${featuredTree.id}`}>
-        <div className="bg-white border border-gray-200 rounded-xl overflow-hidden hover:border-gray-300 hover:shadow-md transition-all duration-200">
+        <div className="bg-card border border-border rounded-xl overflow-hidden hover:border-border/70 hover:shadow-md transition-all duration-200">
           <div className="flex flex-col sm:flex-row items-center gap-0">
-            <div className="shrink-0 w-full sm:w-52 h-48 sm:h-full bg-green-50 flex items-center justify-center relative overflow-hidden">
+            <div className="shrink-0 w-full sm:w-52 h-48 sm:h-full bg-muted flex items-center justify-center relative overflow-hidden">
               <Image src={featuredTree.image} alt={featuredTree.name} width={160} height={160} className="w-36 h-36 object-contain drop-shadow-md relative z-10" unoptimized />
             </div>
 
@@ -53,8 +55,8 @@ export function FeaturedTreeCard({ onSelect }: FeaturedTreeCardProps) {
                   <Sparkles className="h-3 w-3 text-yellow-500" />
                   <span className="text-[10px] font-semibold text-yellow-600 uppercase tracking-wider">Special Edition</span>
                 </div>
-                <h3 className="text-2xl font-bold text-gray-900">{featuredTree.name}</h3>
-                <p className="text-sm text-gray-500 leading-relaxed">{featuredTree.description}</p>
+                <h3 className="text-2xl font-bold text-foreground">{featuredTree.name}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">{featuredTree.description}</p>
               </div>
 
               <div className="flex items-center gap-3 pt-1">
@@ -65,7 +67,7 @@ export function FeaturedTreeCard({ onSelect }: FeaturedTreeCardProps) {
                     disabled={isSelected}
                     className={cn(
                       "h-9 px-5 rounded-lg text-sm font-semibold transition-all",
-                      isSelected ? "bg-gray-100 text-gray-400 cursor-not-allowed border-0" : "bg-green-600 hover:bg-green-700 text-white border-0",
+                      isSelected ? "bg-muted text-muted-foreground cursor-not-allowed border-0" : "bg-primary hover:bg-primary/90 text-primary-foreground border-0",
                     )}
                   >
                     {isSelected ? "Currently growing" : "Use this tree"}
@@ -75,7 +77,7 @@ export function FeaturedTreeCard({ onSelect }: FeaturedTreeCardProps) {
                     id="featured-buy-btn"
                     onClick={handleBuy}
                     disabled={coins < featuredTree.price}
-                    className="h-9 px-5 rounded-lg text-sm font-semibold bg-green-600 hover:bg-green-700 text-white border-0 flex items-center gap-2 disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed"
+                    className="h-9 px-5 rounded-lg text-sm font-semibold bg-primary hover:bg-primary/90 text-primary-foreground border-0 flex items-center gap-2 disabled:bg-muted disabled:text-muted-foreground disabled:cursor-not-allowed"
                   >
                     <Coins className="h-3.5 w-3.5" />
                     {featuredTree.price.toLocaleString()}

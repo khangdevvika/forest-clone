@@ -23,7 +23,7 @@ export function TreeGrid({ activeTab, onSelect }: TreeGridProps) {
 
   if (activeTab === "Exclusive" && filteredTrees.length === 0) {
     return (
-      <div className="text-center py-16 text-gray-400">
+      <div className="text-center py-16 text-muted-foreground">
         <div className="text-4xl mb-3">🌿</div>
         <p className="text-sm font-medium">No Exclusive species yet</p>
         <p className="text-xs mt-1">Check back later for new additions</p>
@@ -33,7 +33,7 @@ export function TreeGrid({ activeTab, onSelect }: TreeGridProps) {
 
   return (
     <section className="space-y-4">
-      <h2 className="text-base font-semibold text-gray-900">All species</h2>
+      <h2 className="text-base font-semibold text-foreground">All species</h2>
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
         <AnimatePresence mode="popLayout">
           {filteredTrees.map((tree, index) => {
@@ -52,12 +52,12 @@ export function TreeGrid({ activeTab, onSelect }: TreeGridProps) {
               >
                 <div
                   className={cn(
-                    "group relative overflow-hidden rounded-xl border bg-white cursor-pointer",
+                    "group relative overflow-hidden rounded-xl border bg-card cursor-pointer",
                     "transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md",
-                    isSelected ? "border-green-400 ring-2 ring-green-400/20" : "border-gray-200 hover:border-gray-300",
+                    isSelected ? "border-primary ring-2 ring-primary/20" : "border-border hover:border-border/70",
                   )}
                 >
-                  <div className={cn("aspect-square relative flex items-center justify-center overflow-hidden", isUnlocked ? "bg-green-50" : "bg-gray-50")}>
+                  <div className={cn("aspect-square relative flex items-center justify-center overflow-hidden", "bg-muted")}>
                     <Image
                       src={tree.image}
                       alt={tree.name}
@@ -69,28 +69,28 @@ export function TreeGrid({ activeTab, onSelect }: TreeGridProps) {
 
                     {!isUnlocked && (
                       <div className="absolute top-3 left-3">
-                        <div className="bg-white border border-gray-200 rounded-md p-1.5 shadow-sm">
-                          <Lock className="h-3 w-3 text-gray-400" />
+                        <div className="bg-card border border-border rounded-md p-1.5 shadow-sm">
+                          <Lock className="h-3 w-3 text-muted-foreground" />
                         </div>
                       </div>
                     )}
 
                     {isSelected && (
                       <div className="absolute top-3 right-3">
-                        <div className="bg-green-600 text-white text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-md">Active</div>
+                        <div className="bg-primary text-primary-foreground text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-md">Active</div>
                       </div>
                     )}
                   </div>
 
-                  <div className="p-3 border-t border-gray-100">
+                  <div className="p-3 border-t border-border">
                     <div className="flex items-center justify-between gap-2">
-                      <h3 className="font-semibold text-gray-900 text-sm truncate">{tree.name}</h3>
+                      <h3 className="font-semibold text-foreground text-sm truncate">{tree.name}</h3>
                       {isUnlocked ? (
-                        <span className="text-[10px] text-gray-400 font-medium shrink-0">Owned</span>
+                        <span className="text-[10px] text-muted-foreground font-medium shrink-0">Owned</span>
                       ) : (
                         <div className="flex items-center gap-1 shrink-0">
                           <Coins className="h-3 w-3 text-yellow-500" />
-                          <span className="text-xs font-semibold text-gray-700">{tree.price.toLocaleString()}</span>
+                          <span className="text-xs font-semibold text-secondary-foreground">{tree.price.toLocaleString()}</span>
                         </div>
                       )}
                     </div>
