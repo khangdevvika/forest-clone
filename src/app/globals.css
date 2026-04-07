@@ -31,9 +31,6 @@
 
   /* ── Shared Fixed Constants ────────────────────────────── */
   --radius: 0.8rem;
-  --sidebar: #1b2b1a;
-  --sidebar-active: rgba(255, 255, 255, 0.08);
-  --sidebar-border: rgba(255, 255, 255, 0.06);
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -69,6 +66,12 @@
   --timer-muted: rgba(27, 43, 26, 0.55);
   --timer-glass: rgba(255, 255, 255, 0.45);
   --timer-glass-border: rgba(255, 255, 255, 0.6);
+
+  /* Sidebar */
+  --sidebar-background: #2a3d27;
+  --sidebar-foreground: #e6ede4;
+  --sidebar-accent: rgba(255, 255, 255, 0.1);
+  --sidebar-border: rgba(255, 255, 255, 0.08);
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -104,6 +107,12 @@
   --timer-muted: rgba(232, 237, 230, 0.5);
   --timer-glass: rgba(255, 255, 255, 0.06);
   --timer-glass-border: rgba(255, 255, 255, 0.1);
+
+  /* Sidebar */
+  --sidebar-background: #1b261a;
+  --sidebar-foreground: #e8ede6;
+  --sidebar-accent: rgba(255, 255, 255, 0.08);
+  --sidebar-border: rgba(255, 255, 255, 0.06);
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -136,6 +145,12 @@
   --timer-muted: rgba(74, 55, 40, 0.5);
   --timer-glass: rgba(255, 255, 255, 0.5);
   --timer-glass-border: rgba(255, 255, 255, 0.7);
+
+  /* Sidebar */
+  --sidebar-background: #4a3728;
+  --sidebar-foreground: #f8efe4;
+  --sidebar-accent: rgba(212, 140, 69, 0.15);
+  --sidebar-border: rgba(212, 140, 69, 0.1);
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -168,6 +183,12 @@
   --timer-muted: rgba(226, 232, 240, 0.5);
   --timer-glass: rgba(255, 255, 255, 0.05);
   --timer-glass-border: rgba(255, 255, 255, 0.08);
+
+  /* Sidebar */
+  --sidebar-background: #0c1221;
+  --sidebar-foreground: #e2e8f0;
+  --sidebar-accent: rgba(56, 189, 248, 0.15);
+  --sidebar-border: rgba(56, 189, 248, 0.1);
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -200,6 +221,12 @@
   --timer-muted: rgba(90, 75, 79, 0.55);
   --timer-glass: rgba(255, 255, 255, 0.55);
   --timer-glass-border: rgba(255, 255, 255, 0.7);
+
+  /* Sidebar */
+  --sidebar-background: #5a4b4f;
+  --sidebar-foreground: #fdf8f9;
+  --sidebar-accent: rgba(212, 165, 178, 0.15);
+  --sidebar-border: rgba(212, 165, 178, 0.1);
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -232,6 +259,12 @@
   --timer-muted: rgba(225, 243, 236, 0.5);
   --timer-glass: rgba(255, 255, 255, 0.05);
   --timer-glass-border: rgba(255, 255, 255, 0.1);
+
+  /* Sidebar */
+  --sidebar-background: #052618;
+  --sidebar-foreground: #e1f3ec;
+  --sidebar-accent: rgba(16, 185, 129, 0.15);
+  --sidebar-border: rgba(16, 185, 129, 0.1);
 }
 
 @theme inline {
@@ -255,11 +288,12 @@
   --radius-lg: calc(var(--radius) * 0.8);
   --radius-md: calc(var(--radius) * 0.5);
 
-  /* Sidebar fallback */
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: #e8ede6;
+  /* Sidebar Sync */
+  --color-sidebar: var(--sidebar-background);
+  --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--primary);
   --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent: var(--sidebar-accent);
 }
 
 /* ─── Base Styles ────────────────────────────────────────── */
@@ -311,39 +345,6 @@ body::before {
     background-position:
       67% 12%,
       24% 86%,
-      center;
-  }
-}
-.timer-bg-animate {
-  animation: bg-breathe 60s ease-in-out infinite;
-}
-
-/* ───────────────────────────────────────────────────────────── */
-/* Used in page.tsx via className="timer-bg" */
-.timer-bg {
-  background:
-    radial-gradient(ellipse at 72% 8%, rgba(107, 143, 107, 0.2) 0%, transparent 55%), radial-gradient(ellipse at 20% 90%, rgba(107, 143, 107, 0.12) 0%, transparent 45%),
-    linear-gradient(160deg, var(--timer-bg-from) 0%, var(--timer-bg-mid) 50%, var(--timer-bg-to) 100%);
-}
-
-/* Slow-motion breathing — 60s cycle, only used when .timer-bg-animate is added */
-@keyframes bg-breathe {
-  0% {
-    background-position:
-      72% 8%,
-      20% 90%,
-      center;
-  }
-  50% {
-    background-position:
-      67% 12%,
-      24% 86%,
-      center;
-  }
-  100% {
-    background-position:
-      72% 8%,
-      20% 90%,
       center;
   }
 }

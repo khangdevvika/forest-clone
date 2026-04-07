@@ -3,12 +3,13 @@ import confetti from "canvas-confetti"
 import { TimerMode } from "@/features/timer/enum/timer"
 import { TIME_DEFAULT, CANCEL_THRESHOLD, STORE_TREES } from "@/features/timer/constants"
 import { useUser } from "@/hooks/use-user"
+import { POTION_ITEMS } from "@/features/store/constants/items"
 import type { TimerDialogState, Tree } from "@/features/timer/types"
 
 const INITIAL_DIALOG: TimerDialogState = { isOpen: false, title: "", description: "" }
 
 export function useTimer() {
-  const { addCoins, addSession, selectedTreeId } = useUser()
+  const { addCoins, addSession, selectedTreeId, activePotionId, setActivePotionId } = useUser()
 
   const activeTree: Tree = STORE_TREES.find((t) => t.id === selectedTreeId) ?? STORE_TREES[0]
 
@@ -30,9 +31,14 @@ export function useTimer() {
         const next = prev + 1
 
         if (mode === TimerMode.TIMER && next >= minutes * 60) {
-          const coinsEarned = Math.floor(minutes / 5)
+          const activePotion = POTION_ITEMS.find((p) => p.id === activePotionId)
+          const multiplier = activePotion?.multiplier || 1
+          const baseCoins = Math.floor(minutes / 5)
+          const coinsEarned = baseCoins * multiplier
+
           setIsActive(false)
           setBloomKey((k) => k + 1)
+          setActivePotionId(null) // Consume the potion
 
           setTimeout(() => {
             confetti({
@@ -58,7 +64,7 @@ export function useTimer() {
           setDialogState({
             isOpen: true,
             title: "Session complete",
-            description: `Great work! You stayed focused for ${minutes} minutes and earned ${coinsEarned} coins.`,
+            description: `Great work! You stayed focused for ${minutes} minutes and earned ${coinsEarned} coins.${multiplier > 1 ? ` (${multiplier}x multiplier applied!)` : ""}`,
             confirmText: "Continue",
             showCancel: false,
           })
@@ -70,7 +76,7 @@ export function useTimer() {
     }, 1000)
 
     return () => clearInterval(interval)
-  }, [isActive, mode, minutes, addCoins, addSession, activeTree])
+  }, [isActive, mode, minutes, addCoins, addSession, activeTree, activePotionId, setActivePotionId])
 
   // ── Handlers ─────────────────────────────────────────────────
   const handleStart = () => {

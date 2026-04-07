@@ -49,7 +49,7 @@ export default function RootLayout({
         <Providers>
           <SidebarProvider defaultOpen={false}>
             <AppSidebar />
-            <SidebarInset className="bg-muted/30 overflow-hidden">{children}</SidebarInset>
+            <SidebarInset className="bg-muted/30 overflow-hidden h-full">{children}</SidebarInset>
           </SidebarProvider>
         </Providers>
       </body>

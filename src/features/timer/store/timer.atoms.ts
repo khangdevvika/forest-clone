@@ -11,6 +11,11 @@ export const sessionsAtom = atomWithStorage<Session[]>("forest-sessions", [])
 export const activeSoundIdAtom = atomWithStorage<string | null>("forest-active-sound", null)
 export const volumeAtom = atomWithStorage<number>("forest-volume", 0.5)
 
+export const unlockedMusicAtom = atomWithStorage<string[]>("forest-music", ["rain", "forest", "cafe"])
+export const unlockedThemesAtom = atomWithStorage<string[]>("forest-unlocked-themes", ["sage", "forest", "emerald"])
+export const potionsInventoryAtom = atomWithStorage<Record<string, number>>("forest-potions", { "potion-x2": 0, "potion-x3": 0 })
+export const activePotionIdAtom = atomWithStorage<string | null>("forest-active-potion", null)
+
 // ── Derived: streak ─────────────────────────────────────────────
 export const streakAtom = atom((get) => {
   const sessions = get(sessionsAtom)

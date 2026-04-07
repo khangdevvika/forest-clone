@@ -101,7 +101,7 @@ export function CircularTimer({ mode, minutes, onChange, onDragStart, onDragEnd,
       ref={containerRef}
       onMouseDown={handleMouseDown}
       onTouchStart={handleTouchStart}
-      className={cn("relative w-64 h-64 md:w-80 md:h-80 transition-transform duration-700", mode === TimerMode.TIMER ? "cursor-pointer touch-none" : "")}
+      className={cn("relative size-64 transition-transform duration-700", mode === TimerMode.TIMER ? "cursor-pointer touch-none" : "")}
     >
       {/* Progress Ring */}
       {mode === TimerMode.TIMER && (

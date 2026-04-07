@@ -3,14 +3,15 @@
 import { cva, type VariantProps } from "class-variance-authority"
 import { Slot } from "radix-ui"
 
-import { useIsMobile } from "@/hooks/use-mobile"
-import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
+import { useIsMobile } from "@/hooks/use-mobile"
+import { cn } from "@/lib/utils"
+import { motion, type HTMLMotionProps } from "framer-motion"
 import { PanelLeftIcon } from "lucide-react"
 import React from "react"
 
@@ -145,7 +146,7 @@ function Sidebar({
   variant?: "sidebar" | "floating" | "inset"
   collapsible?: "offcanvas" | "icon" | "none"
 }) {
-  const { isMobile, state, openMobile, setOpenMobile } = useSidebar()
+  const { state, openMobile, setOpenMobile, isMobile } = useSidebar()
 
   if (collapsible === "none") {
     return (
@@ -181,6 +182,17 @@ function Sidebar({
     )
   }
 
+  // Filter out motion-conflicting props
+  const {
+    onAnimationStart: _onAnimationStart,
+    onAnimationEnd: _onAnimationEnd,
+    onAnimationIteration: _onAnimationIteration,
+    onDrag: _onDrag,
+    onDragEnd: _onDragEnd,
+    onDragStart: _onDragStart,
+    ...restProps
+  } = props
+
   return (
     <div
       className="group peer hidden text-sidebar-foreground md:block"
@@ -191,27 +203,39 @@ function Sidebar({
       data-slot="sidebar"
     >
       {/* This is what handles the sidebar gap on desktop */}
-      <div
+      <motion.div
         data-slot="sidebar-gap"
-        className={cn(
-          "relative w-(--sidebar-width) bg-transparent transition-[width] duration-300 ease-in-out",
-          "group-data-[collapsible=offcanvas]:w-0",
-          "group-data-[side=right]:rotate-180",
-          variant === "floating" || variant === "inset" ? "group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4)))]" : "group-data-[collapsible=icon]:w-(--sidebar-width-icon)",
-        )}
+        initial={false}
+        animate={{
+          width:
+            state === "collapsed" && collapsible === "offcanvas"
+              ? 0
+              : state === "collapsed" && collapsible === "icon"
+                ? variant === "floating" || variant === "inset"
+                  ? "4.5rem"
+                  : "3rem"
+                : SIDEBAR_WIDTH,
+        }}
+        transition={{ type: "spring", stiffness: 320, damping: 35, mass: 1 }}
+        className={cn("relative bg-transparent", "group-data-[side=right]:rotate-180")}
       />
-      <div
+      <motion.div
         data-slot="sidebar-container"
         data-side={side}
+        initial={false}
+        animate={{
+          x: state === "collapsed" && collapsible === "offcanvas" ? (side === "left" ? "-100%" : "100%") : 0,
+          opacity: state === "collapsed" && collapsible === "offcanvas" ? 0 : 1,
+          width: state === "collapsed" && collapsible === "icon" ? (variant === "floating" || variant === "inset" ? "4.5rem" : "3rem") : SIDEBAR_WIDTH,
+        }}
+        transition={{ type: "spring", stiffness: 320, damping: 35, mass: 1 }}
         className={cn(
-          "fixed inset-y-0 z-10 hidden h-svh w-(--sidebar-width) transition-[left,right,width] duration-300 ease-in-out data-[side=left]:left-0 data-[side=left]:group-data-[collapsible=offcanvas]:left-[calc(var(--sidebar-width)*-1)] data-[side=right]:right-0 data-[side=right]:group-data-[collapsible=offcanvas]:right-[calc(var(--sidebar-width)*-1)] md:flex",
-          // Adjust the padding for floating and inset variants.
-          variant === "floating" || variant === "inset"
-            ? "p-2 group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4))+2px)]"
-            : "group-data-[collapsible=icon]:w-(--sidebar-width-icon) group-data-[side=left]:border-r group-data-[side=right]:border-l",
+          "fixed inset-y-0 z-50 hidden h-svh md:flex overflow-hidden",
+          side === "left" ? "left-0" : "right-0",
+          variant === "floating" || variant === "inset" ? "p-2" : "group-data-[side=left]:border-r group-data-[side=right]:border-l",
           className,
         )}
-        {...props}
+        {...(restProps as HTMLMotionProps<"div">)}
       >
         <div
           data-sidebar="sidebar"
@@ -220,7 +244,7 @@ function Sidebar({
         >
           {children}
         </div>
-      </div>
+      </motion.div>
     </div>
   )
 }
@@ -259,7 +283,7 @@ function SidebarRail({ className, ...props }: React.ComponentProps<"button">) {
       onClick={toggleSidebar}
       title="Toggle Sidebar"
       className={cn(
-        "absolute inset-y-0 z-20 hidden w-4 transition-all duration-300 ease-in-out group-data-[side=left]:-right-4 group-data-[side=right]:left-0 after:absolute after:inset-y-0 after:start-1/2 after:w-[2px] hover:after:bg-sidebar-border sm:flex ltr:-translate-x-1/2 rtl:-translate-x-1/2",
+        "absolute inset-y-0 z-20 hidden w-4 transition-all duration-300 ease-in-out group-data-[side=left]:-right-4 group-data-[side=right]:left-0 after:absolute after:inset-y-0 after:inset-s-1/2 after:w-0.5 hover:after:bg-sidebar-border sm:flex ltr:-translate-x-1/2 rtl:-translate-x-1/2",
         "in-data-[side=left]:cursor-w-resize in-data-[side=right]:cursor-e-resize",
         "[[data-side=left][data-state=collapsed]_&]:cursor-e-resize [[data-side=right][data-state=collapsed]_&]:cursor-w-resize",
         "group-data-[collapsible=offcanvas]:translate-x-0 group-data-[collapsible=offcanvas]:after:left-full hover:group-data-[collapsible=offcanvas]:bg-sidebar",

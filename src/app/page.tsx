@@ -1,13 +1,11 @@
 "use client"
 
 import { useSyncExternalStore } from "react"
-import { useSidebar } from "@/components/ui/sidebar"
 import { useUser } from "@/hooks/use-user"
 import { TimerHeader, TimerDisplay, TimerActions, SessionDialog } from "@/features/timer/components"
 import { useTimer } from "@/features/timer"
 
 export default function Home() {
-  const { toggleSidebar } = useSidebar()
   const mounted = useSyncExternalStore(
     () => () => {},
     () => true,
@@ -19,8 +17,10 @@ export default function Home() {
   if (!mounted) return null
 
   return (
-    <div className="timer-bg relative h-full w-full flex flex-col items-center select-none overflow-hidden">
-      <TimerHeader isActive={timer.isActive} mode={timer.mode} onModeChange={timer.setMode} coins={coins} onMenuClick={toggleSidebar} />
+    <div className="timer-bg h-svh w-full flex flex-col items-center justify-between select-none overflow-hidden">
+      <div className="w-full shrink-0">
+        <TimerHeader isActive={timer.isActive} mode={timer.mode} onModeChange={timer.setMode} coins={coins} />
+      </div>
 
       <TimerDisplay
         isActive={timer.isActive}
@@ -33,7 +33,9 @@ export default function Home() {
         progressPercent={timer.progressPercent}
       />
 
-      <TimerActions isActive={timer.isActive} elapsedSeconds={timer.elapsedSeconds} onStart={timer.handleStart} onCancel={timer.handleCancel} onGiveUp={timer.handleGiveUp} />
+      <div className="w-full shrink-0">
+        <TimerActions isActive={timer.isActive} elapsedSeconds={timer.elapsedSeconds} onStart={timer.handleStart} onCancel={timer.handleCancel} onGiveUp={timer.handleGiveUp} />
+      </div>
 
       <SessionDialog state={timer.dialogState} onClose={timer.closeDialog} />
     </div>

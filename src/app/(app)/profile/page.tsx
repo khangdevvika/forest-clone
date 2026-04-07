@@ -8,7 +8,9 @@ import { useUser } from "@/hooks/use-user"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { STORE_TREES } from "@/features/timer/constants/trees"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import { PageHeader } from "@/components/page-header"
 import { format, parseISO } from "date-fns"
+import { motion } from "framer-motion"
 
 // ── Helper: compute longest ever streak from sessions ─────────
 function computeBestStreak(sessions: { completedAt: string }[]): number {
@@ -76,118 +78,142 @@ export default function ProfilePage() {
 
   return (
     <div className="relative h-full flex flex-col bg-background">
-      {/* ── Sticky header ──────────────────────────── */}
-      <header className="sticky top-0 z-40 bg-card/90 backdrop-blur-md border-b border-border">
-        <div className="max-w-2xl mx-auto px-5 h-14 flex items-center">
-          <h1 className="text-base font-semibold text-foreground">Profile</h1>
-        </div>
-      </header>
+      <PageHeader title="Profile" subtitle="Nature Sanctuary Member" />
 
       <ScrollArea className="flex-1">
-        <div className="max-w-2xl mx-auto px-5 py-6 pb-24 space-y-6">
-          {/* ── Profile card ──────────────────────── */}
-          <div className="rounded-2xl overflow-hidden shadow-sm" style={{ background: "linear-gradient(135deg, #1a6440 0%, #2d9e65 60%, #4db882 100%)" }}>
-            <div className="px-6 py-8 flex items-center gap-5">
-              <div>
-                <p className="text-white font-bold text-xl leading-none">Forester</p>
-                <p className="text-green-200 text-xs mt-1.5 font-medium">Nature Sanctuary Member</p>
-                <div className="flex items-center gap-1.5 mt-2.5">
-                  <div className="flex items-center gap-1 bg-white/15 rounded-md px-2 py-0.5">
-                    <Flame className="h-3 w-3 text-orange-300" />
-                    <span className="text-white text-xs font-semibold">{streak} day streak</span>
+        <div className="max-w-2xl mx-auto px-5 py-8 pb-32 space-y-8">
+          {/* ── Profile card with Glass Overlay ────────── */}
+          <motion.div 
+            initial={{ scale: 0.98, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            className="rounded-3xl overflow-hidden shadow-2xl shadow-primary/5" 
+            style={{ background: "linear-gradient(135deg, #1a6440 0%, #2d9e65 60%, #4db882 100%)" }}
+          >
+            <div className="px-7 py-10 flex items-center gap-6 relative overflow-hidden">
+               {/* Decorative Circle */}
+               <div className="absolute -top-10 -right-10 h-40 w-40 rounded-full bg-white/10 blur-3xl pointer-events-none" />
+               
+              <div className="relative z-10">
+                <p className="text-white font-black text-2xl tracking-tight leading-none">Forester</p>
+                <p className="text-green-50/80 text-xs mt-2 font-bold uppercase tracking-widest">Level 1 Practitioner</p>
+                
+                <div className="flex items-center gap-2 mt-5">
+                  <div className="flex items-center gap-1.5 bg-white/20 backdrop-blur-md rounded-xl px-3 py-1.5 border border-white/10">
+                    <Flame className="h-3.5 w-3.5 text-orange-300" strokeWidth={2.5} />
+                    <span className="text-white text-xs font-bold">{streak} day streak</span>
                   </div>
-                  <div className="flex items-center gap-1 bg-white/15 rounded-md px-2 py-0.5">
-                    <CoinsIcon className="h-3 w-3 text-yellow-300" />
-                    <span className="text-white text-xs font-semibold">{coins.toLocaleString()}</span>
+                  <div className="flex items-center gap-1.5 bg-white/20 backdrop-blur-md rounded-xl px-3 py-1.5 border border-white/10">
+                    <CoinsIcon className="h-3.5 w-3.5 text-yellow-300" strokeWidth={2.5} />
+                    <span className="text-white text-xs font-bold">{coins.toLocaleString()}</span>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* ── Stats grid ────────────────────────── */}
-          <section className="space-y-3">
-            <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider px-1">Stats</h2>
-            <div className="grid grid-cols-2 gap-3">
-              {stats.map((stat) => (
-                <div key={stat.label} className={`bg-card border ${stat.border} rounded-xl p-4 space-y-2`}>
-                  <div className={`w-8 h-8 rounded-lg ${stat.bg} flex items-center justify-center`}>
-                    <stat.icon className={`h-4 w-4 ${stat.color}`} />
+          <section className="space-y-4">
+            <h2 className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em] px-1">Statistics</h2>
+            <div className="grid grid-cols-2 gap-4">
+              {stats.map((stat, idx) => (
+                <motion.div 
+                  key={stat.label}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: idx * 0.1 }}
+                  whileHover={{ y: -4 }}
+                  className={`bg-card border ${stat.border} rounded-2xl p-5 space-y-4 shadow-sm hover:shadow-md transition-all`}
+                >
+                  <div className={`w-10 h-10 rounded-xl ${stat.bg} flex items-center justify-center`}>
+                    <stat.icon className={`h-5 w-5 ${stat.color}`} strokeWidth={2} />
                   </div>
                   <div>
-                    <p className="text-2xl font-bold text-foreground leading-none">{stat.value}</p>
-                    <p className="text-xs text-muted-foreground mt-1">{stat.label}</p>
+                    <p className="text-2xl font-black text-foreground leading-none">{stat.value}</p>
+                    <p className="text-[10px] text-muted-foreground mt-2 uppercase font-bold tracking-widest">{stat.label}</p>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
           </section>
 
           {/* ── My Collection ─────────────────────── */}
-          <section className="space-y-3">
+          <section className="space-y-4">
             <div className="flex items-center justify-between px-1">
-              <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">Collection</h2>
-              <Link href="/store" className="text-xs text-primary font-medium hover:text-primary/80">
-                Browse store →
+              <h2 className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em]">Species Records</h2>
+              <Link href="/store" className="text-xs text-primary font-bold hover:text-primary/80 transition-colors">
+                View catalog →
               </Link>
             </div>
             {ownedTrees.length === 0 ? (
-              <div className="bg-card border border-border rounded-xl p-6 text-center text-muted-foreground">
-                <p className="text-sm">No trees yet. Visit the store!</p>
+              <div className="bg-muted/50 border border-border border-dashed rounded-3xl p-10 text-center text-muted-foreground">
+                <Leaf className="h-10 w-10 mx-auto mb-4 opacity-10" />
+                <p className="text-xs font-medium">Your collection is empty.</p>
               </div>
             ) : (
-              <div className="grid grid-cols-4 gap-3">
-                {ownedTrees.map((tree) => (
-                  <div key={tree.id} className="flex flex-col items-center gap-1.5">
-                    <div className="w-16 h-16 rounded-xl bg-muted border border-border flex items-center justify-center overflow-hidden">
-                      <Image src={tree.image} alt={tree.name} width={48} height={48} className="w-12 h-12 object-contain" unoptimized={tree.image.startsWith("http")} />
+              <div className="grid grid-cols-4 gap-4">
+                {ownedTrees.map((tree, idx) => (
+                  <motion.div 
+                    key={tree.id} 
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: idx * 0.05 }}
+                    className="flex flex-col items-center gap-2"
+                  >
+                    <div className="w-full aspect-square rounded-2xl bg-muted border border-border flex items-center justify-center overflow-hidden hover:scale-105 transition-transform cursor-pointer shadow-sm">
+                      <Image src={tree.image} alt={tree.name} width={64} height={64} className="w-14 h-14 object-contain drop-shadow-md" unoptimized={tree.image.startsWith("http")} />
                     </div>
-                    <p className="text-[10px] text-muted-foreground font-medium text-center leading-tight line-clamp-2">{tree.name}</p>
-                  </div>
+                    <p className="text-[9px] text-muted-foreground font-bold text-center leading-tight line-clamp-2 px-1 uppercase tracking-tighter opacity-70">{tree.name}</p>
+                  </motion.div>
                 ))}
               </div>
             )}
           </section>
 
           {/* ── Recent Sessions ───────────────────── */}
-          <section className="space-y-3">
+          <section className="space-y-4">
             <div className="flex items-center justify-between px-1">
-              <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">Recent Sessions</h2>
+              <h2 className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em]">Focus History</h2>
               {sessions.length > 5 && (
-                <Link href="/garden" className="text-xs text-primary font-medium hover:text-primary/80 flex items-center gap-0.5">
-                  View all <ChevronRight className="h-3 w-3" />
+                <Link href="/garden" className="text-xs text-primary font-bold hover:text-primary/80 flex items-center gap-0.5 transition-colors">
+                  Full history <ChevronRight className="h-3.5 w-3.5" />
                 </Link>
               )}
             </div>
 
             {recentSessions.length === 0 ? (
-              <div className="bg-card border border-border rounded-xl p-6 text-center">
-                <Leaf className="h-8 w-8 text-muted-foreground/30 mx-auto mb-2" />
-                <p className="text-sm text-muted-foreground">No sessions yet.</p>
-                <Link href="/" className="text-xs text-primary font-medium hover:text-primary/80 mt-1 block">
-                  Start your first session →
+              <div className="bg-card border border-border border-dashed rounded-3xl p-12 text-center">
+                <Leaf className="h-12 w-12 text-muted-foreground/10 mx-auto mb-4" />
+                <p className="text-sm text-muted-foreground font-medium">Time for your first session.</p>
+                <Link href="/" className="text-xs text-primary font-bold hover:text-primary/80 mt-2 block uppercase tracking-widest">
+                  Begin focus →
                 </Link>
               </div>
             ) : (
-              <div className="space-y-2">
-                {recentSessions.map((session) => {
+              <div className="space-y-3">
+                {recentSessions.map((session, idx) => {
                   const tree = STORE_TREES.find((t) => t.id === session.treeId)
                   return (
-                    <div key={session.id} className="flex items-center gap-3 bg-card border border-border rounded-xl px-4 py-3">
-                      <div className="shrink-0 w-9 h-9 rounded-lg bg-muted border border-border flex items-center justify-center overflow-hidden">
-                        {tree && <Image src={tree.image} alt={tree.name} width={28} height={28} className="w-7 h-7 object-contain" unoptimized={tree.image.startsWith("http")} />}
+                    <motion.div 
+                      key={session.id} 
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: idx * 0.1 }}
+                      className="flex items-center gap-4 bg-card border border-border rounded-2xl px-5 py-4 hover:shadow-md transition-all group cursor-default"
+                    >
+                      <div className="shrink-0 w-11 h-11 rounded-xl bg-muted border border-border flex items-center justify-center overflow-hidden group-hover:scale-105 transition-transform">
+                        {tree && <Image src={tree.image} alt={tree.name} width={34} height={34} className="w-9 h-9 object-contain drop-shadow-sm" unoptimized={tree.image.startsWith("http")} />}
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-foreground truncate">{session.treeName}</p>
-                        <p className="text-xs text-muted-foreground">
-                          {session.durationMinutes} min · {format(parseISO(session.completedAt), "MMM d, HH:mm")}
+                        <p className="text-sm font-bold text-foreground truncate">{session.treeName}</p>
+                        <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider mt-1 opacity-70">
+                          {session.durationMinutes}m · {format(parseISO(session.completedAt), "MMM d, HH:mm")}
                         </p>
                       </div>
-                      <div className="flex items-center gap-1 shrink-0">
-                        <CoinsIcon className="h-3 w-3 text-yellow-500" />
-                        <span className="text-xs font-semibold text-secondary-foreground">{session.coinsEarned}</span>
+                      <div className="flex items-center gap-1.5 shrink-0 bg-muted/50 px-2 py-1 rounded-lg">
+                        <CoinsIcon className="h-3 w-3 text-yellow-500" strokeWidth={2.5} />
+                        <span className="text-xs font-black text-secondary-foreground tabular-nums">{session.coinsEarned}</span>
                       </div>
-                    </div>
+                    </motion.div>
                   )
                 })}
               </div>
@@ -195,16 +221,16 @@ export default function ProfilePage() {
           </section>
 
           {/* ── Settings ───────────────────────────── */}
-          <section className="space-y-3">
-            <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider px-1">Settings</h2>
-            <div className="bg-card border border-border rounded-xl px-4 py-3 flex items-center justify-between shadow-sm">
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center">
-                  <Settings className="h-4 w-4 text-muted-foreground" strokeWidth={1.5} />
+          <section className="space-y-4">
+            <h2 className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em] px-1">Preferences</h2>
+            <div className="bg-card border border-border rounded-2xl px-5 py-4 flex items-center justify-between shadow-sm group hover:border-primary/20 transition-all">
+              <div className="flex items-center gap-4">
+                <div className="w-11 h-11 rounded-xl bg-muted flex items-center justify-center group-hover:bg-primary/5 transition-colors">
+                  <Settings className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" strokeWidth={2} />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-foreground">Appearance</p>
-                  <p className="text-[10px] text-muted-foreground">Choose your favorite color palette</p>
+                  <p className="text-sm font-bold text-foreground">Mood & Visuals</p>
+                  <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-widest mt-0.5 opacity-60">System Theme Palette</p>
                 </div>
               </div>
               <ThemeToggle variant="outline" />

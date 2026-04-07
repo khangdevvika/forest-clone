@@ -1,21 +1,21 @@
 "use client"
 
-import { Coins, Menu, Clock, Leaf } from "lucide-react"
+import { Coins, Clock, Leaf } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { TimerMode } from "@/features/timer/enum/timer"
 import { ModeToggle } from "@/features/timer/components/mode-toggle"
 import { motion, AnimatePresence } from "framer-motion"
 import { fadeUp, spring } from "@/lib/animations"
+import { SidebarTrigger } from "@/components/ui/sidebar"
 
 interface TimerHeaderProps {
   isActive: boolean
   mode: TimerMode
   onModeChange: (mode: TimerMode) => void
   coins: number
-  onMenuClick: () => void
 }
 
-export function TimerHeader({ isActive, mode, onModeChange, coins, onMenuClick }: TimerHeaderProps) {
+export function TimerHeader({ isActive, mode, onModeChange, coins }: TimerHeaderProps) {
   const glassStyle = {
     background: "var(--timer-glass)",
     border: "1px solid var(--timer-glass-border)",
@@ -26,23 +26,17 @@ export function TimerHeader({ isActive, mode, onModeChange, coins, onMenuClick }
       variants={fadeUp}
       initial="hidden"
       animate="show"
-      className="w-full flex items-center justify-between px-5 pt-6 pb-2 z-50"
+      className="w-full grid grid-cols-3 items-center px-5 pt-6 pb-2 z-50 overflow-visible"
     >
       {/* Left: Menu + Brand */}
-      <div className="flex items-center gap-3">
-        <button
-          id="sidebar-toggle"
-          onClick={onMenuClick}
+      <div className="flex items-center gap-3 justify-start">
+        <SidebarTrigger 
           disabled={isActive}
-          style={glassStyle}
           className={cn(
-            "flex h-10 w-10 items-center justify-center rounded-xl transition-all duration-200. backdrop-blur-sm text-[--timer-text]",
-            "hover:bg-white/40 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed",
+            "flex h-10 w-10 items-center justify-center rounded-xl transition-all duration-300 backdrop-blur-md text-[--timer-text] bg-[--timer-glass] border border-[--timer-glass-border]",
+            "hover:bg-white/30 active:scale-90 disabled:opacity-30 disabled:cursor-not-allowed shadow-sm",
           )}
-          aria-label="Open menu"
-        >
-          <Menu className="h-5 w-5" strokeWidth={1.25} />
-        </button>
+        />
 
         <div 
           style={glassStyle}
@@ -53,7 +47,7 @@ export function TimerHeader({ isActive, mode, onModeChange, coins, onMenuClick }
       </div>
 
       {/* Center: Mode toggle or session badge */}
-      <div className="absolute left-1/2 -translate-x-1/2">
+      <div className="flex justify-center w-full">
         <AnimatePresence mode="wait">
           {!isActive ? (
             <motion.div
@@ -73,7 +67,7 @@ export function TimerHeader({ isActive, mode, onModeChange, coins, onMenuClick }
               exit={{ opacity: 0, scale: 0.95, y: -4 }}
               transition={spring}
               style={glassStyle}
-              className="flex items-center gap-2 backdrop-blur-sm rounded-xl px-4 py-2 text-[--timer-text] text-[13px] font-medium font-sans tracking-wide"
+              className="flex items-center gap-2 backdrop-blur-sm rounded-xl px-4 py-2 text-[--timer-text] text-[13px] font-medium font-sans tracking-wide whitespace-nowrap"
             >
               {mode === TimerMode.TIMER ? (
                 <Clock className="h-4 w-4" strokeWidth={1.25} />
@@ -87,17 +81,19 @@ export function TimerHeader({ isActive, mode, onModeChange, coins, onMenuClick }
       </div>
 
       {/* Right: Coin counter */}
-      <div
-        id="coin-counter"
-        style={glassStyle}
-        className="flex items-center gap-2 backdrop-blur-sm rounded-xl px-4 py-2 cursor-pointer hover:bg-white/40 transition-all duration-200 active:scale-95 group"
-      >
-        <div className="h-4.5 w-4.5 rounded-md bg-[--warm-500] flex items-center justify-center shadow-sm group-hover:rotate-12 transition-transform">
-          <Coins className="h-2.5 w-2.5 text-amber-900" strokeWidth={1.5} />
+      <div className="flex justify-end">
+        <div
+          id="coin-counter"
+          style={glassStyle}
+          className="flex items-center gap-2 backdrop-blur-sm rounded-xl px-4 py-2 cursor-pointer hover:bg-white/40 transition-all duration-200 active:scale-95 group"
+        >
+          <div className="h-4.5 w-4.5 rounded-md bg-[--warm-500] flex items-center justify-center shadow-sm group-hover:rotate-12 transition-transform">
+            <Coins className="h-2.5 w-2.5 text-amber-900" strokeWidth={1.5} />
+          </div>
+          <span className="text-[--timer-text] text-sm font-semibold tabular-nums font-sans">
+            {coins.toLocaleString()}
+          </span>
         </div>
-        <span className="text-[--timer-text] text-sm font-semibold tabular-nums font-sans">
-          {coins.toLocaleString()}
-        </span>
       </div>
     </motion.header>
   )
