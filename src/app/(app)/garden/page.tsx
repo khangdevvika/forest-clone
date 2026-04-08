@@ -1,92 +1,108 @@
 "use client"
 
-import { format, startOfDay } from "date-fns"
-import { Leaf, Flame, Clock, Coins } from "lucide-react"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { PageHeader } from "@/components/page-header"
 import { DayGroup } from "@/features/garden/components/day-group"
 import { GardenEmpty } from "@/features/garden/components/garden-empty"
+import { GardenTabs } from "@/features/garden/components/garden-tabs"
+import { GardenGrid } from "@/features/garden/components/garden-grid"
+import { SpeciesLegend } from "@/features/garden/components/species-legend"
 import { useGardenStats } from "@/features/garden/hooks/use-garden-stats"
-import { motion } from "framer-motion"
+import { useGardenView } from "@/features/garden/hooks/use-garden-view"
+import { motion, AnimatePresence } from "framer-motion"
+import { Flame, Clock, Coins, Info } from "lucide-react"
+
+const spring = { type: "spring", stiffness: 280, damping: 22 } as const
+const staggerContainer = {
+  hidden: {},
+  show: {
+    transition: { staggerChildren: 0.08, delayChildren: 0.05 },
+  },
+}
+const fadeUp = {
+  hidden: { opacity: 0, y: 14 },
+  show: { opacity: 1, y: 0, transition: { ...spring } },
+}
 
 export default function GardenPage() {
   const { sessions, streak, groupedDays, totalMinutes, totalHours, remainingMins, totalCoins, hasSession } = useGardenStats()
+  const { viewMode, timeRange } = useGardenView()
 
   return (
-    <div className="relative h-full flex flex-col bg-background">
-      {/* ── Updated Header with SidebarTrigger ────────────────── */}
-      <PageHeader 
-        title="My Garden" 
-        subtitle={`${sessions.length} ${sessions.length === 1 ? "tree" : "trees"} planted`}
-      >
-        <div className="flex items-center gap-2">
-          <motion.div 
-            whileHover={{ y: -2 }}
-            className="flex items-center gap-1.5 bg-orange-50 border border-orange-100 rounded-xl px-3 py-1.5 shadow-sm"
-          >
-            <Flame className="h-3.5 w-3.5 text-orange-500" strokeWidth={2.5} />
-            <span className="text-xs font-bold text-orange-700 tabular-nums">{streak}</span>
-          </motion.div>
-          <motion.div 
-            whileHover={{ y: -2 }}
-            className="flex items-center gap-1.5 bg-muted border border-border rounded-xl px-3 py-1.5 shadow-sm"
-          >
-            <Clock className="h-3.5 w-3.5 text-primary" strokeWidth={2} />
-            <span className="text-xs font-bold text-secondary-foreground tabular-nums">
-              {totalHours > 0 ? `${totalHours}h ${remainingMins}m` : `${totalMinutes}m`}
-            </span>
-          </motion.div>
+    <div className="relative h-full flex flex-col bg-background zen-bg overflow-hidden">
+      <PageHeader title="My Forest" subtitle={`${sessions.length} trees grown`}>
+        <div className="flex gap-2">
+          <div className="flex items-center gap-1.5 bg-card/50 border border-border/50 rounded-xl px-2.5 py-1.5 shadow-sm">
+            <Flame className="h-3.5 w-3.5 text-orange-500" strokeWidth={1.5} />
+            <span className="text-xs font-bold tabular-nums">{streak}</span>
+          </div>
+          <div className="flex items-center gap-1.5 bg-card/50 border border-border/50 rounded-xl px-2.5 py-1.5 shadow-sm">
+            <Coins className="h-3.5 w-3.5 text-yellow-500" strokeWidth={1.5} />
+            <span className="text-xs font-bold tabular-nums">{totalCoins}</span>
+          </div>
         </div>
       </PageHeader>
 
-      {/* ── Today banner ─────────────────────────── */}
-      {hasSession && groupedDays[0]?.[0] === format(startOfDay(new Date()), "yyyy-MM-dd") && (
-        <div className="max-w-2xl mx-auto w-full px-5 pt-6">
-          <div className="flex items-center gap-3 bg-primary rounded-2xl px-5 py-4 shadow-lg shadow-primary/10">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/20">
-              <Leaf className="h-5 w-5 text-primary-foreground" />
-            </div>
-            <div>
-              <p className="text-primary-foreground text-sm font-bold">You&apos;ve focused {groupedDays[0][1].reduce((sum, s) => sum + s.durationMinutes, 0)} minutes today 🌱</p>
-              <p className="text-primary-foreground/75 text-[10px] uppercase font-bold tracking-wider mt-0.5">
-                {groupedDays[0][1].length} {groupedDays[0][1].length === 1 ? "session" : "sessions"} completed
-              </p>
-            </div>
-          </div>
+      {/* Scrollable Content */}
+      <ScrollArea className="flex-1">
+        <div className="max-w-xl mx-auto pb-32">
+          {/* Main Section */}
+          <motion.div initial="hidden" animate="show" variants={staggerContainer} className="px-5 pt-4 space-y-6">
+            {/* Navigation Tabs */}
+            <motion.div variants={fadeUp}>
+              <GardenTabs />
+            </motion.div>
+
+            {/* Main Visual/Content */}
+            <AnimatePresence mode="wait">
+              {!hasSession ? (
+                <motion.div key="empty" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                  <GardenEmpty />
+                </motion.div>
+              ) : (
+                <motion.div key={`${viewMode}-${timeRange}`} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={spring} className="space-y-10">
+                  {/* Summary Box */}
+                  <div className="bg-card/30 border border-border/50 rounded-3xl p-6 backdrop-blur-sm">
+                    <div className="flex items-center justify-between mb-6">
+                      <div className="space-y-1">
+                        <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Focus Duration</p>
+                        <p className="text-4xl font-[family-name:var(--font-outfit)] font-light text-primary">{totalHours > 0 ? `${totalHours}h ${remainingMins}m` : `${totalMinutes}m`}</p>
+                      </div>
+                      <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
+                        <Clock className="h-5 w-5 text-primary" strokeWidth={1.25} />
+                      </div>
+                    </div>
+
+                    {/* View Switcher Content */}
+                    {viewMode === "Grid" ? (
+                      <GardenGrid />
+                    ) : (
+                      <div className="space-y-8 mt-4">
+                        {groupedDays.map(([dateKey, daySessions]) => (
+                          <DayGroup key={dateKey} dateKey={dateKey} sessions={daySessions} />
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Species Insights */}
+                  <div className="px-1">
+                    <SpeciesLegend />
+                  </div>
+
+                  {/* Success Rate Info (Conceptual) */}
+                  <div className="bg-muted/30 border border-border/40 rounded-2xl p-4 flex gap-3 items-start">
+                    <Info className="h-4 w-4 text-muted-foreground mt-0.5" strokeWidth={1.25} />
+                    <p className="text-xs text-muted-foreground leading-relaxed">
+                      Your forest grows healthier as you stick to your focus goals. Success rate is calculated based on completed versus abandoned sessions.
+                    </p>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.div>
         </div>
-      )}
-
-      {/* ── Content ────────────────────────────────── */}
-      {!hasSession ? (
-        <GardenEmpty />
-      ) : (
-        <ScrollArea className="flex-1">
-          <div className="max-w-2xl mx-auto px-5 py-8 pb-32 space-y-10">
-            {groupedDays.map(([dateKey, daySessions]) => (
-              <DayGroup key={dateKey} dateKey={dateKey} sessions={daySessions} />
-            ))}
-
-            {/* Bottom stats summary */}
-            <div className="border-t border-border pt-10 mt-10 grid grid-cols-3 gap-3">
-              <div className="text-center group">
-                <p className="text-2xl font-black text-foreground group-hover:scale-110 transition-transform">{sessions.length}</p>
-                <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-bold mt-1.5">Planted</p>
-              </div>
-              <div className="text-center border-x border-border group">
-                <p className="text-2xl font-black text-foreground group-hover:scale-110 transition-transform">{totalHours > 0 ? `${totalHours}h` : `${totalMinutes}m`}</p>
-                <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-bold mt-1.5">Focus</p>
-              </div>
-              <div className="text-center group">
-                <p className="text-2xl font-black text-foreground group-hover:scale-110 transition-transform">{totalCoins.toLocaleString()}</p>
-                <div className="flex items-center justify-center gap-1 mt-1.5">
-                  <Coins className="h-3 w-3 text-yellow-500" strokeWidth={2.5} />
-                  <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-bold">Earned</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </ScrollArea>
-      )}
+      </ScrollArea>
     </div>
   )
 }

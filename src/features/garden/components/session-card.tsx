@@ -3,6 +3,7 @@
 import Image from "next/image"
 import { Coins } from "lucide-react"
 import { format, parseISO } from "date-fns"
+import { Card } from "@/components/ui/card"
 import type { Session } from "@/features/timer/types/session"
 
 interface SessionCardProps {
@@ -13,7 +14,7 @@ export function SessionCard({ session }: SessionCardProps) {
   const time = format(parseISO(session.completedAt), "HH:mm")
 
   return (
-    <div className="flex items-center gap-4 bg-card border border-border rounded-xl px-4 py-3 hover:border-primary/30 hover:shadow-sm transition-all duration-150">
+    <Card variant="interactive" padding="md" className="flex items-center gap-4">
       {/* Tree thumbnail */}
       <div className="shrink-0 w-12 h-12 rounded-lg bg-muted border border-border flex items-center justify-center overflow-hidden">
         <Image
@@ -41,6 +42,6 @@ export function SessionCard({ session }: SessionCardProps) {
 
       {/* Time */}
       <span className="shrink-0 text-xs text-muted-foreground tabular-nums">{time}</span>
-    </div>
+    </Card>
   )
 }

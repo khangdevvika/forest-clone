@@ -7,6 +7,9 @@ import { Slider } from "@/components/ui/slider"
 import { MUSIC_ITEMS } from "../constants/items"
 import { useUser } from "@/hooks/use-user"
 
+import { Card } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+
 export function SoundTab() {
   const { activeSoundId, setActiveSoundId, volume, setVolume, unlockedMusic, buyItem } = useUser()
 
@@ -18,36 +21,34 @@ export function SoundTab() {
           <p className="text-sm text-muted-foreground">Perfect background for deep work</p>
         </div>
 
-        <div className="flex items-center gap-3 bg-card border border-border rounded-xl p-3 shadow-sm min-w-[200px]">
+        <Card variant="default" padding="sm" className="flex items-center gap-3 min-w-[200px]">
           <Volume2 className="h-4 w-4 text-muted-foreground" />
           <Slider value={[volume * 100]} onValueChange={(v: number[]) => setVolume(v[0] / 100)} max={100} step={1} className="flex-1" />
           <span className="text-[10px] font-bold text-muted-foreground tabular-nums w-6">{Math.round(volume * 100)}%</span>
-        </div>
+        </Card>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {MUSIC_ITEMS.map((sound) => {
           const isUnlocked = unlockedMusic.includes(sound.id)
           const isActive = activeSoundId === sound.id
-          
+
           return (
-            <div
+            <Card
               key={sound.id}
+              variant={isActive ? "active" : isUnlocked ? "interactive" : "default"}
+              padding="md"
               onClick={() => {
                 if (isUnlocked) {
                   setActiveSoundId(isActive ? null : sound.id)
                 }
               }}
-              className={cn(
-                "group relative flex items-center gap-4 p-4 rounded-xl border bg-card transition-all duration-200",
-                isUnlocked ? "cursor-pointer" : "cursor-default opacity-80",
-                isActive ? "border-primary bg-accent/50 ring-2 ring-primary/10 shadow-sm" : "border-border hover:border-border/70",
-              )}
+              className={cn("flex items-center gap-4 transition-all duration-200", !isUnlocked && "opacity-80")}
             >
               <div
                 className={cn(
-                  "h-12 w-12 rounded-lg flex items-center justify-center text-2xl transition-all duration-300", 
-                  isActive ? "bg-accent scale-105" : "bg-muted group-hover:bg-muted/80"
+                  "h-12 w-12 rounded-lg flex items-center justify-center text-2xl transition-all duration-300",
+                  isActive ? "bg-accent scale-105" : "bg-muted group-hover:bg-muted/80",
                 )}
               >
                 {sound.emoji}
@@ -75,18 +76,19 @@ export function SoundTab() {
                   {isActive ? <Pause className="h-4 w-4 fill-current" /> : <Play className="h-4 w-4 ml-0.5 fill-current" />}
                 </div>
               ) : (
-                <button
+                <Button
                   onClick={(e) => {
                     e.stopPropagation()
                     buyItem(sound)
                   }}
-                  className="h-8 px-3 rounded-lg bg-[#d4af82] text-yellow-950 flex items-center gap-1.5 text-[10px] font-bold uppercase transition-all hover:brightness-110 active:scale-95"
+                  variant="3d-gold"
+                  className="h-8 px-3 rounded-lg text-[10px]"
                 >
                   <Coins className="h-3 w-3" />
                   {sound.price}
-                </button>
+                </Button>
               )}
-            </div>
+            </Card>
           )
         })}
       </div>

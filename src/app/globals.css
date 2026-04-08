@@ -72,6 +72,7 @@
   --sidebar-foreground: #e6ede4;
   --sidebar-accent: rgba(255, 255, 255, 0.1);
   --sidebar-border: rgba(255, 255, 255, 0.08);
+  --primary-dark: var(--sage-700);
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -113,6 +114,7 @@
   --sidebar-foreground: #e8ede6;
   --sidebar-accent: rgba(255, 255, 255, 0.08);
   --sidebar-border: rgba(255, 255, 255, 0.06);
+  --primary-dark: var(--sage-600);
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -151,6 +153,7 @@
   --sidebar-foreground: #f8efe4;
   --sidebar-accent: rgba(212, 140, 69, 0.15);
   --sidebar-border: rgba(212, 140, 69, 0.1);
+  --primary-dark: #a3652d;
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -189,6 +192,7 @@
   --sidebar-foreground: #e2e8f0;
   --sidebar-accent: rgba(56, 189, 248, 0.15);
   --sidebar-border: rgba(56, 189, 248, 0.1);
+  --primary-dark: #0284c7;
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -227,6 +231,7 @@
   --sidebar-foreground: #fdf8f9;
   --sidebar-accent: rgba(212, 165, 178, 0.15);
   --sidebar-border: rgba(212, 165, 178, 0.1);
+  --primary-dark: #9c6c7b;
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -265,12 +270,14 @@
   --sidebar-foreground: #e1f3ec;
   --sidebar-accent: rgba(16, 185, 129, 0.15);
   --sidebar-border: rgba(16, 185, 129, 0.1);
+  --primary-dark: #059669;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-primary: var(--primary);
+  --color-primary-dark: var(--primary-dark);
   --color-primary-foreground: var(--primary-foreground);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);

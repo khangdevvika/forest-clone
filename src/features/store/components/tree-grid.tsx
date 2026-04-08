@@ -14,6 +14,8 @@ interface TreeGridProps {
   onSelect: (tree: Tree) => void
 }
 
+import { Card } from "@/components/ui/card"
+
 export function TreeGrid({ activeTab, onSelect }: TreeGridProps) {
   const { unlockedTrees, selectedTreeId } = useUser()
 
@@ -50,12 +52,9 @@ export function TreeGrid({ activeTab, onSelect }: TreeGridProps) {
                 onClick={() => onSelect(tree)}
                 id={`tree-card-${tree.id}`}
               >
-                <div
-                  className={cn(
-                    "group relative overflow-hidden rounded-xl border bg-card cursor-pointer",
-                    "transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md",
-                    isSelected ? "border-primary ring-2 ring-primary/20" : "border-border hover:border-border/70",
-                  )}
+                <Card
+                  variant={isSelected ? "active" : "interactive"}
+                  className="group overflow-hidden relative"
                 >
                   <div className={cn("aspect-square relative flex items-center justify-center overflow-hidden", "bg-muted")}>
                     <Image
@@ -95,7 +94,7 @@ export function TreeGrid({ activeTab, onSelect }: TreeGridProps) {
                       )}
                     </div>
                   </div>
-                </div>
+                </Card>
               </motion.div>
             )
           })}
