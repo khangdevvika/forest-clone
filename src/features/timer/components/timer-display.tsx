@@ -8,7 +8,9 @@ import { fadeUp, scaleIn, staggerContainer, spring } from "@/lib/animations"
 import type { Tree } from "@/features/timer/types"
 import { useUser } from "@/hooks/use-user"
 import { POTION_ITEMS } from "@/features/store/constants/items"
-import { Zap } from "lucide-react"
+import { Zap, ListTodo } from "lucide-react"
+import { useAtomValue } from "jotai"
+import { tasksAtom, activeTaskIdAtom } from "@/features/tasks/store/tasks.atoms"
 
 interface TimerDisplayProps {
   isActive: boolean
@@ -24,12 +26,22 @@ interface TimerDisplayProps {
 export function TimerDisplay({ isActive, mode, displayMinutes, setMinutes, bloomKey, activeTree, formattedTime, progressPercent }: TimerDisplayProps) {
   const { activePotionId } = useUser()
   const activePotion = POTION_ITEMS.find((p) => p.id === activePotionId)
+  
+  const tasks = useAtomValue(tasksAtom)
+  const activeTaskId = useAtomValue(activeTaskIdAtom)
+  const activeTask = tasks.find((t) => t.id === activeTaskId)
 
   return (
     <motion.main variants={staggerContainer} initial="hidden" animate="show" className="flex-1 w-full flex flex-col items-center justify-around py-6 px-6 min-h-0">
       {/* Status label */}
-      <motion.p variants={fadeUp} className="text-[--timer-muted] text-xs md:text-sm font-(family-name:--font-inter) font-medium tracking-wide text-center">
-        {isActive ? (mode === TimerMode.TIMER ? "Stay focused — your tree is growing" : "Time is running…") : "Set your focus time and plant"}
+      <motion.p variants={fadeUp} className="text-[--timer-muted] text-[10px] md:text-xs font-bold tracking-[0.2em] text-center uppercase flex items-center gap-2">
+        {activeTask && (
+          <ListTodo className="w-3.5 h-3.5 opacity-50" />
+        )}
+        {isActive 
+          ? (activeTask ? `FOCUSING: ${activeTask.title}` : "Stay focused — growing tree") 
+          : (activeTask ? `READY: ${activeTask.title}` : "Select a task or plant")
+        }
       </motion.p>
 
       {/* Tree & circular slider */}

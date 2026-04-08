@@ -1,6 +1,6 @@
 "use client"
 
-import { Home, Leaf, User, Coins, Flame, ShoppingBag, TreeDeciduous } from "lucide-react"
+import { Home, Leaf, User, Coins, Flame, ShoppingBag, TreeDeciduous, ListTodo } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useUser } from "@/hooks/use-user"
 import Link from "next/link"
@@ -17,6 +17,7 @@ const gentleSpring = { type: "spring" as const, stiffness: 180, damping: 28 }
 const navMain = [
   { title: "Home", url: "/", icon: Home },
   { title: "Garden", url: "/garden", icon: Leaf },
+  { title: "Tasks", url: "/tasks", icon: ListTodo },
   { title: "Store", url: "/store", icon: ShoppingBag },
   { title: "Profile", url: "/profile", icon: User },
 ]
@@ -177,23 +178,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 </div>
               </div>
             )}
-
-            <Link href="/" className="block w-full group/btn">
-              <motion.button
-                onMouseMove={handleMouseMove}
-                whileHover={{ scale: 1.01 }}
-                whileTap={{ scale: 0.99 }}
-                className={cn(
-                  "w-full rounded-xl font-bold bg-primary text-primary-foreground transition-all relative overflow-hidden flex items-center justify-center gap-3",
-                  isExpanded ? "h-11 text-xs" : "h-10 w-10 p-0 rounded-lg",
-                )}
-                style={{ fontFamily: "var(--font-inter)" }}
-              >
-                <Leaf className="h-4 w-4 shrink-0 transition-transform duration-500 group-hover:rotate-12" strokeWidth={1.25} />
-                {isExpanded && <span className="tracking-[0.15em] uppercase">Start Session</span>}
-                <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-              </motion.button>
-            </Link>
           </div>
         </SidebarFooter>
       </motion.div>
