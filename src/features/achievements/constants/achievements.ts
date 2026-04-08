@@ -1,8 +1,4 @@
-import { 
-  Heart, Leaf, Star, Sun, Trophy, Zap, Moon, Flame, Gift, 
-  Crown, Shield, Coffee, MousePointer2, Gem, Ghost, 
-  Sprout, Trees, Medal, Timer, CheckCircle2, type LucideIcon 
-} from "lucide-react"
+import { Heart, Leaf, Star, Sun, Trophy, Zap, Moon, Flame, Gift, Crown, Shield, Coffee, MousePointer2, Gem, Ghost, Sprout, Trees, Medal, Timer, CheckCircle2, type LucideIcon } from "lucide-react"
 
 export type AchievementCategory = "efficiency" | "consistency" | "collection" | "special"
 
@@ -58,7 +54,7 @@ export const ACHIEVEMENTS: Achievement[] = [
     category: "efficiency",
     requirement: (stats) => stats.totalSessions >= 50,
   },
-  
+
   // CONSISTENCY
   {
     id: "rooted",
