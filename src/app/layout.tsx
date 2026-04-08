@@ -4,6 +4,7 @@ import "./globals.css"
 import { Providers } from "./providers"
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/app-sidebar"
+import { GlobalHeader } from "@/components/global-header"
 
 /**
  * Outfit — display/timer font
@@ -49,7 +50,12 @@ export default function RootLayout({
         <Providers>
           <SidebarProvider defaultOpen={false}>
             <AppSidebar />
-            <SidebarInset className="bg-muted/30 overflow-hidden h-full">{children}</SidebarInset>
+            <SidebarInset className="overflow-hidden h-full flex flex-col">
+              <GlobalHeader />
+              <main className="flex-1 overflow-auto relative">
+                {children}
+              </main>
+            </SidebarInset>
           </SidebarProvider>
         </Providers>
       </body>

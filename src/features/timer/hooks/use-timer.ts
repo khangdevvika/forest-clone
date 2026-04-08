@@ -1,10 +1,12 @@
-import { useState, useEffect } from "react"
-import confetti from "canvas-confetti"
-import { TimerMode } from "@/features/timer/enum/timer"
-import { TIME_DEFAULT, CANCEL_THRESHOLD, STORE_TREES } from "@/features/timer/constants"
-import { useUser } from "@/hooks/use-user"
 import { POTION_ITEMS } from "@/features/store/constants/items"
+import { CANCEL_THRESHOLD, STORE_TREES } from "@/features/timer/constants"
+import { TimerMode } from "@/features/timer/enum/timer"
+import { isTimerActiveAtom, timerElapsedSecondsAtom, timerMinutesAtom, timerModeAtom } from "@/features/timer/store/timer.atoms"
 import type { TimerDialogState, Tree } from "@/features/timer/types"
+import { useUser } from "@/hooks/use-user"
+import confetti from "canvas-confetti"
+import { useAtom } from "jotai"
+import { useEffect, useState } from "react"
 
 const INITIAL_DIALOG: TimerDialogState = { isOpen: false, title: "", description: "" }
 
@@ -13,10 +15,11 @@ export function useTimer() {
 
   const activeTree: Tree = STORE_TREES.find((t) => t.id === selectedTreeId) ?? STORE_TREES[0]
 
-  const [mode, setMode] = useState<TimerMode>(TimerMode.TIMER)
-  const [minutes, setMinutes] = useState(TIME_DEFAULT)
-  const [isActive, setIsActive] = useState(false)
-  const [elapsedSeconds, setElapsedSeconds] = useState(0)
+  const [mode, setMode] = useAtom(timerModeAtom)
+  const [minutes, setMinutes] = useAtom(timerMinutesAtom)
+  const [isActive, setIsActive] = useAtom(isTimerActiveAtom)
+  const [elapsedSeconds, setElapsedSeconds] = useAtom(timerElapsedSecondsAtom)
+
   const [bloomKey, setBloomKey] = useState(0)
   const [dialogState, setDialogState] = useState<TimerDialogState>(INITIAL_DIALOG)
 
@@ -76,7 +79,7 @@ export function useTimer() {
     }, 1000)
 
     return () => clearInterval(interval)
-  }, [isActive, mode, minutes, addCoins, addSession, activeTree, activePotionId, setActivePotionId])
+  }, [isActive, mode, minutes, addCoins, addSession, activeTree, activePotionId, setActivePotionId, setIsActive, setElapsedSeconds])
 
   // ── Handlers ─────────────────────────────────────────────────
   const handleStart = () => {

@@ -1,7 +1,7 @@
 "use client"
 
 import { LayoutGrid, List } from "lucide-react"
-import { useGardenView, TimeRange, ViewMode } from "../hooks/use-garden-view"
+import { useGardenView, TimeRange, ViewMode } from "@/features/garden/hooks/use-garden-view"
 import { cn } from "@/lib/utils"
 import { AnimatedTabs } from "@/components/ui/animated-tabs"
 

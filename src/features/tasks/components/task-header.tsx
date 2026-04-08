@@ -1,39 +1,30 @@
 "use client"
 
-import { useAtomValue } from "jotai"
+import { dailyGoalAtom, tasksAtom } from "@/features/tasks/store/tasks.atoms"
 import { motion } from "framer-motion"
-import { tasksAtom, dailyGoalAtom } from "../store/tasks.atoms"
-import { Target, Sparkles } from "lucide-react"
+import { useAtomValue } from "jotai"
+import { Sparkles, Target } from "lucide-react"
 
 export function TaskHeader() {
   const tasks = useAtomValue(tasksAtom)
   const dailyGoal = useAtomValue(dailyGoalAtom)
 
-  const completedToday = tasks.filter(t => t.isCompleted).length
+  const completedToday = tasks.filter((t) => t.isCompleted).length
   const progress = Math.min((completedToday / dailyGoal) * 100, 100)
 
   return (
     <div className="mb-12">
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div>
-          <motion.h1 
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="text-4xl md:text-5xl font-display font-bold text-foreground mb-2"
-          >
+          <motion.h1 initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="text-4xl md:text-5xl font-display font-bold text-foreground mb-2">
             Tasks for Today
           </motion.h1>
-          <motion.p 
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-muted-foreground font-light text-lg"
-          >
+          <motion.p initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 }} className="text-muted-foreground font-light text-lg">
             Stay focused, grow your garden step by step.
           </motion.p>
         </div>
 
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.2 }}
@@ -42,15 +33,7 @@ export function TaskHeader() {
           <div className="flex flex-col items-center gap-1 min-w-[80px]">
             <div className="relative w-12 h-12 flex items-center justify-center">
               <svg className="w-full h-full transform -rotate-90">
-                <circle
-                  cx="24"
-                  cy="24"
-                  r="20"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="3"
-                  className="text-muted/20"
-                />
+                <circle cx="24" cy="24" r="20" fill="none" stroke="currentColor" strokeWidth="3" className="text-muted/20" />
                 <motion.circle
                   cx="24"
                   cy="24"

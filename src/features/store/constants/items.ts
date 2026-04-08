@@ -1,4 +1,4 @@
-import type { StoreItem } from "../types/store"
+import type { StoreItem } from "@/features/store/types/store"
 import { STORE_TREES } from "@/features/timer/constants/trees"
 import { AMBIENT_SOUNDS } from "@/features/timer/constants/sounds"
 

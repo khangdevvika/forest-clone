@@ -11,10 +11,10 @@ import {
   unlockedThemesAtom,
   potionsInventoryAtom,
   activePotionIdAtom,
-} from "../features/timer/store/timer.atoms"
-import type { Tree } from "../features/timer/types/tree"
-import type { Session } from "../features/timer/types/session"
-import type { StoreItem } from "../features/store/types/store"
+} from "@/features/timer/store/timer.atoms"
+import type { Tree } from "@/features/timer/types/tree"
+import type { Session } from "@/features/timer/types/session"
+import type { StoreItem } from "@/features/store/types/store"
 
 // ── Hook ───────────────────────────────────────────────────────
 export const useUser = () => {

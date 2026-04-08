@@ -1,14 +1,14 @@
 "use client"
 
-import { useState } from "react"
-import { useSetAtom } from "jotai"
-import { Plus } from "lucide-react"
-import { motion, AnimatePresence } from "framer-motion"
-import { tasksAtom } from "../store/tasks.atoms"
-import { Task } from "../types/task"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { tasksAtom } from "@/features/tasks/store/tasks.atoms"
+import { Task } from "@/features/tasks/types/task"
 import { cn } from "@/lib/utils"
+import { AnimatePresence, motion } from "framer-motion"
+import { useSetAtom } from "jotai"
+import { Plus } from "lucide-react"
+import { useState } from "react"
 
 export function AddTaskInput() {
   const [title, setTitle] = useState("")
@@ -36,15 +36,11 @@ export function AddTaskInput() {
       <motion.div
         animate={{
           scale: isFocused ? 1.01 : 1,
-          boxShadow: isFocused 
-            ? "0 10px 25px -5px rgba(0, 0, 0, 0.05)" 
-            : "0 4px 6px -1px rgba(0, 0, 0, 0.02)"
+          boxShadow: isFocused ? "0 10px 25px -5px rgba(0, 0, 0, 0.05)" : "0 4px 6px -1px rgba(0, 0, 0, 0.02)",
         }}
         className={cn(
           "flex items-center gap-2 p-2 rounded-2xl border transition-all duration-300",
-          isFocused 
-            ? "border-primary/40 bg-card/80 backdrop-blur-md" 
-            : "border-border/40 bg-card/40 backdrop-blur-sm"
+          isFocused ? "border-primary/40 bg-card/80 backdrop-blur-md" : "border-border/40 bg-card/40 backdrop-blur-sm",
         )}
       >
         <div className="flex-1 flex items-center px-2">
@@ -58,7 +54,7 @@ export function AddTaskInput() {
             onKeyDown={(e) => e.key === "Enter" && handleAddTask()}
           />
         </div>
-        
+
         <AnimatePresence>
           {(isFocused || title) && (
             <motion.div
@@ -67,12 +63,7 @@ export function AddTaskInput() {
               exit={{ opacity: 0, x: 10, scale: 0.9 }}
               transition={{ type: "spring", damping: 20, stiffness: 300 }}
             >
-              <Button 
-                onClick={handleAddTask}
-                disabled={!title.trim()}
-                size="sm"
-                className="rounded-xl h-10 px-4 bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm"
-              >
+              <Button onClick={handleAddTask} disabled={!title.trim()} size="sm" className="rounded-xl h-10 px-4 bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm">
                 <Plus className="w-4 h-4 mr-1.5" />
                 Add
               </Button>

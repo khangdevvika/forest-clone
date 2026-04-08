@@ -1,8 +1,8 @@
 "use client"
 
+import { useGardenStats } from "@/features/garden/hooks/use-garden-stats"
 import { motion } from "framer-motion"
 import Image from "next/image"
-import { useGardenStats } from "../hooks/use-garden-stats"
 
 const gentleSpring = { type: "spring", stiffness: 180, damping: 28 } as const
 
@@ -10,7 +10,7 @@ const GRID_SIZE = 25 // 5x5
 
 export function GardenGrid() {
   const { sessions } = useGardenStats()
-  
+
   // Fill the grid with sessions or placeholders
   const tiles = Array.from({ length: GRID_SIZE }).map((_, i) => sessions[i] || null)
 

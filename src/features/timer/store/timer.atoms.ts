@@ -1,7 +1,8 @@
+import { TimerMode } from "@/features/timer/enum/timer"
+import type { Session } from "@/features/timer/types/session"
+import { differenceInCalendarDays, parseISO, startOfDay } from "date-fns"
 import { atom } from "jotai"
 import { atomWithStorage } from "jotai/utils"
-import { differenceInCalendarDays, parseISO, startOfDay } from "date-fns"
-import type { Session } from "@/features/timer/types/session"
 
 // ── Persistent atoms ────────────────────────────────────────────
 export const coinsAtom = atomWithStorage<number>("forest-coins", 3119)
@@ -15,6 +16,12 @@ export const unlockedMusicAtom = atomWithStorage<string[]>("forest-music", ["rai
 export const unlockedThemesAtom = atomWithStorage<string[]>("forest-unlocked-themes", ["sage", "forest", "emerald"])
 export const potionsInventoryAtom = atomWithStorage<Record<string, number>>("forest-potions", { "potion-x2": 0, "potion-x3": 0 })
 export const activePotionIdAtom = atomWithStorage<string | null>("forest-active-potion", null)
+
+// ── Timer state atoms (Global) ──────────────────────────────────
+export const timerModeAtom = atom<TimerMode>(TimerMode.TIMER)
+export const timerMinutesAtom = atom<number>(30)
+export const isTimerActiveAtom = atom<boolean>(false)
+export const timerElapsedSecondsAtom = atom<number>(0)
 
 // ── Derived: streak ─────────────────────────────────────────────
 export const streakAtom = atom((get) => {

@@ -1,16 +1,16 @@
 "use client"
 
+import { THEME_ITEMS } from "@/features/store/constants/items"
+import { THEMES, useTheme } from "@/hooks/use-theme"
 import { useUser } from "@/hooks/use-user"
-import { THEME_ITEMS } from "../constants/items"
-import { useTheme, THEMES } from "@/hooks/use-theme"
-import { motion, AnimatePresence } from "framer-motion"
-import { Coins, Check, Lock, MousePointer2 } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { AnimatePresence, motion } from "framer-motion"
+import { Check, Coins, Lock, MousePointer2 } from "lucide-react"
 
 import { type Theme } from "@/store/ui.atoms"
 
-import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import { Card } from "@/components/ui/card"
 
 export function ThemeTab() {
   const { unlockedThemes, buyItem } = useUser()
@@ -45,10 +45,7 @@ export function ThemeTab() {
                       <h3 className="font-bold text-lg text-foreground leading-none">{item.name}</h3>
                       <p className="text-xs text-muted-foreground pr-4">{item.description}</p>
                     </div>
-                    <div
-                      className="h-10 w-10 shrink-0 rounded-xl shadow-inner border-2 border-white/10 transition-transform group-hover:rotate-12"
-                      style={{ backgroundColor: themeConfig?.color }}
-                    />
+                    <div className="h-10 w-10 shrink-0 rounded-xl shadow-inner border-2 border-white/10 transition-transform group-hover:rotate-12" style={{ backgroundColor: themeConfig?.color }} />
                   </div>
 
                   <div className="mt-auto pt-4 flex flex-col gap-3">

@@ -13,9 +13,8 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { PageHeader } from "@/components/page-header"
 import { format, parseISO } from "date-fns"
 
-import { ACHIEVEMENTS } from "@/features/profile/constants/achievements"
 import { LevelProgress } from "@/features/profile/components/level-progress"
-import { AchievementBadge } from "@/features/profile/components/achievement-badge"
+import { useAchievements } from "@/features/achievements/hooks/use-achievements"
 import { cn } from "@/lib/utils"
 
 // ── Patterns ──────────────────────────────────────────
@@ -51,12 +50,7 @@ export default function ProfilePage() {
   const level = Math.floor(totalMinutes / XP_PER_LEVEL) + 1
   const currentXP = totalMinutes % XP_PER_LEVEL
 
-  const achievementStats = {
-    totalMinutes,
-    totalSessions: sessions.length,
-    bestStreak: streak,
-    ownedTrees: unlockedTrees.length,
-  }
+  const { unlockedIds, achievements } = useAchievements()
 
   const coreStats: CoreStat[] = [
     { label: "Hours Focused", value: `${totalHours}h ${remainingMins}m`, icon: Clock, color: "text-blue-500" },
@@ -139,25 +133,24 @@ export default function ProfilePage() {
                   <Award className="h-4 w-4 text-primary" strokeWidth={1.25} />
                   <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Milestones</h3>
                 </div>
-                <span className="text-[10px] font-black text-primary uppercase tracking-widest">
-                  {ACHIEVEMENTS.filter((a) => a.requirement(achievementStats)).length} / {ACHIEVEMENTS.length}
-                </span>
+                <Link href="/achievements" className="text-[10px] font-black text-primary uppercase tracking-widest hover:opacity-70 transition-opacity flex items-center gap-1">
+                  View All <ChevronRight className="h-3 w-3" />
+                </Link>
               </div>
 
-              <div className="bg-card/20 border border-border/40 rounded-3xl p-8 backdrop-blur-sm">
-                <div className="grid grid-cols-3 sm:grid-cols-6 gap-8">
-                  {ACHIEVEMENTS.map((achievement, idx) => (
-                    <AchievementBadge
-                      key={achievement.id}
-                      icon={achievement.icon}
-                      title={achievement.title}
-                      description={achievement.description}
-                      unlocked={achievement.requirement(achievementStats)}
-                      delay={0.1 + idx * 0.05}
-                    />
-                  ))}
+              <Link href="/achievements" className="block group">
+                <div className="bg-card/20 border border-border/40 hover:border-primary/30 rounded-3xl p-8 backdrop-blur-sm transition-all duration-300 flex items-center justify-between">
+                  <div className="space-y-1">
+                    <p className="text-lg font-[family-name:var(--font-outfit)] font-light text-foreground">Achievement Collection</p>
+                    <p className="text-xs text-muted-foreground flex items-center gap-2">
+                      <span className="text-primary font-bold">{unlockedIds.length} / {achievements.length}</span> medals collected in your sanctuary
+                    </p>
+                  </div>
+                  <div className="h-12 w-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary group-hover:scale-110 transition-transform duration-500">
+                    <Award className="h-6 w-6" strokeWidth={1.25} />
+                  </div>
                 </div>
-              </div>
+              </Link>
             </section>
 
             {/* ── Species Records ─────────────────────── */}

@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils"
 import { Volume2, Play, Pause, Coins } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Slider } from "@/components/ui/slider"
-import { MUSIC_ITEMS } from "../constants/items"
+import { MUSIC_ITEMS } from "@/features/store/constants/items"
 import { useUser } from "@/hooks/use-user"
 
 import { Card } from "@/components/ui/card"

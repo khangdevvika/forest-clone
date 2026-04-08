@@ -1,7 +1,7 @@
 "use client"
 
 import { useUser } from "@/hooks/use-user"
-import { POTION_ITEMS } from "../constants/items"
+import { POTION_ITEMS } from "@/features/store/constants/items"
 import { motion } from "framer-motion"
 import { Coins, Zap, Clock, Sparkles } from "lucide-react"
 import { cn } from "@/lib/utils"

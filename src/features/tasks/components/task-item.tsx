@@ -1,13 +1,13 @@
 "use client"
 
-import { useAtom, useSetAtom } from "jotai"
-import { Check, Trash2, Trophy } from "lucide-react"
-import { motion } from "framer-motion"
-import { tasksAtom, activeTaskIdAtom } from "../store/tasks.atoms"
-import { Task, TaskCategory } from "../types/task"
 import { Badge } from "@/components/ui/badge"
-import { cn } from "@/lib/utils"
+import { activeTaskIdAtom, tasksAtom } from "@/features/tasks/store/tasks.atoms"
+import { Task, TaskCategory } from "@/features/tasks/types/task"
 import { useUser } from "@/hooks/use-user"
+import { cn } from "@/lib/utils"
+import { motion } from "framer-motion"
+import { useAtom } from "jotai"
+import { Check, Trash2, Trophy } from "lucide-react"
 
 interface TaskItemProps {
   task: Task
@@ -41,7 +41,7 @@ export function TaskItem({ task }: TaskItemProps) {
           }
         }
         return t
-      })
+      }),
     )
   }
 
@@ -68,11 +68,7 @@ export function TaskItem({ task }: TaskItemProps) {
       onClick={selectTask}
       className={cn(
         "group flex items-center gap-4 p-4 rounded-2xl border transition-all duration-300 cursor-pointer",
-        task.isCompleted 
-          ? "bg-muted/30 border-border/20" 
-          : isActive
-            ? "bg-primary/5 border-primary/30 shadow-sm"
-            : "bg-card/40 border-border/40 hover:border-primary/20 hover:bg-card/60"
+        task.isCompleted ? "bg-muted/30 border-border/20" : isActive ? "bg-primary/5 border-primary/30 shadow-sm" : "bg-card/40 border-border/40 hover:border-primary/20 hover:bg-card/60",
       )}
     >
       {/* Custom Checkbox */}
@@ -84,35 +80,23 @@ export function TaskItem({ task }: TaskItemProps) {
         }}
         className={cn(
           "w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all duration-300",
-          task.isCompleted
-            ? "bg-primary border-primary text-primary-foreground"
-            : "border-muted-foreground/30 hover:border-primary/50"
+          task.isCompleted ? "bg-primary border-primary text-primary-foreground" : "border-muted-foreground/30 hover:border-primary/50",
         )}
       >
         {task.isCompleted && <Check className="w-4 h-4" />}
       </motion.button>
 
       <div className="flex-1 min-w-0">
-        <h3 className={cn(
-          "font-medium transition-all duration-300 truncate",
-          task.isCompleted ? "text-muted-foreground line-through decoration-muted-foreground/50" : "text-foreground"
-        )}>
+        <h3 className={cn("font-medium transition-all duration-300 truncate", task.isCompleted ? "text-muted-foreground line-through decoration-muted-foreground/50" : "text-foreground")}>
           {task.title}
         </h3>
         <div className="flex items-center gap-2 mt-1">
-          <Badge 
-            variant="outline" 
-            className={cn(
-              "text-[10px] capitalize font-medium py-0 h-5 px-1.5 border-transparent",
-              categoryStyles[task.category]
-            )}
-          >
+          <Badge variant="outline" className={cn("text-[10px] capitalize font-medium py-0 h-5 px-1.5 border-transparent", categoryStyles[task.category])}>
             {task.category}
           </Badge>
           {task.isCompleted && (
             <span className="flex items-center gap-1 text-[10px] text-warm-600 font-bold">
-              <Trophy className="w-3 h-3" />
-              +{task.coinsReward}
+              <Trophy className="w-3 h-3" />+{task.coinsReward}
             </span>
           )}
         </div>

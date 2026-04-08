@@ -1,5 +1,5 @@
+import { Task } from "@/features/tasks/types/task"
 import { atomWithStorage } from "jotai/utils"
-import { Task } from "../types/task"
 
 export const tasksAtom = atomWithStorage<Task[]>("forest-tasks", [])
 export const activeTaskIdAtom = atomWithStorage<string | null>("forest-active-task", null)

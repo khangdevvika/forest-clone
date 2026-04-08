@@ -1,14 +1,14 @@
 "use client"
 
-import { Home, Leaf, User, Coins, Flame, ShoppingBag, TreeDeciduous, ListTodo } from "lucide-react"
-import { cn } from "@/lib/utils"
+import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "@/components/ui/sidebar"
+import { useTheme } from "@/hooks/use-theme"
 import { useUser } from "@/hooks/use-user"
+import { cn } from "@/lib/utils"
+import { AnimatePresence, motion, useMotionValue } from "framer-motion"
+import { Coins, Flame, Home, Leaf, ListTodo, ShoppingBag, TreeDeciduous, Trophy, User } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { motion, AnimatePresence, useMotionValue, useSpring } from "framer-motion"
-import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarGroup, SidebarGroupContent, useSidebar } from "@/components/ui/sidebar"
 import React from "react"
-import { useTheme } from "@/hooks/use-theme"
 
 // Consistent Animation Tokens
 const spring = { type: "spring" as const, stiffness: 280, damping: 22 }
@@ -18,6 +18,7 @@ const navMain = [
   { title: "Home", url: "/", icon: Home },
   { title: "Garden", url: "/garden", icon: Leaf },
   { title: "Tasks", url: "/tasks", icon: ListTodo },
+  { title: "Achievements", url: "/achievements", icon: Trophy },
   { title: "Store", url: "/store", icon: ShoppingBag },
   { title: "Profile", url: "/profile", icon: User },
 ]
