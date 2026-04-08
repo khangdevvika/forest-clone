@@ -31,6 +31,11 @@
 
   /* ── Shared Fixed Constants ────────────────────────────── */
   --radius: 0.8rem;
+
+  /* ── Warm accent (coins, highlights) ─────────────────── */
+  --warm-400: #d4af82;
+  --warm-500: #c8a882;
+  --warm-600: #b8926a;
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -289,6 +294,39 @@
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
   --color-ring: var(--ring);
+
+  /* Sage Scale */
+  --color-sage-50: var(--sage-50);
+  --color-sage-100: var(--sage-100);
+  --color-sage-200: var(--sage-200);
+  --color-sage-300: var(--sage-300);
+  --color-sage-400: var(--sage-400);
+  --color-sage-500: var(--sage-500);
+  --color-sage-600: var(--sage-600);
+  --color-sage-700: var(--sage-700);
+  --color-sage-800: var(--sage-800);
+  --color-sage-900: var(--sage-900);
+
+  /* Cream Scale */
+  --color-cream-50: var(--cream-50);
+  --color-cream-100: var(--cream-100);
+  --color-cream-200: var(--cream-200);
+  --color-cream-300: var(--cream-300);
+  --color-cream-400: var(--cream-400);
+  --color-cream-500: var(--cream-500);
+  --color-cream-600: var(--cream-600);
+  --color-cream-700: var(--cream-700);
+  --color-cream-800: var(--cream-800);
+  --color-cream-900: var(--cream-900);
+
+  /* Font Families */
+  --font-display: var(--font-outfit);
+  --font-sans: var(--font-inter);
+
+  /* Warm Scale */
+  --color-warm-400: var(--warm-400);
+  --color-warm-500: var(--warm-500);
+  --color-warm-600: var(--warm-600);
 
   /* Radius */
   --radius-xl: var(--radius);

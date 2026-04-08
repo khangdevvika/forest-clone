@@ -16,11 +16,13 @@ const buttonVariants = cva(
           "bg-destructive/10 text-destructive hover:bg-destructive/20 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40",
         link: "text-primary underline-offset-4 hover:underline",
         "3d": "bg-primary text-primary-foreground shadow-[0_6px_0_var(--color-primary-dark),0_12px_24px_rgba(0,0,0,0.2)] hover:brightness-110 active:shadow-[0_2px_0_var(--color-primary-dark)] active:translate-y-1 transition-all",
-        "3d-danger": "bg-red-500/80 text-white border-red-400/20 shadow-[0_4px_0_rgb(153,27,27),0_10px_20px_rgba(0,0,0,0.15)] hover:bg-red-500/90 active:shadow-[0_1px_0_rgb(153,27,27)] active:translate-y-0.5 transition-all",
+        "3d-danger":
+          "bg-red-500/80 text-white border-red-400/20 shadow-[0_4px_0_rgb(153,27,27),0_10px_20px_rgba(0,0,0,0.15)] hover:bg-red-500/90 active:shadow-[0_1px_0_rgb(153,27,27)] active:translate-y-0.5 transition-all",
         glass: "bg-white/35 border border-white/50 backdrop-blur-sm text-foreground hover:bg-white/50 transition-colors",
         "3d-store": "bg-primary text-primary-foreground border-b-4 border-primary-foreground/20 active:border-b-0 transition-all font-bold uppercase tracking-widest text-xs",
         "3d-secondary": "bg-secondary text-secondary-foreground border-b-4 border-secondary-foreground/10 active:border-b-0 transition-all font-bold uppercase tracking-widest text-xs",
-        "3d-gold": "bg-[#d4af82] text-yellow-950 shadow-[0_4px_0_rgba(100,80,0,0.2)] hover:brightness-110 active:shadow-none translate-y-[-2px] active:translate-y-0 transition-all font-bold uppercase tracking-widest text-xs",
+        "3d-gold":
+          "bg-[#d4af82] text-yellow-950 shadow-[0_4px_0_rgba(100,80,0,0.2)] hover:brightness-110 active:shadow-none translate-y-[-2px] active:translate-y-0 transition-all font-bold uppercase tracking-widest text-xs",
       },
       size: {
         default: "h-8 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2",

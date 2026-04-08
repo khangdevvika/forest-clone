@@ -3,30 +3,41 @@
 import { useMemo } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { Clock, TreePine, Flame, Coins as CoinsIcon, ChevronRight, Leaf, Settings } from "lucide-react"
+import { motion } from "framer-motion"
+import { Clock, TreePine, Flame, Coins as CoinsIcon, ChevronRight, Leaf, Settings, Award, Sparkles, ExternalLink, Target, type LucideIcon } from "lucide-react"
+
 import { useUser } from "@/hooks/use-user"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { STORE_TREES } from "@/features/timer/constants/trees"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { PageHeader } from "@/components/page-header"
 import { format, parseISO } from "date-fns"
-import { motion } from "framer-motion"
 
-// ── Helper: compute longest ever streak from sessions ─────────
-function computeBestStreak(sessions: { completedAt: string }[]): number {
-  if (sessions.length === 0) return 0
-  const days = [...new Set(sessions.map((s) => format(parseISO(s.completedAt), "yyyy-MM-dd")))].sort()
+import { ACHIEVEMENTS } from "@/features/profile/constants/achievements"
+import { LevelProgress } from "@/features/profile/components/level-progress"
+import { AchievementBadge } from "@/features/profile/components/achievement-badge"
+import { cn } from "@/lib/utils"
 
-  let best = 1
-  let current = 1
-  for (let i = 1; i < days.length; i++) {
-    const prev = new Date(days[i - 1])
-    const curr = new Date(days[i])
-    const diff = (curr.getTime() - prev.getTime()) / (1000 * 60 * 60 * 24)
-    current = diff === 1 ? current + 1 : 1
-    if (current > best) best = current
-  }
-  return best
+// ── Patterns ──────────────────────────────────────────
+const spring = { type: "spring", stiffness: 280, damping: 22 } as const
+const staggerContainer = {
+  hidden: {},
+  show: {
+    transition: { staggerChildren: 0.08, delayChildren: 0.1 },
+  },
+} as const
+const fadeUp = {
+  hidden: { opacity: 0, y: 14 },
+  show: { opacity: 1, y: 0, transition: { ...spring } },
+} as const
+
+const XP_PER_LEVEL = 200
+
+interface CoreStat {
+  label: string
+  value: string | number
+  icon: LucideIcon
+  color: string
 }
 
 export default function ProfilePage() {
@@ -36,206 +47,190 @@ export default function ProfilePage() {
   const totalHours = Math.floor(totalMinutes / 60)
   const remainingMins = totalMinutes % 60
   const totalCoinsEarned = useMemo(() => sessions.reduce((sum, s) => sum + s.coinsEarned, 0), [sessions])
-  const bestStreak = useMemo(() => computeBestStreak(sessions), [sessions])
 
-  const recentSessions = sessions.slice(0, 5)
-  const ownedTrees = STORE_TREES.filter((t) => unlockedTrees.includes(t.id))
+  const level = Math.floor(totalMinutes / XP_PER_LEVEL) + 1
+  const currentXP = totalMinutes % XP_PER_LEVEL
 
-  const stats = [
-    {
-      icon: Clock,
-      label: "Focus Time",
-      value: totalHours > 0 ? `${totalHours}h ${remainingMins}m` : `${totalMinutes}m`,
-      color: "text-blue-600",
-      bg: "bg-blue-50",
-      border: "border-blue-100",
-    },
-    {
-      icon: TreePine,
-      label: "Trees Planted",
-      value: sessions.length.toString(),
-      color: "text-primary",
-      bg: "bg-muted",
-      border: "border-border",
-    },
-    {
-      icon: Flame,
-      label: "Best Streak",
-      value: `${bestStreak}d`,
-      color: "text-orange-500",
-      bg: "bg-orange-50",
-      border: "border-orange-100",
-    },
-    {
-      icon: CoinsIcon,
-      label: "Coins Earned",
-      value: totalCoinsEarned.toLocaleString(),
-      color: "text-yellow-600",
-      bg: "bg-yellow-50",
-      border: "border-yellow-100",
-    },
+  const achievementStats = {
+    totalMinutes,
+    totalSessions: sessions.length,
+    bestStreak: streak,
+    ownedTrees: unlockedTrees.length,
+  }
+
+  const coreStats: CoreStat[] = [
+    { label: "Hours Focused", value: `${totalHours}h ${remainingMins}m`, icon: Clock, color: "text-blue-500" },
+    { label: "Trees Grown", value: sessions.length, icon: TreePine, color: "text-primary" },
+    { label: "Current Streak", value: `${streak}d`, icon: Flame, color: "text-orange-500" },
+    { label: "Total Wealth", value: totalCoinsEarned.toLocaleString(), icon: CoinsIcon, color: "text-yellow-600" },
   ]
 
   return (
-    <div className="relative h-full flex flex-col bg-background">
-      <PageHeader title="Profile" subtitle="Nature Sanctuary Member" />
+    <div className="relative h-full flex flex-col bg-background timer-bg overflow-hidden antialiased">
+      <PageHeader title="Nature Sanctuary" subtitle={`Member since ${sessions.length > 0 ? format(parseISO(sessions[sessions.length - 1].completedAt), "MMM yyyy") : "today"}`}>
+        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="flex items-center gap-2 bg-muted border border-border rounded-xl px-4 py-2 shadow-sm">
+          <div className="h-5 w-5 bg-[#d4af82] rounded-lg flex items-center justify-center shadow-inner">
+            <CoinsIcon className="h-3 w-3 text-yellow-950" strokeWidth={2.5} />
+          </div>
+          <span className="text-foreground text-sm font-bold tabular-nums">{coins.toLocaleString()}</span>
+        </motion.div>
+      </PageHeader>
 
       <ScrollArea className="flex-1">
-        <div className="max-w-2xl mx-auto px-5 py-8 pb-32 space-y-8">
-          {/* ── Profile card with Glass Overlay ────────── */}
-          <motion.div 
-            initial={{ scale: 0.98, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            className="rounded-3xl overflow-hidden shadow-2xl shadow-primary/5" 
-            style={{ background: "linear-gradient(135deg, #1a6440 0%, #2d9e65 60%, #4db882 100%)" }}
-          >
-            <div className="px-7 py-10 flex items-center gap-6 relative overflow-hidden">
-               {/* Decorative Circle */}
-               <div className="absolute -top-10 -right-10 h-40 w-40 rounded-full bg-white/10 blur-3xl pointer-events-none" />
-               
-              <div className="relative z-10">
-                <p className="text-white font-black text-2xl tracking-tight leading-none">Forester</p>
-                <p className="text-green-50/80 text-xs mt-2 font-bold uppercase tracking-widest">Level 1 Practitioner</p>
-                
-                <div className="flex items-center gap-2 mt-5">
-                  <div className="flex items-center gap-1.5 bg-white/20 backdrop-blur-md rounded-xl px-3 py-1.5 border border-white/10">
-                    <Flame className="h-3.5 w-3.5 text-orange-300" strokeWidth={2.5} />
-                    <span className="text-white text-xs font-bold">{streak} day streak</span>
+        <div className="max-w-2xl mx-auto px-6 py-8 pb-32">
+          <motion.main variants={staggerContainer} initial="hidden" animate="show" className="space-y-12">
+            {/* ── Practitioner Card ──────────────────── */}
+            <motion.section variants={fadeUp} className="bg-card/30 border border-border/50 rounded-3xl p-8 backdrop-blur-sm shadow-sm">
+              <div className="flex flex-col md:flex-row gap-8 items-start md:items-center">
+                <div className="relative group">
+                  <div className="h-24 w-24 rounded-3xl bg-primary/10 flex items-center justify-center border border-primary/20 rotate-3 group-hover:rotate-0 transition-transform duration-500">
+                    <Leaf className="h-10 w-10 text-primary" strokeWidth={1.25} />
                   </div>
-                  <div className="flex items-center gap-1.5 bg-white/20 backdrop-blur-md rounded-xl px-3 py-1.5 border border-white/10">
-                    <CoinsIcon className="h-3.5 w-3.5 text-yellow-300" strokeWidth={2.5} />
-                    <span className="text-white text-xs font-bold">{coins.toLocaleString()}</span>
+                  <div className="absolute -bottom-2 -right-2 h-8 w-8 rounded-xl bg-background border border-border flex items-center justify-center shadow-sm">
+                    <p className="text-xs font-black text-primary">{level}</p>
+                  </div>
+                </div>
+
+                <div className="flex-1 space-y-4 w-full">
+                  <div className="space-y-1">
+                    <p className="text-[10px] font-black text-primary uppercase tracking-[0.2em] opacity-80">Forest Guardian</p>
+                    <h2 className="text-3xl font-[family-name:var(--font-outfit)] font-light text-foreground -ml-0.5">Focus Master</h2>
+                  </div>
+
+                  <div className="space-y-3">
+                    <LevelProgress level={level} xp={currentXP} maxXp={XP_PER_LEVEL} />
+                    <div className="flex items-center justify-between text-[10px] font-bold text-muted-foreground uppercase tracking-widest px-1">
+                      <span>Level {level} Journey</span>
+                      <span>
+                        {XP_PER_LEVEL - currentXP} mins to level {level + 1}
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </motion.div>
+            </motion.section>
 
-          {/* ── Stats grid ────────────────────────── */}
-          <section className="space-y-4">
-            <h2 className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em] px-1">Statistics</h2>
-            <div className="grid grid-cols-2 gap-4">
-              {stats.map((stat, idx) => (
-                <motion.div 
-                  key={stat.label}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: idx * 0.1 }}
-                  whileHover={{ y: -4 }}
-                  className={`bg-card border ${stat.border} rounded-2xl p-5 space-y-4 shadow-sm hover:shadow-md transition-all`}
-                >
-                  <div className={`w-10 h-10 rounded-xl ${stat.bg} flex items-center justify-center`}>
-                    <stat.icon className={`h-5 w-5 ${stat.color}`} strokeWidth={2} />
-                  </div>
-                  <div>
-                    <p className="text-2xl font-black text-foreground leading-none">{stat.value}</p>
-                    <p className="text-[10px] text-muted-foreground mt-2 uppercase font-bold tracking-widest">{stat.label}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </section>
-
-          {/* ── My Collection ─────────────────────── */}
-          <section className="space-y-4">
-            <div className="flex items-center justify-between px-1">
-              <h2 className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em]">Species Records</h2>
-              <Link href="/store" className="text-xs text-primary font-bold hover:text-primary/80 transition-colors">
-                View catalog →
-              </Link>
-            </div>
-            {ownedTrees.length === 0 ? (
-              <div className="bg-muted/50 border border-border border-dashed rounded-3xl p-10 text-center text-muted-foreground">
-                <Leaf className="h-10 w-10 mx-auto mb-4 opacity-10" />
-                <p className="text-xs font-medium">Your collection is empty.</p>
+            {/* ── Key Statistics ──────────────────────── */}
+            <section className="space-y-6">
+              <div className="flex items-center gap-2 px-1">
+                <Target className="h-4 w-4 text-primary" strokeWidth={1.25} />
+                <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Sanctuary Stats</h3>
               </div>
-            ) : (
-              <div className="grid grid-cols-4 gap-4">
-                {ownedTrees.map((tree, idx) => (
-                  <motion.div 
-                    key={tree.id} 
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: idx * 0.05 }}
-                    className="flex flex-col items-center gap-2"
-                  >
-                    <div className="w-full aspect-square rounded-2xl bg-muted border border-border flex items-center justify-center overflow-hidden hover:scale-105 transition-transform cursor-pointer shadow-sm">
-                      <Image src={tree.image} alt={tree.name} width={64} height={64} className="w-14 h-14 object-contain drop-shadow-md" unoptimized={tree.image.startsWith("http")} />
+
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                {coreStats.map((stat) => (
+                  <motion.div key={stat.label} variants={fadeUp} className="bg-card/40 border border-border/50 rounded-2xl p-5 space-y-3">
+                    <div className={cn("h-8 w-8 rounded-xl bg-secondary/30 flex items-center justify-center", stat.color)}>
+                      <stat.icon className="h-4 w-4" strokeWidth={1.25} />
                     </div>
-                    <p className="text-[9px] text-muted-foreground font-bold text-center leading-tight line-clamp-2 px-1 uppercase tracking-tighter opacity-70">{tree.name}</p>
+                    <div>
+                      <p className="text-xl font-[family-name:var(--font-outfit)] font-medium text-foreground">{stat.value}</p>
+                      <p className="text-[9px] text-muted-foreground font-black uppercase tracking-widest mt-1 opacity-60">{stat.label}</p>
+                    </div>
                   </motion.div>
                 ))}
               </div>
-            )}
-          </section>
+            </section>
 
-          {/* ── Recent Sessions ───────────────────── */}
-          <section className="space-y-4">
-            <div className="flex items-center justify-between px-1">
-              <h2 className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em]">Focus History</h2>
-              {sessions.length > 5 && (
-                <Link href="/garden" className="text-xs text-primary font-bold hover:text-primary/80 flex items-center gap-0.5 transition-colors">
-                  Full history <ChevronRight className="h-3.5 w-3.5" />
-                </Link>
-              )}
-            </div>
-
-            {recentSessions.length === 0 ? (
-              <div className="bg-card border border-border border-dashed rounded-3xl p-12 text-center">
-                <Leaf className="h-12 w-12 text-muted-foreground/10 mx-auto mb-4" />
-                <p className="text-sm text-muted-foreground font-medium">Time for your first session.</p>
-                <Link href="/" className="text-xs text-primary font-bold hover:text-primary/80 mt-2 block uppercase tracking-widest">
-                  Begin focus →
-                </Link>
-              </div>
-            ) : (
-              <div className="space-y-3">
-                {recentSessions.map((session, idx) => {
-                  const tree = STORE_TREES.find((t) => t.id === session.treeId)
-                  return (
-                    <motion.div 
-                      key={session.id} 
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: idx * 0.1 }}
-                      className="flex items-center gap-4 bg-card border border-border rounded-2xl px-5 py-4 hover:shadow-md transition-all group cursor-default"
-                    >
-                      <div className="shrink-0 w-11 h-11 rounded-xl bg-muted border border-border flex items-center justify-center overflow-hidden group-hover:scale-105 transition-transform">
-                        {tree && <Image src={tree.image} alt={tree.name} width={34} height={34} className="w-9 h-9 object-contain drop-shadow-sm" unoptimized={tree.image.startsWith("http")} />}
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm font-bold text-foreground truncate">{session.treeName}</p>
-                        <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider mt-1 opacity-70">
-                          {session.durationMinutes}m · {format(parseISO(session.completedAt), "MMM d, HH:mm")}
-                        </p>
-                      </div>
-                      <div className="flex items-center gap-1.5 shrink-0 bg-muted/50 px-2 py-1 rounded-lg">
-                        <CoinsIcon className="h-3 w-3 text-yellow-500" strokeWidth={2.5} />
-                        <span className="text-xs font-black text-secondary-foreground tabular-nums">{session.coinsEarned}</span>
-                      </div>
-                    </motion.div>
-                  )
-                })}
-              </div>
-            )}
-          </section>
-
-          {/* ── Settings ───────────────────────────── */}
-          <section className="space-y-4">
-            <h2 className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em] px-1">Preferences</h2>
-            <div className="bg-card border border-border rounded-2xl px-5 py-4 flex items-center justify-between shadow-sm group hover:border-primary/20 transition-all">
-              <div className="flex items-center gap-4">
-                <div className="w-11 h-11 rounded-xl bg-muted flex items-center justify-center group-hover:bg-primary/5 transition-colors">
-                  <Settings className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" strokeWidth={2} />
+            {/* ── Milestones ───────────────────────────── */}
+            <section className="space-y-6">
+              <div className="flex items-center justify-between px-1">
+                <div className="flex items-center gap-2">
+                  <Award className="h-4 w-4 text-primary" strokeWidth={1.25} />
+                  <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Milestones</h3>
                 </div>
-                <div>
-                  <p className="text-sm font-bold text-foreground">Mood & Visuals</p>
-                  <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-widest mt-0.5 opacity-60">System Theme Palette</p>
+                <span className="text-[10px] font-black text-primary uppercase tracking-widest">
+                  {ACHIEVEMENTS.filter((a) => a.requirement(achievementStats)).length} / {ACHIEVEMENTS.length}
+                </span>
+              </div>
+
+              <div className="bg-card/20 border border-border/40 rounded-3xl p-8 backdrop-blur-sm">
+                <div className="grid grid-cols-3 sm:grid-cols-6 gap-8">
+                  {ACHIEVEMENTS.map((achievement, idx) => (
+                    <AchievementBadge
+                      key={achievement.id}
+                      icon={achievement.icon}
+                      title={achievement.title}
+                      description={achievement.description}
+                      unlocked={achievement.requirement(achievementStats)}
+                      delay={0.1 + idx * 0.05}
+                    />
+                  ))}
                 </div>
               </div>
-              <ThemeToggle variant="outline" />
-            </div>
-          </section>
+            </section>
+
+            {/* ── Species Records ─────────────────────── */}
+            <section className="space-y-6">
+              <div className="flex items-center justify-between px-1">
+                <div className="flex items-center gap-2">
+                  <Leaf className="h-4 w-4 text-primary" strokeWidth={1.25} />
+                  <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Sanctuary Records</h3>
+                </div>
+                <Link href="/store" className="text-[10px] font-black text-primary uppercase tracking-widest hover:opacity-70 transition-opacity flex items-center gap-1">
+                  Store <ChevronRight className="h-3 w-3" />
+                </Link>
+              </div>
+
+              <div className="bg-card/20 border border-border/40 rounded-3xl p-6">
+                <div className="grid grid-cols-4 md:grid-cols-6 gap-4">
+                  {STORE_TREES.map((tree) => {
+                    const isOwned = unlockedTrees.includes(tree.id)
+                    return (
+                      <motion.div
+                        key={tree.id}
+                        variants={fadeUp}
+                        className={cn(
+                          "aspect-square rounded-xl border flex items-center justify-center p-2 relative group",
+                          isOwned ? "bg-secondary/30 border-primary/10" : "bg-muted/10 border-dashed border-border/30 opacity-40 grayscale",
+                        )}
+                      >
+                        <Image
+                          src={tree.image}
+                          alt={tree.name}
+                          width={48}
+                          height={48}
+                          className={cn("w-full h-full object-contain drop-shadow-sm transition-transform duration-300", isOwned && "group-hover:scale-110")}
+                          unoptimized={tree.image.startsWith("http")}
+                        />
+                        {isOwned && (
+                          <div className="absolute inset-x-0 bottom-0 py-0.5 bg-background/80 backdrop-blur-xs opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                            <p className="text-[7px] font-bold text-center truncate px-1">{tree.name}</p>
+                          </div>
+                        )}
+                      </motion.div>
+                    )
+                  })}
+                </div>
+              </div>
+            </section>
+
+            {/* ── Preferences ──────────────────────────── */}
+            <section className="space-y-6">
+              <div className="flex items-center gap-2 px-1">
+                <Settings className="h-4 w-4 text-primary" strokeWidth={1.25} />
+                <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Sanctuary Settings</h3>
+              </div>
+              <div className="bg-card/40 border border-border/50 rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-6">
+                <div className="flex items-center gap-4">
+                  <div className="h-12 w-12 rounded-xl bg-primary text-white flex items-center justify-center shadow-lg shadow-primary/20">
+                    <Sparkles className="h-6 w-6" strokeWidth={1} />
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-bold text-foreground">Aesthetic Vibes</h4>
+                    <p className="text-[10px] text-muted-foreground font-medium mt-1 leading-relaxed opacity-60">Global font & color presets</p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-3 w-full md:w-auto">
+                  <ThemeToggle variant="outline" className="flex-1 md:flex-none h-12 rounded-xl border-border/40" />
+                  <button className="h-12 w-12 bg-muted hover:bg-muted-hover rounded-xl flex items-center justify-center border border-border transition-all active:scale-95 group shadow-sm">
+                    <ExternalLink className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" strokeWidth={1.25} />
+                  </button>
+                </div>
+              </div>
+            </section>
+          </motion.main>
         </div>
       </ScrollArea>
     </div>
