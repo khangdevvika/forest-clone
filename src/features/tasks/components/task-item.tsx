@@ -64,7 +64,11 @@ export function TaskItem({ task }: TaskItemProps) {
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.95 }}
-      whileHover={{ scale: 1.005 }}
+      whileHover={{ 
+        backgroundColor: isActive ? "rgba(107, 143, 107, 0.08)" : "rgba(255, 255, 255, 0.5)",
+        borderColor: "rgba(107, 143, 107, 0.2)"
+      }}
+      transition={{ duration: 0.3 }}
       onClick={selectTask}
       className={cn(
         "group flex items-center gap-4 p-4 rounded-2xl border transition-all duration-300 cursor-pointer",

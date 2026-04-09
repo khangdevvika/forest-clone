@@ -15,8 +15,12 @@ export function AchievementCard({ achievement, isUnlocked }: AchievementCardProp
 
   return (
     <motion.div
-      whileHover={{ y: -6, scale: 1.02 }}
-      transition={{ type: "spring", stiffness: 300, damping: 20 }}
+      whileHover={{ 
+        backgroundColor: isUnlocked ? "rgba(255, 255, 255, 0.9)" : "rgba(255, 255, 255, 0.6)",
+        borderColor: "rgba(107, 168, 107, 0.5)",
+        boxShadow: "0 25px 50px -12px rgba(107, 143, 107, 0.15)"
+      }}
+      transition={{ duration: 0.4, ease: "easeOut" }}
       className={cn(
         "group relative flex flex-col items-center p-5 rounded-[2.5rem] border-2 transition-all duration-500 overflow-hidden h-full min-h-[170px]",
         isUnlocked 
@@ -79,7 +83,7 @@ export function AchievementCard({ achievement, isUnlocked }: AchievementCardProp
       {isUnlocked && (
         <motion.button
           initial={{ opacity: 0 }}
-          whileHover={{ scale: 1.1, rotate: 5 }}
+          whileHover={{ scale: 1.05, filter: "brightness(1.1)" }}
           className="absolute top-4 right-4 p-2.5 rounded-2xl bg-primary text-primary-foreground shadow-lg opacity-0 group-hover:opacity-100 transition-all z-30"
           onClick={(e) => {
             e.stopPropagation()

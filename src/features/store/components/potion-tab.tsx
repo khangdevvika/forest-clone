@@ -1,100 +1,125 @@
 "use client"
 
-import { useUser } from "@/hooks/use-user"
-import { POTION_ITEMS } from "@/features/store/constants/items"
-import { motion } from "framer-motion"
-import { Coins, Zap, Clock, Sparkles } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { Badge } from "@/components/ui/badge"
-
-import { Card } from "@/components/ui/card"
+import { FlaskConical, Clock, Info, Zap, Sparkles } from "lucide-react"
+import { POTION_ITEMS } from "@/features/store/constants/items"
+import { useUser } from "@/hooks/use-user"
+import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
+import { StoreCard } from "./store-card"
 
 export function PotionTab() {
-  const { buyItem, potionsInventory, usePotion: activatePotion, activePotionId } = useUser()
+  const { coins, buyItem, activePotionId, potionsInventory, usePotion: activatePotion } = useUser()
 
   return (
-    <div className="space-y-8">
-      <div>
-        <h2 className="text-xl font-semibold text-foreground">Growth Potions</h2>
-        <p className="text-sm text-muted-foreground">Boost your coin earnings during focus sessions</p>
+    <div className="space-y-12">
+      <div className="flex flex-col gap-3 px-1 text-left">
+        <div className="flex items-center gap-3.5">
+           <FlaskConical className="h-6 w-6 text-[--sage-600]" strokeWidth={1.25} />
+           <h3 className="text-3xl font-light font-[family-name:var(--font-outfit)] text-[--sage-900] tracking-tight leading-none">
+             Mystic Catalysts
+           </h3>
+        </div>
+        <p className="text-[14px] text-[--sage-600]/60 font-medium ml-9 leading-relaxed max-w-sm">
+          Potent elixirs and alchemical enhancers to refine your mental frequency and focus depth.
+        </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {POTION_ITEMS.map((potion) => {
-          const count = potionsInventory[potion.id] || 0
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-12">
+        {POTION_ITEMS.map((potion, index) => {
           const isActive = activePotionId === potion.id
+          const count = potionsInventory[potion.id] || 0
 
           return (
-            <motion.div key={potion.id} whileHover={{ y: -4 }}>
-              <Card
-                variant={isActive ? "active" : "default"}
-                padding="lg"
-                className={cn("group relative overflow-hidden transition-all duration-300 backdrop-blur-xs h-full", !isActive && "bg-card/60 hover:border-border/80 hover:shadow-xl hover:shadow-primary/5")}
-              >
-                <div className="absolute top-0 right-0 p-4">
-                  <Badge variant="outline" className={cn("bg-white/5 border-white/10", count > 0 ? "text-primary border-primary/20" : "text-muted-foreground/30")}>
-                    Owned: {count}
-                  </Badge>
+            <StoreCard
+              key={potion.id}
+              index={index}
+              title={potion.name}
+              subtitle="Alchemical Essence"
+              icon={<FlaskConical className="h-4 w-4" strokeWidth={1.25} />}
+              price={potion.price}
+              isUnlocked={count > 0 || isActive}
+              isSelected={isActive}
+              onClick={() => {
+                if (count > 0 && !isActive) {
+                   activatePotion(potion.id)
+                } else if (!isActive) {
+                   buyItem(potion)
+                }
+              }}
+              cornerIcon={
+                isActive ? (
+                   <Sparkles className="h-4.5 w-4.5 text-[--sage-600]/30 animate-pulse" strokeWidth={1.25} />
+                ) : null
+              }
+            >
+              <div className="flex flex-col items-center gap-6 w-full text-center">
+                <div className="relative shrink-0">
+                   <motion.div 
+                     whileHover={{ 
+                       backgroundColor: "rgba(255, 255, 255, 0.9)",
+                       borderColor: "rgba(255, 255, 255, 1)",
+                       boxShadow: "0 24px 48px -12px rgba(107, 143, 107, 0.12)",
+                       scale: 1.05
+                     }}
+                     transition={{ duration: 0.7 }}
+                     className={cn(
+                       "h-28 w-28 rounded-[40px] flex items-center justify-center text-4xl transition-all duration-1000",
+                       "bg-white/40 backdrop-blur-sm border border-white/60 shadow-sm",
+                       isActive ? "bg-[--sage-900] text-white" : "text-foreground"
+                     )}
+                   >
+                     <span className={cn(isActive && "animate-pulse")}>{potion.emoji}</span>
+                   </motion.div>
                 </div>
 
-                <div className="flex gap-6 items-start">
-                  <div
-                    className={cn(
-                      "h-16 w-16 rounded-2xl flex items-center justify-center text-4xl shadow-inner transition-transform group-hover:scale-110",
-                      isActive ? "bg-primary/20 text-primary-foreground" : "bg-muted group-hover:bg-muted/80",
-                    )}
-                  >
-                    {potion.emoji}
+                <div className="space-y-4 mt-2">
+                  <p className="text-[13px] text-[--sage-900]/60 leading-relaxed font-medium line-clamp-2 px-6 italic">
+                    &ldquo;{potion.description}&rdquo;
+                  </p>
+                  
+                  <div className="flex flex-wrap items-center justify-center gap-3">
+                     <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/40 border border-white/60 text-[10px] font-bold text-[--sage-900]/30 uppercase tracking-[0.2em]">
+                        <Clock className="h-3 w-3" strokeWidth={1.25} />
+                        60m
+                     </div>
+                     {count > 0 && (
+                        <div className="text-[10px] font-bold text-[--sage-600] bg-[--sage-100]/60 border border-[--sage-200]/40 px-3 py-1.5 rounded-full uppercase tracking-widest">
+                           {count} Available
+                        </div>
+                     )}
                   </div>
-
-                  <div className="flex-1 space-y-2">
-                    <div className="flex items-center gap-2">
-                      <h3 className="font-bold text-lg text-foreground leading-none">{potion.name}</h3>
-                      {isActive && <Badge className="bg-primary/20 text-primary border-transparent animate-pulse text-[10px] h-5">ACTIVE</Badge>}
-                    </div>
-                    <p className="text-sm text-muted-foreground font-light leading-relaxed pr-8">{potion.description}</p>
-                  </div>
                 </div>
+              </div>
 
-                <div className="mt-8 flex items-center gap-4">
-                  <Button variant="3d-store" onClick={() => buyItem(potion)} className="flex-1 h-11">
-                    <Coins className="h-4 w-4" strokeWidth={2.5} />
-                    {potion.price}
-                  </Button>
-
-                  <Button
-                    variant={count > 0 && !isActive ? "3d-secondary" : "default"}
-                    disabled={count === 0 || isActive}
-                    onClick={() => activatePotion(potion.id)}
-                    className={cn("flex-1 h-11", (count === 0 || isActive) && "bg-muted text-muted-foreground/30 cursor-not-allowed border-0")}
-                  >
-                    <Zap className={cn("h-4 w-4 fill-current", count > 0 && !isActive ? "text-primary" : "text-muted-foreground/20")} strokeWidth={2.5} />
-                    {isActive ? "Active" : "Use Now"}
-                  </Button>
-                </div>
-              </Card>
-            </motion.div>
+              {/* Unique Action Overlay for Potion Tab */}
+              {count > 0 && !isActive && (
+                 <div className="absolute top-6 right-6">
+                    <Button
+                      variant="ghost"
+                      className="h-9 w-9 rounded-full p-0 bg-white/70 border border-white/80 hover:bg-white text-[--warm-500] shadow-sm transition-all duration-500"
+                    >
+                       <Zap className="h-4 w-4" strokeWidth={1.5} />
+                    </Button>
+                 </div>
+              )}
+            </StoreCard>
           )
         })}
       </div>
 
-      {/* Informational Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4">
-        {[
-          { icon: Clock, title: "One-Time Use", text: "Consumed when focus session ends" },
-          { icon: Sparkles, title: "Stacking", text: "Multipliers apply to base earnings" },
-          { icon: Coins, title: "Maximize Profit", text: "Best for long 2h sessions" },
-        ].map((info, i) => (
-          <Card key={i} variant="muted" padding="md" className="flex gap-3 border-white/5">
-            <info.icon className="h-5 w-5 text-primary/40 shrink-0" strokeWidth={1.5} />
-            <div className="space-y-0.5">
-              <p className="text-[11px] font-bold text-foreground/60 uppercase tracking-wider">{info.title}</p>
-              <p className="text-[11px] text-muted-foreground leading-tight">{info.text}</p>
-            </div>
-          </Card>
-        ))}
+      <div className="max-w-4xl mx-auto p-12 rounded-[48px] bg-white/25 border border-white/40 backdrop-blur-sm flex flex-col sm:flex-row items-center gap-10">
+         <div className="h-20 w-20 shrink-0 bg-white/60 rounded-[32px] shadow-sm flex items-center justify-center border border-white">
+            <Info className="h-7 w-7 text-[--sage-400]" strokeWidth={1.25} />
+         </div>
+         <div className="space-y-2">
+           <h4 className="text-[11px] font-bold text-[--sage-600]/40 uppercase tracking-[0.3em]">Alchemical Guidance</h4>
+           <p className="text-[15px] text-[--sage-900]/60 font-medium leading-relaxed italic text-center sm:text-left">
+              &ldquo;Potions are temporary catalysts. Use them wisely during peak cognitive windows. Effects do not persist across multiple focus cycles.&rdquo;
+           </p>
+         </div>
       </div>
     </div>
+
   )
 }

@@ -292,7 +292,7 @@ export function AmbianceSidebar() {
       </nav>
 
       <div className="p-8 relative z-10">
-        <div className="bg-white/[0.03] border border-white/5 rounded-[32px] p-5 flex items-center justify-between">
+        <div className="bg-white/3 border border-white/5 rounded-3xl p-5 flex items-center justify-between">
           <div className="flex flex-col gap-0.5">
             <span className="text-[9px] uppercase font-bold text-white/20 tracking-widest leading-none">Ambiance</span>
             <span className="text-xs font-medium capitalize text-primary/80">{theme}</span>

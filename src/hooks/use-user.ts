@@ -11,6 +11,7 @@ import {
   unlockedThemesAtom,
   potionsInventoryAtom,
   activePotionIdAtom,
+  selectedTagIdAtom,
 } from "@/features/timer/store"
 import type { Tree, Session } from "@/features/timer/types"
 import type { StoreItem } from "@/features/store/types/store"
@@ -20,6 +21,7 @@ export const useUser = () => {
   const [coins, setCoins] = useAtom(coinsAtom)
   const [unlockedTrees, setUnlockedTrees] = useAtom(unlockedTreesAtom)
   const [selectedTreeId, setSelectedTreeId] = useAtom(selectedTreeIdAtom)
+  const [selectedTagId, setSelectedTagId] = useAtom(selectedTagIdAtom)
   const [sessions, setSessions] = useAtom(sessionsAtom)
   const [activeSoundId, setActiveSoundId] = useAtom(activeSoundIdAtom)
   const [volume, setVolume] = useAtom(volumeAtom)
@@ -104,6 +106,8 @@ export const useUser = () => {
     coins,
     unlockedTrees,
     selectedTreeId,
+    selectedTagId,
+    setSelectedTagId,
     sessions,
     streak,
     activeSoundId,

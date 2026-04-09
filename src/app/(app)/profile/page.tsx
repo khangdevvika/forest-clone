@@ -62,7 +62,7 @@ export default function ProfilePage() {
   return (
     <div className="relative h-full flex flex-col bg-background timer-bg overflow-hidden antialiased">
       <PageHeader title="Nature Sanctuary" subtitle={`Member since ${sessions.length > 0 ? format(parseISO(sessions[sessions.length - 1].completedAt), "MMM yyyy") : "today"}`}>
-        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="flex items-center gap-2 bg-muted border border-border rounded-xl px-4 py-2 shadow-sm">
+        <motion.div whileHover={{ backgroundColor: "var(--cream-200)" }} whileTap={{ scale: 0.98 }} className="flex items-center gap-2 bg-muted border border-border rounded-xl px-4 py-2 shadow-sm transition-colors duration-300">
           <div className="h-5 w-5 bg-[#d4af82] rounded-lg flex items-center justify-center shadow-inner">
             <CoinsIcon className="h-3 w-3 text-yellow-950" strokeWidth={2.5} />
           </div>
@@ -77,7 +77,7 @@ export default function ProfilePage() {
             <motion.section variants={fadeUp} className="bg-card/30 border border-border/50 rounded-3xl p-8 backdrop-blur-sm shadow-sm">
               <div className="flex flex-col md:flex-row gap-8 items-start md:items-center">
                 <div className="relative group">
-                  <div className="h-24 w-24 rounded-3xl bg-primary/10 flex items-center justify-center border border-primary/20 rotate-3 group-hover:rotate-0 transition-transform duration-500">
+                  <div className="h-24 w-24 rounded-3xl bg-primary/10 flex items-center justify-center border border-primary/20 transition-all duration-500">
                     <Leaf className="h-10 w-10 text-primary" strokeWidth={1.25} />
                   </div>
                   <div className="absolute -bottom-2 -right-2 h-8 w-8 rounded-xl bg-background border border-border flex items-center justify-center shadow-sm">
@@ -146,7 +146,7 @@ export default function ProfilePage() {
                       <span className="text-primary font-bold">{unlockedIds.length} / {achievements.length}</span> medals collected in your sanctuary
                     </p>
                   </div>
-                  <div className="h-12 w-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary group-hover:scale-110 transition-transform duration-500">
+                  <div className="h-12 w-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary transition-all duration-500 group-hover:bg-primary/20">
                     <Award className="h-6 w-6" strokeWidth={1.25} />
                   </div>
                 </div>
@@ -183,7 +183,7 @@ export default function ProfilePage() {
                           alt={tree.name}
                           width={48}
                           height={48}
-                          className={cn("w-full h-full object-contain drop-shadow-sm transition-transform duration-300", isOwned && "group-hover:scale-110")}
+                          className={cn("w-full h-full object-contain drop-shadow-sm transition-all duration-300", isOwned && "group-hover:drop-shadow-[0_0_15px_rgba(107,143,107,0.4)]")}
                           unoptimized={tree.image.startsWith("http")}
                         />
                         {isOwned && (
@@ -217,7 +217,7 @@ export default function ProfilePage() {
 
                 <div className="flex items-center gap-3 w-full md:w-auto">
                   <ThemeToggle variant="outline" className="flex-1 md:flex-none h-12 rounded-xl border-border/40" />
-                  <button className="h-12 w-12 bg-muted hover:bg-muted-hover rounded-xl flex items-center justify-center border border-border transition-all active:scale-95 group shadow-sm">
+                  <button className="h-12 w-12 bg-muted hover:bg-muted-hover rounded-xl flex items-center justify-center border border-border transition-all group shadow-sm">
                     <ExternalLink className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" strokeWidth={1.25} />
                   </button>
                 </div>

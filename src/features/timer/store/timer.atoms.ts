@@ -1,3 +1,4 @@
+import { DEFAULT_TAG_ID } from "@/features/timer/constants/tags"
 import { TimerMode } from "@/features/timer/enum/timer"
 import type { Session } from "@/features/timer/types/session"
 import { differenceInCalendarDays, parseISO, startOfDay } from "date-fns"
@@ -8,7 +9,86 @@ import { atomWithStorage } from "jotai/utils"
 export const coinsAtom = atomWithStorage<number>("forest-coins", 3119)
 export const unlockedTreesAtom = atomWithStorage<string[]>("forest-trees", ["balloon-flower", "golden-trumpet"])
 export const selectedTreeIdAtom = atomWithStorage<string>("forest-selected-tree", "balloon-flower")
-export const sessionsAtom = atomWithStorage<Session[]>("forest-sessions", [])
+export const selectedTagIdAtom = atomWithStorage<string>("forest-selected-tag", DEFAULT_TAG_ID)
+export const sessionsAtom = atomWithStorage<Session[]>("forest-sessions", [
+  {
+    id: "1",
+    completedAt: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString(),
+    durationMinutes: 45,
+    treeId: "balloon-flower",
+    treeName: "Balloon Flower",
+    treeImage: "/trees/balloon-flower.png",
+    coinsEarned: 9,
+    mode: "timer",
+    tagId: "work",
+  },
+  {
+    id: "2",
+    completedAt: new Date(Date.now() - 1000 * 60 * 60 * 24).toISOString(),
+    durationMinutes: 60,
+    treeId: "golden-trumpet",
+    treeName: "Golden Trumpet",
+    treeImage: "/trees/golden-trumpet.png",
+    coinsEarned: 12,
+    mode: "timer",
+    tagId: "study",
+  },
+  {
+    id: "3",
+    completedAt: new Date(Date.now() - 1000 * 60 * 60 * 48).toISOString(),
+    durationMinutes: 30,
+    treeId: "balloon-flower",
+    treeName: "Balloon Flower",
+    treeImage: "/trees/balloon-flower.png",
+    coinsEarned: 6,
+    mode: "timer",
+    tagId: "reading",
+  },
+  {
+    id: "4",
+    completedAt: new Date(Date.now() - 1000 * 60 * 60 * 72).toISOString(),
+    durationMinutes: 90,
+    treeId: "golden-trumpet",
+    treeName: "Golden Trumpet",
+    treeImage: "/trees/golden-trumpet.png",
+    coinsEarned: 18,
+    mode: "timer",
+    tagId: "work",
+  },
+  {
+    id: "5",
+    completedAt: new Date(Date.now() - 1000 * 60 * 60 * 96).toISOString(),
+    durationMinutes: 45,
+    treeId: "balloon-flower",
+    treeName: "Balloon Flower",
+    treeImage: "/trees/balloon-flower.png",
+    coinsEarned: 9,
+    mode: "timer",
+    tagId: "exercise",
+  },
+  {
+    id: "6",
+    completedAt: new Date(Date.now() - 1000 * 60 * 60 * 120).toISOString(),
+    durationMinutes: 120,
+    treeId: "golden-trumpet",
+    treeName: "Golden Trumpet",
+    treeImage: "/trees/golden-trumpet.png",
+    coinsEarned: 24,
+    mode: "timer",
+    tagId: "study",
+  },
+  {
+    id: "7",
+    completedAt: new Date(Date.now() - 1000 * 60 * 60 * 5).toISOString(),
+    durationMinutes: 25,
+    treeId: "balloon-flower",
+    treeName: "Balloon Flower",
+    treeImage: "/trees/balloon-flower.png",
+    coinsEarned: 5,
+    mode: "timer",
+    tagId: "meditation",
+  },
+])
 export const activeSoundIdAtom = atomWithStorage<string | null>("forest-active-sound", null)
 export const volumeAtom = atomWithStorage<number>("forest-volume", 0.5)
 

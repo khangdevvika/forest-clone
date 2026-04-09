@@ -1,93 +1,140 @@
 "use client"
 
-import Image from "next/image"
-import { Coins, Sparkles } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
+import { Card } from "@/components/ui/card"
+import { STORE_TREES } from "@/features/timer/constants/trees"
+import type { Tree } from "@/features/timer/types/tree"
+import { useUser } from "@/hooks/use-user"
+import { gentleSpring, spring } from "@/lib/animations"
 import { cn } from "@/lib/utils"
 import { motion } from "framer-motion"
-import { useUser } from "@/hooks/use-user"
-import { STORE_TREES } from "@/features/timer/constants/trees"
+import { Coins, Sparkles, Sprout, Wand2 } from "lucide-react"
+import Image from "next/image"
 import { useMemo } from "react"
-import type { Tree } from "@/features/timer/types/tree"
 
 interface FeaturedTreeCardProps {
   onSelect: (tree: Tree) => void
 }
 
 export function FeaturedTreeCard({ onSelect }: FeaturedTreeCardProps) {
-  const { coins, unlockedTrees, selectedTreeId, buyTree, selectTree } = useUser()
+  const { coins, buyItem, selectTree, unlockedTrees, selectedTreeId } = useUser()
 
   const featuredTree = useMemo(() => STORE_TREES.find((t) => t.id === "jacaranda") ?? STORE_TREES[0], [])
 
   const isUnlocked = unlockedTrees.includes(featuredTree.id)
   const isSelected = selectedTreeId === featuredTree.id
 
-  const handleEquip = (e: React.MouseEvent) => {
+  const handleAction = (e: React.MouseEvent) => {
     e.stopPropagation()
-    selectTree(featuredTree.id)
-  }
-
-  const handleBuy = (e: React.MouseEvent) => {
-    e.stopPropagation()
-    buyTree(featuredTree)
+    if (isUnlocked) {
+      selectTree(featuredTree.id)
+    } else {
+      buyItem({ ...featuredTree, type: "tree" })
+    }
   }
 
   return (
-    <section className="space-y-4">
-      <div className="flex items-center gap-2">
-        <Badge className="bg-accent text-accent-foreground border-border text-[10px] uppercase tracking-wider font-semibold px-2 py-0.5 rounded-md">
-          Featured
-        </Badge>
-      </div>
-      <h2 className="text-xl font-semibold text-foreground -mt-1">Today&apos;s specimen</h2>
+    <motion.div
+      initial={{ opacity: 0, scale: 0.98 }}
+      animate={{ opacity: 1, scale: 1 }}
+      className="relative group cursor-pointer"
+      onClick={() => onSelect(featuredTree)}
+    >
+      {/* Immersive Shadow/Glow */}
+      <div className="absolute -inset-4 bg-linear-to-b from-[--sage-400]/5 to-transparent blur-[40px] rounded-[60px] opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
 
-      <motion.div layout whileHover={{ y: -2 }} transition={{ duration: 0.15 }} onClick={() => onSelect(featuredTree)} className="cursor-pointer" id={`tree-featured-${featuredTree.id}`}>
-        <div className="bg-card border border-border rounded-xl overflow-hidden hover:border-border/70 hover:shadow-md transition-all duration-200">
-          <div className="flex flex-col sm:flex-row items-center gap-0">
-            <div className="shrink-0 w-full sm:w-52 h-48 sm:h-full bg-muted flex items-center justify-center relative overflow-hidden">
-              <Image src={featuredTree.image} alt={featuredTree.name} width={160} height={160} className="w-36 h-36 object-contain drop-shadow-md relative z-10" unoptimized />
-            </div>
+      <Card
+        variant="glass"
+        className="relative overflow-hidden p-10 md:p-14 rounded-[50px] border-white bg-white/80 backdrop-blur-3xl shadow-[0_0_100px_rgba(0,0,0,0.1)] flex flex-col items-center text-center gap-10"
+      >
+        {/* Floating Aura */}
+        <motion.div
+          animate={{ scale: [1, 1.1, 1], opacity: [0.1, 0.2, 0.1] }}
+          transition={{ duration: 10, repeat: Infinity }}
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[120%] w-[80%] bg-[--sage-300] rounded-full blur-[100px] pointer-events-none"
+        />
 
-            <div className="flex-1 p-6 space-y-4">
-              <div className="space-y-1.5">
-                <div className="flex items-center gap-1.5">
-                  <Sparkles className="h-3 w-3 text-yellow-500" />
-                  <span className="text-[10px] font-semibold text-yellow-600 uppercase tracking-wider">Special Edition</span>
-                </div>
-                <h3 className="text-2xl font-bold text-foreground">{featuredTree.name}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{featuredTree.description}</p>
-              </div>
+        <div className="relative z-10 space-y-4">
+          <div className="flex items-center justify-center gap-4">
+            <div className="h-px w-8 bg-[--sage-300]/50" />
+            <span className="text-[10px] font-bold text-[--sage-600] uppercase tracking-[0.4em]">Master Specimen</span>
+            <div className="h-px w-8 bg-[--sage-300]/50" />
+          </div>
+          <h2 className="text-5xl md:text-7xl font-light font-[family-name:var(--font-outfit)] text-foreground tracking-tight italic lowercase px-2">
+            The {featuredTree.name}
+          </h2>
+          <p className="max-w-md mx-auto text-sm md:text-base text-foreground/50 font-medium leading-relaxed italic px-4">
+            &ldquo;A rare botanical anomaly, whispers of violet blooms that harmonize with the cosmic frequency of focus.&rdquo;
+          </p>
+        </div>
 
-              <div className="flex items-center gap-3 pt-1">
-                {isUnlocked ? (
-                  <Button
-                    id="featured-equip-btn"
-                    onClick={handleEquip}
-                    disabled={isSelected}
-                    className={cn(
-                      "h-9 px-5 rounded-lg text-sm font-semibold transition-all",
-                      isSelected ? "bg-muted text-muted-foreground cursor-not-allowed border-0" : "bg-primary hover:bg-primary/90 text-primary-foreground border-0",
-                    )}
-                  >
-                    {isSelected ? "Currently growing" : "Use this tree"}
-                  </Button>
-                ) : (
-                  <Button
-                    id="featured-buy-btn"
-                    onClick={handleBuy}
-                    disabled={coins < featuredTree.price}
-                    className="h-9 px-5 rounded-lg text-sm font-semibold bg-primary hover:bg-primary/90 text-primary-foreground border-0 flex items-center gap-2 disabled:bg-muted disabled:text-muted-foreground disabled:cursor-not-allowed"
-                  >
-                    <Coins className="h-3.5 w-3.5" />
-                    {featuredTree.price.toLocaleString()}
-                  </Button>
+        <motion.div
+          animate={{ y: [0, -15, 0] }}
+          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+          className="relative z-10"
+        >
+          <div className="absolute -inset-10 bg-white/20 blur-3xl rounded-full opacity-50" />
+          <Image
+            src={featuredTree.image}
+            alt={featuredTree.name}
+            width={350}
+            height={350}
+            className="w-56 md:w-72 h-auto object-contain drop-shadow-[0_45px_75px_rgba(0,0,0,0.15)] transition-all duration-1000 group-hover:drop-shadow-[0_45px_95px_rgba(107,143,107,0.3)] group-hover:brightness-[1.02]"
+            unoptimized
+          />
+        </motion.div>
+
+        <div className="relative z-10 flex flex-col items-center gap-6">
+          <div className="flex items-center gap-3">
+             <Badge className="bg-[--sage-100] text-[--sage-700] border-0 text-[10px] font-bold tracking-[0.2em] uppercase px-4 py-1.5 rounded-full">
+               Level Alpha
+             </Badge>
+          </div>
+
+          <div className="flex flex-wrap justify-center gap-4">
+             <Button
+                onClick={handleAction}
+                disabled={!isUnlocked && coins < featuredTree.price}
+                className={cn(
+                  "h-14 px-10 rounded-[22px] text-xs font-bold uppercase tracking-[0.2em] shadow-2xl transition-all duration-500",
+                  isSelected 
+                    ? "bg-white/60 text-[--sage-600] border border-white cursor-default" 
+                    : isUnlocked 
+                      ? "bg-[--warm-500] hover:bg-[--warm-600] text-white" 
+                      : "bg-[--sage-500] hover:bg-[--sage-600] text-white"
                 )}
-              </div>
-            </div>
+             >
+                {isSelected ? (
+                  <div className="flex items-center gap-3">
+                    <Sparkles className="h-4 w-4" />
+                    Currently Seated
+                  </div>
+                ) : isUnlocked ? (
+                  <div className="flex items-center gap-3">
+                    <Sprout className="h-4 w-4" />
+                    Cultivate Now
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-3">
+                    <Coins className="h-4 w-4" />
+                    <span className="tabular-nums">Research {featuredTree.price}</span>
+                  </div>
+                )}
+             </Button>
+
+             {!isSelected && (
+                <div className="flex items-center gap-2 text-[10px] font-bold text-foreground/30 uppercase tracking-widest">
+                   <Wand2 className="h-3.5 w-3.5" />
+                   Limited Flux
+                </div>
+             )}
           </div>
         </div>
-      </motion.div>
-    </section>
+      </Card>
+    </motion.div>
   )
+}
+
+function Badge({ children, className }: { children: React.ReactNode; className?: string }) {
+  return <div className={cn("px-2 py-1 rounded text-xs", className)}>{children}</div>
 }

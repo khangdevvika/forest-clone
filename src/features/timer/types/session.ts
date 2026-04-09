@@ -7,4 +7,5 @@ export interface Session {
   treeImage: string
   coinsEarned: number
   mode: "timer" | "stopwatch"
+  tagId: string // Added to support category-based analytics
 }

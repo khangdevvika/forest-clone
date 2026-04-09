@@ -69,7 +69,8 @@ export default function Home() {
   if (!mounted) return null
 
   return (
-    <div className="timer-bg absolute inset-0 flex flex-col items-center justify-between select-none overflow-hidden pb-4 pt-16">
+    <div className="timer-bg h-screen w-full flex flex-col items-center justify-between select-none overflow-hidden pb-4 pt-16">
+
       <div /> {/* Spacer for absolute header */}
 
       <TimerDisplay

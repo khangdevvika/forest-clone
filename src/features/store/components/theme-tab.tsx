@@ -1,97 +1,133 @@
 "use client"
 
-import { THEME_ITEMS } from "@/features/store/constants/items"
-import { THEMES, useTheme } from "@/hooks/use-theme"
-import { useUser } from "@/hooks/use-user"
 import { cn } from "@/lib/utils"
-import { AnimatePresence, motion } from "framer-motion"
-import { Check, Coins, Lock, MousePointer2 } from "lucide-react"
-
+import { Check, Coins, Sparkles, Palette } from "lucide-react"
+import { THEME_ITEMS } from "@/features/store/constants/items"
+import { useUser } from "@/hooks/use-user"
+import { useTheme } from "@/hooks/use-theme"
 import { type Theme } from "@/store/ui.atoms"
+import { motion } from "framer-motion"
+import { StoreCard } from "./store-card"
 
-import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
+const THEME_VISUALS: Record<string, { gradient: string; aura: string; iconColor: string }> = {
+  sage: { 
+    gradient: "bg-linear-to-br from-[#7ba87b]/30 to-[#e6ede4]/30", 
+    aura: "bg-[#7ba87b]", 
+    iconColor: "text-[#5a7a5a]" 
+  },
+  forest: { 
+    gradient: "bg-linear-to-br from-[#2a3d27]/40 to-[#4a6649]/30 border-b border-white/5", 
+    aura: "bg-[#2a3d27] border border-white/10", 
+    iconColor: "text-[#9ebd98]" 
+  },
+  sunset: { 
+    gradient: "bg-linear-to-br from-[#f97316]/30 via-[#fb923c]/20 to-[#fde68a]/30", 
+    aura: "bg-orange-400 blur-[30px]", 
+    iconColor: "text-orange-600" 
+  },
+  midnight: { 
+    gradient: "bg-linear-to-br from-[#1e1b4b]/50 to-[#4338ca]/30", 
+    aura: "bg-indigo-500 blur-[25px]", 
+    iconColor: "text-indigo-400" 
+  },
+  rose: { 
+    gradient: "bg-linear-to-br from-[#fecdd3]/40 to-[#fda4af]/30", 
+    aura: "bg-rose-300", 
+    iconColor: "text-rose-600" 
+  },
+  emerald: { 
+    gradient: "bg-linear-to-br from-[#059669]/30 to-[#34d399]/20", 
+    aura: "bg-emerald-400", 
+    iconColor: "text-emerald-700" 
+  },
+}
 
 export function ThemeTab() {
   const { unlockedThemes, buyItem } = useUser()
-  const { theme: currentTheme, setTheme } = useTheme()
+  const { theme: activeTheme, setTheme } = useTheme()
 
   return (
-    <div className="space-y-8">
-      <div>
-        <h2 className="text-xl font-semibold text-foreground">Aesthetics Store</h2>
-        <p className="text-sm text-muted-foreground">Personalize your oasis landscape</p>
+    <div className="space-y-12">
+      <div className="flex flex-col gap-3 px-1 text-left">
+        <div className="flex items-center gap-3.5">
+          <Palette className="h-6 w-6 text-[--sage-600]" strokeWidth={1.25} />
+          <h3 className="text-3xl font-light font-[family-name:var(--font-outfit)] text-[--sage-900] tracking-tight leading-none">Chromatic Lenses</h3>
+        </div>
+        <p className="text-[14px] text-[--sage-600]/60 font-medium ml-9 leading-relaxed max-w-sm">
+           Refract the forest atmosphere through unique chromatic filters and ethereal light.
+        </p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {THEME_ITEMS.map((item) => {
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-12">
+        {THEME_ITEMS.map((item, index) => {
           const isUnlocked = unlockedThemes.includes(item.id)
-          const isActive = currentTheme === item.id
-          const themeConfig = THEMES.find((t) => t.id === item.id)
+          const isActive = activeTheme === item.id
+          const visual = THEME_VISUALS[item.id] || THEME_VISUALS.sage
 
           return (
-            <motion.div layout key={item.id} whileHover={{ y: -4, scale: 1.01 }}>
-              <Card
-                variant={isActive ? "active" : "default"}
-                padding="lg"
-                className={cn("group relative overflow-hidden transition-all duration-300 h-full", !isActive && "hover:border-border/80 hover:shadow-xl hover:shadow-primary/5")}
-              >
-                {/* Theme Preview Color Orb */}
-                <div className="absolute top-0 right-0 h-40 w-40 -translate-y-12 translate-x-12 opacity-10 blur-3xl rounded-full" style={{ backgroundColor: themeConfig?.color }} />
-
-                <div className="flex flex-col h-full space-y-5">
-                  <div className="flex items-start justify-between">
-                    <div className="space-y-1">
-                      <h3 className="font-bold text-lg text-foreground leading-none">{item.name}</h3>
-                      <p className="text-xs text-muted-foreground pr-4">{item.description}</p>
-                    </div>
-                    <div className="h-10 w-10 shrink-0 rounded-xl shadow-inner border-2 border-white/10 transition-transform group-hover:rotate-12" style={{ backgroundColor: themeConfig?.color }} />
-                  </div>
-
-                  <div className="mt-auto pt-4 flex flex-col gap-3">
-                    <AnimatePresence mode="wait">
-                      {isUnlocked ? (
-                        <motion.div key="select" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                          <Button
-                            onClick={() => setTheme(item.id as Theme)}
-                            variant={isActive ? "secondary" : "outline"}
-                            className={cn("w-full h-11 rounded-xl text-xs uppercase tracking-widest", isActive && "bg-primary/10 text-primary border-transparent hover:bg-primary/15 cursor-default")}
-                          >
-                            {isActive ? (
-                              <>
-                                <Check className="h-4 w-4" strokeWidth={3} />
-                                Active
-                              </>
-                            ) : (
-                              <>
-                                <MousePointer2 className="h-3.5 w-3.5" strokeWidth={3} />
-                                Apply Theme
-                              </>
-                            )}
-                          </Button>
-                        </motion.div>
-                      ) : (
-                        <motion.div key="buy" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                          <Button onClick={() => buyItem(item)} variant="3d-gold" className="w-full h-11 rounded-xl">
-                            <Coins className="h-4 w-4" strokeWidth={2.5} />
-                            {item.price}
-                          </Button>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
+            <StoreCard
+              key={item.id}
+              index={index}
+              title={item.name}
+              subtitle="Chromatic Culture"
+              icon={<Palette className={cn("h-4 w-4", visual.iconColor)} strokeWidth={1.25} />}
+              price={item.price}
+              isUnlocked={isUnlocked}
+              isSelected={isActive}
+              onClick={() => {
+                if (isUnlocked) {
+                  setTheme(item.id as Theme)
+                } else {
+                  buyItem(item)
+                }
+              }}
+              className="px-0 py-0"
+              cornerIcon={isActive ? <Sparkles className="h-4.5 w-4.5 text-[--sage-600]/30 animate-pulse" strokeWidth={1.25} /> : null}
+            >
+              <div className="flex flex-col items-stretch w-full h-full">
+                <div
+                  className={cn(
+                    "w-full h-[140px] relative overflow-hidden flex items-center justify-center transition-all duration-700",
+                    visual.gradient
+                  )}
+                >
+                  <motion.div
+                    animate={{ 
+                      scale: [1, 1.4, 1], 
+                      opacity: [0.4, 0.7, 0.4],
+                      rotate: [0, 10, 0]
+                    }}
+                    transition={{ duration: 10 + index, repeat: Infinity, ease: "easeInOut" }}
+                    className={cn(
+                      "h-32 w-32 rounded-full blur-[35px] opacity-50",
+                      visual.aura
+                    )}
+                  />
+                  
+                  {/* Internal Reflection Effect — Premium Glassy layer */}
+                  <div className="absolute inset-0 bg-white/5 backdrop-blur-[2px]" />
+                  <div className="absolute inset-0 bg-linear-to-b from-white/10 via-transparent to-black/5" />
+                  
+                  <Sparkles className="absolute inset-0 m-auto h-8 w-8 text-white/30 mix-blend-overlay" strokeWidth={0.75} />
                 </div>
+                
+                <div className="p-7 flex-1 flex flex-col items-center text-center gap-5">
+                   <p className="text-[13px] text-[--sage-900]/60 font-medium leading-relaxed italic px-2">
+                      &ldquo;{item.description}&rdquo;
+                   </p>
 
-                {!isUnlocked && (
-                  <div className="absolute top-3 right-3 opacity-20 pointer-events-none group-hover:opacity-40 transition-opacity">
-                    <Lock className="h-4 w-4" strokeWidth={2} />
-                  </div>
-                )}
-              </Card>
-            </motion.div>
+                   {isActive && (
+                      <div className="mt-auto pt-2 flex items-center gap-2.5 text-[--sage-600]/80 font-semibold text-[10px] uppercase tracking-[0.25em]">
+                         <Check className="h-3 w-3" strokeWidth={2.5} />
+                      </div>
+                   )}
+                </div>
+              </div>
+            </StoreCard>
           )
         })}
       </div>
     </div>
+
   )
 }

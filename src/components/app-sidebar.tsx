@@ -5,7 +5,7 @@ import { useTheme } from "@/hooks/use-theme"
 import { useUser } from "@/hooks/use-user"
 import { cn } from "@/lib/utils"
 import { AnimatePresence, motion, useMotionValue } from "framer-motion"
-import { Coins, Flame, Home, Leaf, ListTodo, ShoppingBag, TreeDeciduous, Trophy, User } from "lucide-react"
+import { BarChart3, Coins, Flame, Home, Leaf, ListTodo, ShoppingBag, TreeDeciduous, Trophy, User } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import React from "react"
@@ -16,6 +16,7 @@ const gentleSpring = { type: "spring" as const, stiffness: 180, damping: 28 }
 
 const navMain = [
   { title: "Home", url: "/", icon: Home },
+  { title: "Stats", url: "/stats", icon: BarChart3 },
   { title: "Garden", url: "/garden", icon: Leaf },
   { title: "Tasks", url: "/tasks", icon: ListTodo },
   { title: "Achievements", url: "/achievements", icon: Trophy },
@@ -57,7 +58,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         {/* ── Header ────────────────────────────────────────── */}
         <SidebarHeader className={cn("px-6 pt-8 pb-6 transition-all duration-300", !isExpanded && "px-0 items-center")}>
           <div className="flex items-center gap-4 group">
-            <motion.div whileHover={{ scale: 1.05 }} className={cn("relative shrink-0 flex h-11 w-11 items-center justify-center rounded-xl", glassStyle)}>
+            <motion.div whileHover={{ backgroundColor: "rgba(255,255,255,0.1)" }} className={cn("relative shrink-0 flex h-11 w-11 items-center justify-center rounded-xl", glassStyle)}>
               <TreeDeciduous className="h-5.5 w-5.5 text-primary" strokeWidth={1.25} />
               <motion.div
                 animate={{ opacity: [0.1, 0.3, 0.1] }}
@@ -91,7 +92,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                         asChild
                         isActive={isActive}
                         className={cn(
-                          "relative h-11 px-4 transition-all duration-300 gap-3 outline-none font-[family-name:var(--font-inter)] text-sm font-medium group overflow-hidden border-0 rounded-xl active:scale-[0.98]",
+                          "relative h-11 px-4 transition-all duration-300 gap-3 outline-none font-[family-name:var(--font-inter)] text-sm font-medium group overflow-hidden border-0 rounded-xl",
                           isActive ? "text-white" : cn("text-white/40 hover:text-white/80 hover:bg-white/5", glassMuted),
                         )}
                       >
@@ -101,7 +102,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                           </AnimatePresence>
 
                           <div className="relative z-10 flex items-center gap-3 w-full">
-                            <item.icon className={cn("h-4.5 w-4.5 transition-all duration-500", isActive ? "text-primary scale-110" : "text-white/30 group-hover:text-white/60")} strokeWidth={1.25} />
+                            <item.icon className={cn("h-4.5 w-4.5 transition-all duration-500", isActive ? "text-primary brightness-110" : "text-white/30 group-hover:text-white/60")} strokeWidth={1.25} />
                             <span className={cn("tracking-wide", isActive ? "font-semibold" : "")}>{item.title}</span>
 
                             {isActive && (

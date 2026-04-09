@@ -11,7 +11,7 @@ import { useEffect, useState } from "react"
 const INITIAL_DIALOG: TimerDialogState = { isOpen: false, title: "", description: "" }
 
 export function useTimer() {
-  const { addCoins, addSession, selectedTreeId, activePotionId, setActivePotionId } = useUser()
+  const { addCoins, addSession, selectedTreeId, activePotionId, setActivePotionId, selectedTagId } = useUser()
 
   const activeTree: Tree = STORE_TREES.find((t) => t.id === selectedTreeId) ?? STORE_TREES[0]
 
@@ -62,6 +62,7 @@ export function useTimer() {
             treeImage: activeTree.image,
             coinsEarned,
             mode: "timer",
+            tagId: selectedTagId,
           })
 
           setDialogState({
@@ -79,7 +80,7 @@ export function useTimer() {
     }, 1000)
 
     return () => clearInterval(interval)
-  }, [isActive, mode, minutes, addCoins, addSession, activeTree, activePotionId, setActivePotionId, setIsActive, setElapsedSeconds])
+  }, [isActive, mode, minutes, addCoins, addSession, activeTree, activePotionId, setActivePotionId, setIsActive, setElapsedSeconds, selectedTagId])
 
   // ── Handlers ─────────────────────────────────────────────────
   const handleStart = () => {

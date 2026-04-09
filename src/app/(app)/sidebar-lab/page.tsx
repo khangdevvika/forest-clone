@@ -84,7 +84,7 @@ export default function SidebarLabPage() {
                 key={key}
                 onClick={() => setActiveVariation(key)}
                 className={cn(
-                  "relative p-8 rounded-[32px] border text-left transition-all duration-700 group overflow-hidden",
+                  "relative p-8 rounded-3xl border text-left transition-all duration-700 group overflow-hidden",
                   isActive ? "bg-primary/5 border-primary/30 ring-1 ring-primary/20 shadow-xl" : "bg-muted/30 border-border/50 hover:bg-muted/80 hover:border-border",
                 )}
                 initial={{ opacity: 0, x: 40 }}
@@ -95,7 +95,7 @@ export default function SidebarLabPage() {
                 <div className="flex items-center gap-6">
                   <div
                     className={cn(
-                      "h-16 w-16 rounded-[24px] flex items-center justify-center transition-all duration-700",
+                      "h-16 w-16 rounded-3xl flex items-center justify-center transition-all duration-700",
                       isActive ? "bg-primary text-white scale-110 shadow-lg" : "bg-background border border-border group-hover:bg-primary/10 group-hover:text-primary",
                     )}
                     style={isActive ? { boxShadow: `0 0 20px ${data.color}44` } : {}}
