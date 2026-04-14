@@ -2,7 +2,6 @@
 
 import { LayoutGrid, List } from "lucide-react"
 import { useGardenView, TimeRange, ViewMode } from "@/features/garden/hooks/use-garden-view"
-import { cn } from "@/lib/utils"
 import { AnimatedTabs } from "@/components/ui/animated-tabs"
 
 const timeRanges: TimeRange[] = ["Day", "Week", "Month", "Year"]
@@ -16,7 +15,7 @@ export function GardenTabs() {
   ]
 
   return (
-    <div className="flex items-center justify-between px-5 pt-4 pb-2">
+    <div className="flex items-center gap-4 px-5 pt-4 pb-2">
       {/* Time Range Tabs */}
       <AnimatedTabs
         tabs={timeRanges}

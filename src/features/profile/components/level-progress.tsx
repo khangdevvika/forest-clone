@@ -8,7 +8,7 @@ interface LevelProgressProps {
   maxXp: number
 }
 
-export function LevelProgress({ level, xp, maxXp }: LevelProgressProps) {
+export function LevelProgress({ xp, maxXp }: LevelProgressProps) {
   const percentage = Math.min(100, Math.max(0, (xp / maxXp) * 100))
 
   return (

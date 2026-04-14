@@ -1,6 +1,5 @@
 "use client"
 
-import { cn } from "@/lib/utils"
 import { motion, AnimatePresence } from "framer-motion"
 import { fadeUp, spring } from "@/lib/animations"
 import { CANCEL_THRESHOLD } from "@/features/timer/constants/timer"
@@ -16,7 +15,7 @@ interface TimerActionsProps {
   onGiveUp: () => void
 }
 
-import { TagSelector } from "@/features/timer/components/tag-selector"
+
 
 export function TimerActions({ isActive, elapsedSeconds, onStart, onCancel, onGiveUp }: TimerActionsProps) {
   return (

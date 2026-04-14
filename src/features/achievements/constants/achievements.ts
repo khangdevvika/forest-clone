@@ -1,4 +1,4 @@
-import { Heart, Leaf, Star, Sun, Trophy, Zap, Moon, Flame, Gift, Crown, Shield, Coffee, MousePointer2, Gem, Ghost, Sprout, Trees, Medal, Timer, CheckCircle2, type LucideIcon } from "lucide-react"
+import { Heart, Leaf, Star, Sun, Zap, Moon, Flame, Crown, Shield, Coffee, Gem, Sprout, Trees, CheckCircle2, type LucideIcon } from "lucide-react"
 
 export type AchievementCategory = "efficiency" | "consistency" | "collection" | "special"
 
@@ -8,6 +8,7 @@ export type AchievementStats = {
   bestStreak: number
   ownedTrees: number
   completedTasks: number
+  longestSessionMinutes: number
 }
 
 export type Achievement = {
@@ -31,12 +32,20 @@ export const ACHIEVEMENTS: Achievement[] = [
     requirement: (stats) => stats.totalSessions >= 1,
   },
   {
-    id: "centurion",
-    title: "Centurion",
-    description: "Focused for a total of 100 minutes.",
-    icon: Trophy,
+    id: "diligent-gardener",
+    title: "Diligent Gardener",
+    description: "Focused for a total of 10 hours.",
+    icon: Trees,
     category: "efficiency",
-    requirement: (stats) => stats.totalMinutes >= 100,
+    requirement: (stats) => stats.totalMinutes >= 600,
+  },
+  {
+    id: "ancient-tree",
+    title: "Ancient Tree",
+    description: "Completed a single session longer than 120 minutes.",
+    icon: Crown,
+    category: "efficiency",
+    requirement: (stats) => stats.longestSessionMinutes >= 120,
   },
   {
     id: "deep-work-master",
@@ -45,14 +54,6 @@ export const ACHIEVEMENTS: Achievement[] = [
     icon: Sun,
     category: "efficiency",
     requirement: (stats) => stats.totalMinutes >= 1000,
-  },
-  {
-    id: "marathon-runner",
-    title: "Marathon Runner",
-    description: "Successfully completed 50 sessions.",
-    icon: Timer,
-    category: "efficiency",
-    requirement: (stats) => stats.totalSessions >= 50,
   },
 
   // CONSISTENCY

@@ -182,16 +182,7 @@ function Sidebar({
     )
   }
 
-  // Filter out motion-conflicting props
-  const {
-    onAnimationStart: _onAnimationStart,
-    onAnimationEnd: _onAnimationEnd,
-    onAnimationIteration: _onAnimationIteration,
-    onDrag: _onDrag,
-    onDragEnd: _onDragEnd,
-    onDragStart: _onDragStart,
-    ...restProps
-  } = props
+  const restProps = props
 
   return (
     <div

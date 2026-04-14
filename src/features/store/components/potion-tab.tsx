@@ -9,18 +9,18 @@ import { Button } from "@/components/ui/button"
 import { StoreCard } from "./store-card"
 
 export function PotionTab() {
-  const { coins, buyItem, activePotionId, potionsInventory, usePotion: activatePotion } = useUser()
+  const { buyItem, activePotionId, potionsInventory, usePotion: activatePotion } = useUser()
 
   return (
     <div className="space-y-12">
       <div className="flex flex-col gap-3 px-1 text-left">
         <div className="flex items-center gap-3.5">
-           <FlaskConical className="h-6 w-6 text-[--sage-600]" strokeWidth={1.25} />
-           <h3 className="text-3xl font-light font-[family-name:var(--font-outfit)] text-[--sage-900] tracking-tight leading-none">
+           <FlaskConical className="h-6 w-6 text-primary" strokeWidth={1.25} />
+           <h3 className="text-3xl font-light font-[family-name:var(--font-outfit)] text-foreground tracking-tight leading-none">
              Mystic Catalysts
            </h3>
         </div>
-        <p className="text-[14px] text-[--sage-600]/60 font-medium ml-9 leading-relaxed max-w-sm">
+        <p className="text-[14px] text-muted-foreground font-medium ml-9 leading-relaxed max-w-sm">
           Potent elixirs and alchemical enhancers to refine your mental frequency and focus depth.
         </p>
       </div>
@@ -49,7 +49,7 @@ export function PotionTab() {
               }}
               cornerIcon={
                 isActive ? (
-                   <Sparkles className="h-4.5 w-4.5 text-[--sage-600]/30 animate-pulse" strokeWidth={1.25} />
+                   <Sparkles className="h-4.5 w-4.5 text-primary/30 animate-pulse" strokeWidth={1.25} />
                 ) : null
               }
             >
@@ -57,16 +57,16 @@ export function PotionTab() {
                 <div className="relative shrink-0">
                    <motion.div 
                      whileHover={{ 
-                       backgroundColor: "rgba(255, 255, 255, 0.9)",
-                       borderColor: "rgba(255, 255, 255, 1)",
+                       backgroundColor: "var(--card)",
+                       borderColor: "var(--border)",
                        boxShadow: "0 24px 48px -12px rgba(107, 143, 107, 0.12)",
                        scale: 1.05
                      }}
                      transition={{ duration: 0.7 }}
                      className={cn(
                        "h-28 w-28 rounded-[40px] flex items-center justify-center text-4xl transition-all duration-1000",
-                       "bg-white/40 backdrop-blur-sm border border-white/60 shadow-sm",
-                       isActive ? "bg-[--sage-900] text-white" : "text-foreground"
+                       "bg-card/40 backdrop-blur-sm border border-border/60 shadow-sm",
+                       isActive ? "bg-foreground text-background" : "text-foreground"
                      )}
                    >
                      <span className={cn(isActive && "animate-pulse")}>{potion.emoji}</span>
@@ -74,17 +74,17 @@ export function PotionTab() {
                 </div>
 
                 <div className="space-y-4 mt-2">
-                  <p className="text-[13px] text-[--sage-900]/60 leading-relaxed font-medium line-clamp-2 px-6 italic">
+                  <p className="text-[13px] text-muted-foreground leading-relaxed font-medium line-clamp-2 px-6 italic">
                     &ldquo;{potion.description}&rdquo;
                   </p>
                   
                   <div className="flex flex-wrap items-center justify-center gap-3">
-                     <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/40 border border-white/60 text-[10px] font-bold text-[--sage-900]/30 uppercase tracking-[0.2em]">
+                     <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-card/40 border border-border/60 text-[10px] font-bold text-muted-foreground/30 uppercase tracking-[0.2em]">
                         <Clock className="h-3 w-3" strokeWidth={1.25} />
                         60m
                      </div>
                      {count > 0 && (
-                        <div className="text-[10px] font-bold text-[--sage-600] bg-[--sage-100]/60 border border-[--sage-200]/40 px-3 py-1.5 rounded-full uppercase tracking-widest">
+                        <div className="text-[10px] font-bold text-primary bg-primary/10 border border-primary/20 px-3 py-1.5 rounded-full uppercase tracking-widest">
                            {count} Available
                         </div>
                      )}
@@ -97,7 +97,7 @@ export function PotionTab() {
                  <div className="absolute top-6 right-6">
                     <Button
                       variant="ghost"
-                      className="h-9 w-9 rounded-full p-0 bg-white/70 border border-white/80 hover:bg-white text-[--warm-500] shadow-sm transition-all duration-500"
+                      className="h-9 w-9 rounded-full p-0 bg-card/70 border border-border/80 hover:bg-card text-warm-500 shadow-sm transition-all duration-500"
                     >
                        <Zap className="h-4 w-4" strokeWidth={1.5} />
                     </Button>
@@ -108,13 +108,13 @@ export function PotionTab() {
         })}
       </div>
 
-      <div className="max-w-4xl mx-auto p-12 rounded-[48px] bg-white/25 border border-white/40 backdrop-blur-sm flex flex-col sm:flex-row items-center gap-10">
-         <div className="h-20 w-20 shrink-0 bg-white/60 rounded-[32px] shadow-sm flex items-center justify-center border border-white">
-            <Info className="h-7 w-7 text-[--sage-400]" strokeWidth={1.25} />
+      <div className="max-w-4xl mx-auto p-12 rounded-[48px] bg-card/25 border border-border/40 backdrop-blur-sm flex flex-col sm:flex-row items-center gap-10">
+         <div className="h-20 w-20 shrink-0 bg-card/60 rounded-[32px] shadow-sm flex items-center justify-center border border-border">
+            <Info className="h-7 w-7 text-primary" strokeWidth={1.25} />
          </div>
          <div className="space-y-2">
-           <h4 className="text-[11px] font-bold text-[--sage-600]/40 uppercase tracking-[0.3em]">Alchemical Guidance</h4>
-           <p className="text-[15px] text-[--sage-900]/60 font-medium leading-relaxed italic text-center sm:text-left">
+           <h4 className="text-[11px] font-bold text-muted-foreground uppercase tracking-[0.3em]">Alchemical Guidance</h4>
+           <p className="text-[15px] text-muted-foreground font-medium leading-relaxed italic text-center sm:text-left">
               &ldquo;Potions are temporary catalysts. Use them wisely during peak cognitive windows. Effects do not persist across multiple focus cycles.&rdquo;
            </p>
          </div>

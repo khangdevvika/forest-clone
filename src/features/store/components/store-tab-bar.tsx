@@ -1,7 +1,7 @@
 "use client"
 
 import { AnimatedTabs } from "@/components/ui/animated-tabs"
-import { cn } from "@/lib/utils"
+
 
 const TABS = ["Trees", "Sound", "Theme", "Potion"] as const
 export type StoreTab = (typeof TABS)[number]

@@ -8,15 +8,13 @@ import { TreeGrid } from "@/features/store/components/tree-grid"
 import type { Tree } from "@/features/timer/types/tree"
 import { useUser } from "@/hooks/use-user"
 import { AnimatePresence, motion } from "framer-motion"
-import { Coins, Leaf, Sparkles, Sprout, Wind } from "lucide-react"
+import { Coins } from "lucide-react"
 import { useState } from "react"
 
 import { PotionTab } from "@/features/store/components/potion-tab"
 import { SoundTab } from "@/features/store/components/sound-tab"
 import { ThemeTab } from "@/features/store/components/theme-tab"
-import { fadeUp, scaleIn, staggerContainer } from "@/lib/animations"
-
-const gentleSpring = { type: "spring" as const, stiffness: 180, damping: 28 }
+import { fadeUp, staggerContainer } from "@/lib/animations"
 
 export default function StorePage() {
   const { coins } = useUser()
@@ -24,20 +22,20 @@ export default function StorePage() {
   const [selectedTree, setSelectedTree] = useState<Tree | null>(null)
 
   return (
-    <div className="relative min-h-screen w-full flex flex-col bg-[#F5EDD8] text-[#1A2E0A] antialiased overflow-hidden">
+    <div className="relative min-h-screen w-full flex flex-col bg-background text-foreground zen-bg antialiased overflow-hidden">
       <PageHeader title="Botanical Garden" subtitle="Discover diverse plant species and start your growing journey.">
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="group relative flex items-center gap-4 px-6 py-2.5 rounded-full bg-white border border-[#E5E7EB] shadow-sm transition-all duration-300"
+          className="group relative flex items-center gap-4 px-6 py-2.5 rounded-full bg-card border border-border/50 shadow-sm transition-all duration-300"
         >
-          <div className="h-8 w-8 bg-[#F59E0B] rounded-full flex items-center justify-center shadow-md">
+          <div className="h-8 w-8 bg-warm-500 rounded-full flex items-center justify-center shadow-md">
             <Coins className="h-4 w-4 text-white" strokeWidth={2} />
           </div>
           <div className="flex flex-col items-start">
-            <span className="text-[10px] font-bold text-[#6B7280] uppercase tracking-[0.1em] leading-none mb-1">Clover Coins</span>
+            <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-[0.1em] leading-none mb-1">Clover Coins</span>
             <div className="flex items-baseline gap-1">
-              <span className="text-2xl font-semibold tabular-nums tracking-tight leading-none text-[#1A2E0A]">{coins.toLocaleString()}</span>
+              <span className="text-2xl font-semibold tabular-nums tracking-tight leading-none text-foreground">{coins.toLocaleString()}</span>
             </div>
           </div>
         </motion.div>
@@ -46,11 +44,9 @@ export default function StorePage() {
       <ScrollArea className="flex-1 w-full relative z-10 no-scrollbar">
         <div className="max-w-6xl mx-auto px-8 py-10 pb-40">
           <motion.div variants={staggerContainer} initial="hidden" animate="show" className="space-y-12">
-            {/* Tab Switcher - Solid White */}
+            {/* Tab Switcher - Simple and Zen */}
             <motion.div variants={fadeUp} className="flex justify-center">
-              <div className="relative p-1 rounded-full bg-white border border-[#E5E7EB] shadow-sm">
-                <StoreTabBar activeTab={activeTab} onChange={setActiveTab} />
-              </div>
+              <StoreTabBar activeTab={activeTab} onChange={setActiveTab} />
             </motion.div>
 
             <AnimatePresence mode="wait">
@@ -58,8 +54,8 @@ export default function StorePage() {
                 {activeTab === "Trees" ? (
                   <div className="space-y-12">
                     <div className="flex flex-col gap-2 px-4 mb-4">
-                      <h2 className="text-[18px] font-bold text-[#1A2E0A]">Featured Collection</h2>
-                      <p className="text-[14px] text-[#6B7280]">Select your next botanical companion to start growing together.</p>
+                      <h2 className="text-[18px] font-bold text-foreground">Featured Collection</h2>
+                      <p className="text-[14px] text-muted-foreground">Select your next botanical companion to start growing together.</p>
                     </div>
                     <TreeGrid activeTab="Classic" onSelect={setSelectedTree} />
                   </div>

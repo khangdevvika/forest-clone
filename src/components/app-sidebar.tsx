@@ -4,8 +4,8 @@ import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupConte
 import { useTheme } from "@/hooks/use-theme"
 import { useUser } from "@/hooks/use-user"
 import { cn } from "@/lib/utils"
-import { AnimatePresence, motion, useMotionValue } from "framer-motion"
-import { BarChart3, Coins, Flame, Home, Leaf, ListTodo, ShoppingBag, TreeDeciduous, Trophy, User } from "lucide-react"
+import { AnimatePresence, motion } from "framer-motion"
+import { Coins, Flame, Home, Leaf, ListTodo, ShoppingBag, TreeDeciduous, Trophy, User } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import React from "react"
@@ -16,7 +16,6 @@ const gentleSpring = { type: "spring" as const, stiffness: 180, damping: 28 }
 
 const navMain = [
   { title: "Home", url: "/", icon: Home },
-  { title: "Stats", url: "/stats", icon: BarChart3 },
   { title: "Garden", url: "/garden", icon: Leaf },
   { title: "Tasks", url: "/tasks", icon: ListTodo },
   { title: "Achievements", url: "/achievements", icon: Trophy },
@@ -31,15 +30,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { theme, setTheme } = useTheme()
   const isExpanded = state === "expanded"
 
-  // Motion values for global refined interactions
-  const mouseX = useMotionValue(0)
-  const mouseY = useMotionValue(0)
-
-  function handleMouseMove({ currentTarget, clientX, clientY }: React.MouseEvent) {
-    const { left, top } = currentTarget.getBoundingClientRect()
-    mouseX.set(clientX - left)
-    mouseY.set(clientY - top)
-  }
 
   // Consistent Glass Style Tokens
   const glassStyle = "bg-white/5 border border-white/10 backdrop-blur-sm"

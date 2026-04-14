@@ -8,9 +8,9 @@ import { cva, type VariantProps } from "class-variance-authority"
 const tabsContainerVariants = cva("flex", {
   variants: {
     variant: {
-      default: "bg-muted/50 p-1 rounded-xl border border-border/50",
-      card: "gap-1 w-fit bg-white/40 border border-white/60 rounded-xl p-1 items-center flex shadow-sm",
-      glass: "relative items-center p-1 rounded-2xl backdrop-blur-sm self-center mx-auto bg-[var(--timer-glass)] border-solid border border-[var(--timer-glass-border)]",
+      default: "bg-muted/30 p-1 rounded-full border border-border/40",
+      card: "gap-3 w-fit bg-white/40 border border-white/60 rounded-full p-1.5 items-center flex shadow-sm",
+      glass: "relative items-center p-1 rounded-full backdrop-blur-sm self-center mx-auto bg-[var(--timer-glass)] border-solid border border-[var(--timer-glass-border)]",
     },
   },
   defaultVariants: {
@@ -21,9 +21,9 @@ const tabsContainerVariants = cva("flex", {
 const tabVariants = cva("relative transition-all duration-300 outline-none z-0", {
   variants: {
     variant: {
-      default: "px-4 py-1.5 text-xs font-semibold rounded-lg",
-      card: "px-6 py-2 rounded-lg text-[10px] font-black uppercase tracking-[0.2em]",
-      glass: "group flex items-center h-10 px-5 rounded-xl text-[14px] font-medium font-sans isolation-auto select-none",
+      default: "px-5 py-2 text-xs font-medium rounded-full",
+      card: "px-10 py-3 rounded-full text-[10px] font-bold uppercase tracking-[0.25em]",
+      glass: "group flex items-center h-10 px-5 rounded-full text-[14px] font-medium font-sans isolation-auto select-none",
     },
     active: {
       true: "",
@@ -32,7 +32,7 @@ const tabVariants = cva("relative transition-all duration-300 outline-none z-0",
   },
   compoundVariants: [
     { variant: "default", active: true, className: "text-primary-foreground" },
-    { variant: "default", active: false, className: "text-muted-foreground hover:text-foreground" },
+    { variant: "default", active: false, className: "text-muted-foreground/70 hover:text-foreground" },
     { variant: "card", active: true, className: "text-[--sage-700]" },
     { variant: "card", active: false, className: "text-[--sage-600]/40 hover:text-[--sage-600]/80" },
     { variant: "glass", active: true, className: "text-[--timer-text]" },
@@ -47,9 +47,9 @@ const tabVariants = cva("relative transition-all duration-300 outline-none z-0",
 const indicatorVariants = cva("absolute inset-0 z-[-1]", {
   variants: {
     variant: {
-      default: "bg-primary rounded-lg",
-      card: "bg-white rounded-lg shadow-md border border-white",
-      glass: "bg-white/90 shadow-[0_1px_4px_rgba(0,0,0,0.06)] dark:bg-white/10 rounded-[inherit]",
+      default: "bg-primary rounded-full shadow-sm",
+      card: "bg-white rounded-full shadow-md border border-white",
+      glass: "bg-white/90 shadow-[0_1px_4px_rgba(0,0,0,0.06)] dark:bg-white/10 rounded-full",
     },
   },
   defaultVariants: {
@@ -72,15 +72,7 @@ export interface AnimatedTabsProps extends VariantProps<typeof tabsContainerVari
   transition?: Transition
 }
 
-export function AnimatedTabs({
-  tabs,
-  activeTab,
-  onChange,
-  layoutId = "animated-tabs",
-  variant = "default",
-  className,
-  transition = { type: "spring", stiffness: 300, damping: 30 },
-}: AnimatedTabsProps) {
+export function AnimatedTabs({ tabs, activeTab, onChange, layoutId = "animated-tabs", variant = "default", className, transition }: AnimatedTabsProps) {
   const normalizedTabs = tabs.map((tab) => {
     if (typeof tab === "string") {
       return { id: tab, label: tab }
@@ -88,7 +80,6 @@ export function AnimatedTabs({
     return tab
   })
 
-  // Set default transitions per variant if not overridden
   const activeTransition = transition || (variant === "card" ? { type: "spring", bounce: 0.15, duration: 0.5 } : { type: "spring", stiffness: 300, damping: 30 })
 
   return (

@@ -1,4 +1,5 @@
 import { Session } from "@/features/timer/types/session";
+import { Tag } from "@/features/timer/constants/tags";
 import { 
   startOfWeek, 
   endOfWeek, 
@@ -52,7 +53,7 @@ export const getWeeklyData = (sessions: Session[], dateRange: { start: Date; end
 /**
  * Groups session duration by tag
  */
-export const getTagDistribution = (sessions: Session[], tags: any[]): TagDistribution[] => {
+export const getTagDistribution = (sessions: Session[], tags: Tag[]): TagDistribution[] => {
   const distribution: Record<string, number> = {};
 
   sessions.forEach(s => {

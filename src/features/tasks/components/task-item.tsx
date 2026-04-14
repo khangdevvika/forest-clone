@@ -22,7 +22,7 @@ const categoryStyles: Record<TaskCategory, string> = {
 }
 
 export function TaskItem({ task }: TaskItemProps) {
-  const [tasks, setTasks] = useAtom(tasksAtom)
+  const [, setTasks] = useAtom(tasksAtom)
   const [activeTaskId, setActiveTaskId] = useAtom(activeTaskIdAtom)
   const { addCoins } = useUser()
 

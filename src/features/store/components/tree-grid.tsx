@@ -4,11 +4,9 @@ import { STORE_TREES } from "@/features/timer/constants/trees"
 import type { Tree } from "@/features/timer/types/tree"
 import { useUser } from "@/hooks/use-user"
 import { cn } from "@/lib/utils"
-import { AnimatePresence, motion } from "framer-motion"
-import { Lock, Sparkles, Leaf } from "lucide-react"
+import { AnimatePresence } from "framer-motion"
 import Image from "next/image"
 import { StoreCard } from "./store-card"
-import { gentleSpring } from "@/lib/animations"
 
 interface TreeGridProps {
   activeTab: string

@@ -3,7 +3,7 @@
 import { FireflySidebar, AmbianceSidebar, LuminousSidebar } from "@/components/sidebar-v2/variations"
 import { motion, AnimatePresence } from "framer-motion"
 import { useState } from "react"
-import { Sparkles, Palette, Zap, Layout, Eye } from "lucide-react"
+import { Sparkles, Palette, Zap, Eye } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 export default function SidebarLabPage() {

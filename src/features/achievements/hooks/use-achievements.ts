@@ -15,6 +15,7 @@ export function useAchievements() {
     bestStreak: streak,
     ownedTrees: unlockedTrees.length,
     completedTasks: tasks.filter((t) => t.isCompleted).length,
+    longestSessionMinutes: Math.max(0, ...sessions.map((s) => s.durationMinutes)),
   }
 
   const unlockedIds = ACHIEVEMENTS.filter((a) => a.requirement(stats)).map((a) => a.id)

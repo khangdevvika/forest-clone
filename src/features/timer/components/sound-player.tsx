@@ -15,21 +15,20 @@ export function SoundPlayer() {
     if (!audioRef.current || !sound) return
 
     const audio = audioRef.current
-    audio.volume = volume
     
     // We only call play() if the audio is paused
     if (audio.paused) {
       const playPromise = audio.play()
       if (playPromise !== undefined) {
         playPromise.catch((error) => {
-          // Ignore autopaly blocking errors, but log others as warnings
+          // Ignore autoplay blocking errors, but log others as warnings
           if (error.name !== "NotAllowedError" && error.name !== "AbortError") {
             console.warn("Audio playback issue:", error)
           }
         })
       }
     }
-  }, [sound])
+  }, [sound, volume])
 
   // Sync volume separately to avoid re-triggering playback logic
   useEffect(() => {
