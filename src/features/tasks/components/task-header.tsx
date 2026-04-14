@@ -5,6 +5,8 @@ import { motion } from "framer-motion"
 import { useAtomValue } from "jotai"
 import { Sparkles, Target } from "lucide-react"
 
+const gentleSpring = { type: "spring" as const, stiffness: 160, damping: 28 }
+
 export function TaskHeader() {
   const tasks = useAtomValue(tasksAtom)
   const dailyGoal = useAtomValue(dailyGoalAtom)
@@ -16,46 +18,89 @@ export function TaskHeader() {
     <div className="mb-12">
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div>
-          <motion.h1 initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="text-4xl md:text-5xl font-display font-bold text-foreground mb-2">
+          <motion.div
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ ...gentleSpring }}
+            className="eco-island inline-flex items-center gap-2 px-3 py-1.5 rounded-2xl mb-4"
+          >
+            <Target className="w-3.5 h-3.5 text-primary" strokeWidth={1.25} />
+            <span className="text-[10px] font-bold uppercase tracking-[0.28em] text-primary/80">Daily Focus</span>
+          </motion.div>
+
+          <motion.h1
+            initial={{ opacity: 0, x: -20, filter: "blur(4px)" }}
+            animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+            transition={{ delay: 0.05, ...gentleSpring }}
+            className="text-4xl md:text-5xl font-extralight text-foreground mb-2 tracking-tight"
+            style={{ fontFamily: "var(--font-outfit)", letterSpacing: "-0.02em" }}
+          >
             Tasks for Today
           </motion.h1>
-          <motion.p initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 }} className="text-muted-foreground font-light text-lg">
+          <motion.p
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.1, ...gentleSpring }}
+            className="text-muted-foreground font-light text-lg"
+          >
             Stay focused, grow your garden step by step.
           </motion.p>
         </div>
 
+        {/* iOS 26: Plate progress panel */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.2 }}
-          className="flex items-center gap-6 p-4 rounded-3xl bg-card/60 border border-border/40 backdrop-blur-sm"
+          initial={{ opacity: 0, scale: 0.92, y: 10 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ delay: 0.18, ...gentleSpring }}
+          className="plate flex items-center gap-6 p-5 rounded-[1.75rem] relative overflow-hidden"
         >
-          <div className="flex flex-col items-center gap-1 min-w-[80px]">
-            <div className="relative w-12 h-12 flex items-center justify-center">
-              <svg className="w-full h-full transform -rotate-90">
-                <circle cx="24" cy="24" r="20" fill="none" stroke="currentColor" strokeWidth="3" className="text-muted/20" />
-                <motion.circle
-                  cx="24"
-                  cy="24"
-                  r="20"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="3"
-                  strokeDasharray="125.66"
-                  initial={{ strokeDashoffset: 125.66 }}
-                  animate={{ strokeDashoffset: 125.66 - (progress / 100) * 125.66 }}
-                  transition={{ duration: 1, ease: "easeOut" }}
-                  className="text-primary"
-                />
-              </svg>
-              <Target className="absolute w-5 h-5 text-primary" />
-            </div>
-            <span className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground">Goal</span>
+          {/* Rim light */}
+          <div
+            className="absolute inset-x-0 top-0 h-px pointer-events-none"
+            style={{ background: "linear-gradient(90deg, transparent, var(--rim-light) 50%, transparent)" }}
+          />
+          {/* Aura glow */}
+          <div
+            className="absolute top-0 right-0 w-24 h-24 rounded-full translate-x-8 -translate-y-8 pointer-events-none"
+            style={{ background: "var(--aura-primary)", filter: "blur(24px)" }}
+          />
+
+          {/* Progress ring */}
+          <div className="relative w-14 h-14 flex items-center justify-center shrink-0">
+            <div
+              className="absolute inset-0 rounded-full"
+              style={{ boxShadow: "0 0 12px var(--aura-primary)", opacity: 0.7 }}
+            />
+            <svg className="w-full h-full transform -rotate-90">
+              <circle cx="28" cy="28" r="24" fill="none" stroke="currentColor" strokeWidth="2.5" className="text-muted/20" />
+              <motion.circle
+                cx="28"
+                cy="28"
+                r="24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeDasharray="150.8"
+                initial={{ strokeDashoffset: 150.8 }}
+                animate={{ strokeDashoffset: 150.8 - (progress / 100) * 150.8 }}
+                transition={{ duration: 1.5, ease: "circOut" }}
+                className="text-primary"
+                style={{ filter: "drop-shadow(0 0 3px var(--primary))" }}
+              />
+            </svg>
+            <Target className="absolute w-5 h-5 text-primary" strokeWidth={1.25} />
           </div>
 
-          <div className="flex flex-col gap-1">
+          {/* Counts */}
+          <div className="flex flex-col gap-1 relative z-10">
             <div className="flex items-baseline gap-2">
-              <span className="text-3xl font-display font-bold text-foreground">{completedToday}</span>
+              <span
+                className="text-3xl font-light text-foreground"
+                style={{ fontFamily: "var(--font-outfit)" }}
+              >
+                {completedToday}
+              </span>
               <span className="text-muted-foreground font-light text-sm">/ {dailyGoal}</span>
             </div>
             <div className="text-xs text-muted-foreground flex items-center gap-1">

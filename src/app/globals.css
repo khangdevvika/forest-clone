@@ -1,10 +1,10 @@
 @import "tailwindcss";
 
 :root {
-  /* ─────────────────────────────────────────────────────────
-     FOREST CLONE — ADVANCED THEME ENGINE (SEMANTIC TOKENS)
-     Direction: Zen Organic Nature Moods
-  ───────────────────────────────────────────────────────── */
+  /* ─────────────────────────────────────────────────────────────
+     FOREST CLONE — iOS 26 "ETHEREAL FOREST" DESIGN SYSTEM
+     Spatial Organic · Liquid Glass · Phygital Touch
+  ───────────────────────────────────────────────────────────── */
 
   /* ── Palette Base (Sage & Cream) ───────────────────────── */
   --sage-50: #f4f7f3;
@@ -29,18 +29,17 @@
   --cream-800: #2d3e2b;
   --cream-900: #1b2b1a;
 
-  /* ── Shared Fixed Constants ────────────────────────────── */
-  --radius: 0.8rem;
-
-  /* ── Warm accent (coins, highlights) ─────────────────── */
+  /* ── Warm accent ─────────────────────────────────────── */
   --warm-400: #d4af82;
   --warm-500: #c8a882;
   --warm-600: #b8926a;
+
+  /* ── Shared Fixed Constants ────────────────────────────── */
+  --radius: 1rem;
 }
 
 /* ─────────────────────────────────────────────────────────────
-   MOOD 1: SAGE CREAM (Original Light)
-   Class: .sage or default :root
+   MOOD 1: SAGE CREAM (Light)
 ───────────────────────────────────────────────────────────── */
 .sage,
 :root {
@@ -63,6 +62,26 @@
   --popover: var(--cream-50);
   --popover-foreground: var(--cream-900);
 
+  /* iOS 26: Aura glow tints */
+  --aura-primary: rgba(107, 143, 107, 0.18);
+  --aura-accent: rgba(212, 175, 130, 0.12);
+
+  /* iOS 26: Rim light (1px top border on elevated elements) */
+  --rim-light: rgba(255, 255, 255, 0.9);
+  --rim-shadow: rgba(107, 143, 107, 0.08);
+
+  /* iOS 26: Plate system (liquid glass panels) */
+  --plate-bg: rgba(255, 255, 255, 0.55);
+  --plate-border: rgba(255, 255, 255, 0.8);
+  --plate-shadow: 0 8px 32px rgba(107, 143, 107, 0.1), 0 2px 8px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+
+  /* iOS 26: Elevation shadow scale */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04), 0 0 0 0.5px rgba(0, 0, 0, 0.03);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06), 0 0 0 0.5px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.1), 0 4px 16px rgba(0, 0, 0, 0.06);
+  --shadow-xl: 0 40px 80px rgba(0, 0, 0, 0.14), 0 8px 30px rgba(0, 0, 0, 0.08);
+
   /* Timer Page */
   --timer-bg-from: #d6e5d3;
   --timer-bg-mid: #c2d8be;
@@ -81,8 +100,7 @@
 }
 
 /* ─────────────────────────────────────────────────────────────
-   MOOD 2: FOREST FLOOR (Original Dark)
-   Class: .forest or .dark (for compatibility)
+   MOOD 2: FOREST FLOOR (Dark)
 ───────────────────────────────────────────────────────────── */
 .forest,
 .dark {
@@ -105,7 +123,21 @@
   --popover: #22311f;
   --popover-foreground: #e8ede6;
 
-  /* Timer Page - Deep Woods */
+  --aura-primary: rgba(123, 168, 123, 0.14);
+  --aura-accent: rgba(212, 175, 130, 0.08);
+  --rim-light: rgba(255, 255, 255, 0.07);
+  --rim-shadow: rgba(0, 0, 0, 0.3);
+  --plate-bg: rgba(34, 49, 31, 0.85);
+  --plate-border: rgba(107, 168, 107, 0.15);
+  --plate-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 2px 8px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.12), 0 0 0 0.5px rgba(0, 0, 0, 0.1);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2), 0 0 0 0.5px rgba(0, 0, 0, 0.12);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.28), 0 2px 8px rgba(0, 0, 0, 0.16);
+  --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.38), 0 4px 16px rgba(0, 0, 0, 0.22);
+  --shadow-xl: 0 40px 80px rgba(0, 0, 0, 0.5), 0 8px 30px rgba(0, 0, 0, 0.3);
+
+  /* Timer Page */
   --timer-bg-from: #1b2b1a;
   --timer-bg-mid: #22311f;
   --timer-bg-to: #1a2818;
@@ -124,7 +156,6 @@
 
 /* ─────────────────────────────────────────────────────────────
    MOOD 3: SUNSET AMBER
-   Class: .sunset
 ───────────────────────────────────────────────────────────── */
 .sunset {
   --background: #faf7f2;
@@ -144,7 +175,20 @@
   --card: #ffffff;
   --card-foreground: #4a3728;
 
-  /* Timer Page - Warm Dusk */
+  --aura-primary: rgba(212, 140, 69, 0.16);
+  --aura-accent: rgba(238, 199, 154, 0.1);
+  --rim-light: rgba(255, 255, 255, 0.95);
+  --rim-shadow: rgba(212, 140, 69, 0.06);
+  --plate-bg: rgba(255, 255, 255, 0.6);
+  --plate-border: rgba(255, 255, 255, 0.85);
+  --plate-shadow: 0 8px 32px rgba(212, 140, 69, 0.1), 0 2px 8px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 40px 80px rgba(0, 0, 0, 0.14);
+
   --timer-bg-from: #f8e8d5;
   --timer-bg-mid: #f2d5b5;
   --timer-bg-to: #eec79a;
@@ -153,7 +197,6 @@
   --timer-glass: rgba(255, 255, 255, 0.5);
   --timer-glass-border: rgba(255, 255, 255, 0.7);
 
-  /* Sidebar */
   --sidebar-background: #4a3728;
   --sidebar-foreground: #f8efe4;
   --sidebar-accent: rgba(212, 140, 69, 0.15);
@@ -163,7 +206,6 @@
 
 /* ─────────────────────────────────────────────────────────────
    MOOD 4: MIDNIGHT OCEAN
-   Class: .midnight
 ───────────────────────────────────────────────────────────── */
 .midnight {
   --background: #0f172a;
@@ -183,7 +225,20 @@
   --card: #141d2e;
   --card-foreground: #e2e8f0;
 
-  /* Timer Page - Deep Ocean */
+  --aura-primary: rgba(56, 189, 248, 0.12);
+  --aura-accent: rgba(125, 211, 252, 0.08);
+  --rim-light: rgba(255, 255, 255, 0.06);
+  --rim-shadow: rgba(0, 0, 0, 0.4);
+  --plate-bg: rgba(20, 29, 46, 0.88);
+  --plate-border: rgba(56, 189, 248, 0.12);
+  --plate-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.2);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.5);
+  --shadow-xl: 0 40px 80px rgba(0, 0, 0, 0.6);
+
   --timer-bg-from: #0f172a;
   --timer-bg-mid: #141d2e;
   --timer-bg-to: #0c1221;
@@ -192,7 +247,6 @@
   --timer-glass: rgba(255, 255, 255, 0.05);
   --timer-glass-border: rgba(255, 255, 255, 0.08);
 
-  /* Sidebar */
   --sidebar-background: #0c1221;
   --sidebar-foreground: #e2e8f0;
   --sidebar-accent: rgba(56, 189, 248, 0.15);
@@ -202,7 +256,6 @@
 
 /* ─────────────────────────────────────────────────────────────
    MOOD 5: ROSE QUARTZ
-   Class: .rose
 ───────────────────────────────────────────────────────────── */
 .rose {
   --background: #fdf8f9;
@@ -222,7 +275,20 @@
   --card: #ffffff;
   --card-foreground: #5a4b4f;
 
-  /* Timer Page - Cherry Blossom */
+  --aura-primary: rgba(212, 165, 178, 0.18);
+  --aura-accent: rgba(249, 223, 231, 0.12);
+  --rim-light: rgba(255, 255, 255, 0.95);
+  --rim-shadow: rgba(212, 165, 178, 0.08);
+  --plate-bg: rgba(255, 255, 255, 0.6);
+  --plate-border: rgba(255, 255, 255, 0.9);
+  --plate-shadow: 0 8px 32px rgba(212, 165, 178, 0.12), 0 2px 8px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 40px 80px rgba(0, 0, 0, 0.14);
+
   --timer-bg-from: #fceef2;
   --timer-bg-mid: #f9dfe7;
   --timer-bg-to: #f4cfda;
@@ -231,7 +297,6 @@
   --timer-glass: rgba(255, 255, 255, 0.55);
   --timer-glass-border: rgba(255, 255, 255, 0.7);
 
-  /* Sidebar */
   --sidebar-background: #5a4b4f;
   --sidebar-foreground: #fdf8f9;
   --sidebar-accent: rgba(212, 165, 178, 0.15);
@@ -241,7 +306,6 @@
 
 /* ─────────────────────────────────────────────────────────────
    MOOD 6: EMERALD LUSH
-   Class: .emerald
 ───────────────────────────────────────────────────────────── */
 .emerald {
   --background: #06281a;
@@ -261,7 +325,20 @@
   --card: #0d3d29;
   --card-foreground: #e1f3ec;
 
-  /* Timer Page - Tropical Lush */
+  --aura-primary: rgba(16, 185, 129, 0.14);
+  --aura-accent: rgba(167, 217, 198, 0.08);
+  --rim-light: rgba(255, 255, 255, 0.06);
+  --rim-shadow: rgba(0, 0, 0, 0.35);
+  --plate-bg: rgba(13, 61, 41, 0.88);
+  --plate-border: rgba(16, 185, 129, 0.15);
+  --plate-shadow: 0 8px 32px rgba(0, 0, 0, 0.38), 0 2px 8px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.16);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.24);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.34);
+  --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.44);
+  --shadow-xl: 0 40px 80px rgba(0, 0, 0, 0.55);
+
   --timer-bg-from: #06281a;
   --timer-bg-mid: #0b3d29;
   --timer-bg-to: #052618;
@@ -270,7 +347,6 @@
   --timer-glass: rgba(255, 255, 255, 0.05);
   --timer-glass-border: rgba(255, 255, 255, 0.1);
 
-  /* Sidebar */
   --sidebar-background: #052618;
   --sidebar-foreground: #e1f3ec;
   --sidebar-accent: rgba(16, 185, 129, 0.15);
@@ -360,21 +436,29 @@ body {
   overflow: hidden;
 }
 
+/* ─── iOS 26: Grain Texture Overlay ─────────────────────── */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
   z-index: 9999;
   pointer-events: none;
-  opacity: 0.035;
+  opacity: 0.025;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
   background-size: 200px 200px;
   background-repeat: repeat;
 }
 
+/* ─── Timer / Zen Backgrounds ─────────────────────────────── */
 .timer-bg {
   background:
-    radial-gradient(ellipse at 72% 8%, var(--primary) 0.08, transparent 55%), radial-gradient(ellipse at 20% 90%, var(--primary) 0.05, transparent 45%),
+    radial-gradient(ellipse at 72% 8%, var(--aura-primary) 0%, transparent 55%), radial-gradient(ellipse at 20% 90%, var(--aura-accent) 0%, transparent 45%),
+    linear-gradient(160deg, var(--timer-bg-from) 0%, var(--timer-bg-mid) 50%, var(--timer-bg-to) 100%);
+}
+
+.zen-bg {
+  background:
+    radial-gradient(ellipse at 72% 8%, var(--aura-primary) 0%, transparent 55%), radial-gradient(ellipse at 20% 90%, var(--aura-accent) 0%, transparent 45%),
     linear-gradient(160deg, var(--timer-bg-from) 0%, var(--timer-bg-mid) 50%, var(--timer-bg-to) 100%);
 }
 
@@ -397,11 +481,102 @@ body::before {
   animation: bg-breathe 60s ease-in-out infinite;
 }
 
-.zen-bg {
-  background:
-    radial-gradient(ellipse at 72% 8%, rgba(107, 143, 107, 0.15) 0%, transparent 55%), 
-    radial-gradient(ellipse at 20% 90%, rgba(107, 143, 107, 0.1) 0%, transparent 45%),
-    linear-gradient(160deg, var(--timer-bg-from) 0%, var(--timer-bg-mid) 50%, var(--timer-bg-to) 100%);
+/* ─── iOS 26: Plate System (Liquid Glass Panels) ──────────── */
+/* High altitude — primary cards, modals */
+.plate {
+  background: var(--plate-bg);
+  border: 1px solid var(--plate-border);
+  box-shadow: var(--plate-shadow);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+
+/* Low altitude — secondary containers */
+.plate-subtle {
+  background: var(--plate-bg);
+  border: 1px solid var(--plate-border);
+  box-shadow:
+    0 4px 16px var(--rim-shadow),
+    inset 0 1px 0 var(--rim-light);
+  backdrop-filter: blur(8px) saturate(140%);
+  -webkit-backdrop-filter: blur(8px) saturate(140%);
+}
+
+/* ─── iOS 26: Elevation Utilities ────────────────────────── */
+.elevation-1 {
+  box-shadow: var(--shadow-xs);
+}
+.elevation-2 {
+  box-shadow: var(--shadow-sm);
+}
+.elevation-3 {
+  box-shadow: var(--shadow-md);
+}
+.elevation-4 {
+  box-shadow: var(--shadow-lg);
+}
+.elevation-5 {
+  box-shadow: var(--shadow-xl);
+}
+
+/* ─── iOS 26: Spatial Lift on Hover ─────────────────────── */
+.lift {
+  transition:
+    transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.3s ease;
+}
+.lift:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+}
+.lift:active {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+/* ─── iOS 26: Phygital Press Feedback ───────────────────── */
+.press {
+  transition:
+    transform 0.12s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.12s ease;
+  cursor: pointer;
+}
+.press:active {
+  transform: scale(0.96) translateY(2px);
+  box-shadow: var(--shadow-xs);
+}
+
+/* ─── iOS 26: Aura Glow on interactive elements ─────────── */
+.btn-aura {
+  position: relative;
+  isolation: isolate;
+}
+.btn-aura::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: inherit;
+  background: var(--aura-primary);
+  filter: blur(10px);
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.btn-aura:hover::after,
+.btn-aura:focus-visible::after {
+  opacity: 1;
+}
+
+/* ─── iOS 26: Eco-Island (floating header chip) ──────────── */
+.eco-island {
+  background: var(--plate-bg);
+  border: 1px solid var(--plate-border);
+  box-shadow:
+    0 0 0 1px var(--rim-shadow),
+    var(--shadow-md),
+    inset 0 1px 0 var(--rim-light);
+  backdrop-filter: blur(24px) saturate(200%);
+  -webkit-backdrop-filter: blur(24px) saturate(200%);
 }
 
 /* ─── Scrollbar ──────────────────────────────────────────── */
@@ -412,8 +587,96 @@ body::before {
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
-
 .no-scrollbar {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   GLASS-OFF MODE  ·  [data-glass="off"] on <html>
+   ───────────────────────────────────────────────────────────
+   This is the SINGLE MAINTENANCE POINT for the glass toggle.
+   When glass is disabled, every glass utility class below drops
+   its backdrop-filter, blur, and heavy box-shadows and falls
+   back to a clean, solid, performant alternative.
+
+   To add a new glass-aware utility in future:
+     1. Define the glass version normally (e.g. .my-glass-thing)
+     2. Add the solid fallback here under [data-glass="off"]
+   That's it — no component code changes needed.
+═══════════════════════════════════════════════════════════ */
+
+/* ── Disable grain overlay (expensive SVG filter) ───────── */
+[data-glass="off"] body::before {
+  display: none;
+}
+
+/* ── Disable background aura gradients ───────────────────── */
+[data-glass="off"] .timer-bg,
+[data-glass="off"] .zen-bg {
+  background: var(--background);
+}
+
+/* ── Hide ambient aura blob layers ──────────────────────────
+   .aura-blob is a marker class placed on the wrapper <div>
+   that contains the decorative radial-gradient blob children.
+   Add .aura-blob to any new blob wrapper — it auto-hides here.
+─────────────────────────────────────────────────────────── */
+[data-glass="off"] .aura-blob {
+  display: none;
+}
+
+/* ── .plate → solid card ────────────────────────────────── */
+[data-glass="off"] .plate {
+  background: var(--card);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+
+/* ── .plate-subtle → lighter solid card ─────────────────── */
+[data-glass="off"] .plate-subtle {
+  background: var(--card);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-xs);
+}
+
+/* ── .eco-island → flat pill ─────────────────────────────── */
+[data-glass="off"] .eco-island {
+  background: var(--card);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-xs);
+}
+
+/* ── .btn-aura → remove pseudo-element glow ─────────────── */
+[data-glass="off"] .btn-aura::after {
+  display: none;
+}
+
+/* ── .lift → keep hover lift, remove heavy shadow ────────── */
+[data-glass="off"] .lift:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+/* ── Global header → solid opaque background ─────────────── */
+[data-glass="off"] header {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  background: var(--background) !important;
+}
+
+/* ── Transition smoothing when toggling ──────────────────── */
+.plate,
+.plate-subtle,
+.eco-island {
+  transition:
+    background 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
