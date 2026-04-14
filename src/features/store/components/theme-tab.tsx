@@ -95,7 +95,7 @@ export function ThemeTab() {
                   />
 
                   {/* Internal Reflection Effect — Premium Glassy layer */}
-                  <div className="absolute inset-0 bg-card/5 backdrop-blur-[2px]" />
+                  <div className="absolute inset-0 bg-card/10" />
                   <div className="absolute inset-0 bg-linear-to-b from-card/10 via-transparent to-black/5" />
 
                   <Sparkles className="absolute inset-0 m-auto h-8 w-8 text-white/30 mix-blend-overlay" strokeWidth={0.75} />

@@ -30,7 +30,7 @@ interface CustomTooltipProps {
 const CustomTooltip = ({ active, payload, label }: CustomTooltipProps) => {
   if (active && payload && payload.length) {
     return (
-      <div className="bg-card/70 border border-border/50 backdrop-blur-md px-4 py-3 rounded-2xl shadow-xl ring-1 ring-black/5">
+      <div className="bg-card/90 border border-border/50 px-4 py-3 rounded-2xl shadow-xl ring-1 ring-black/5">
         <p className="text-[10px] uppercase tracking-wider font-bold text-muted-foreground mb-1.5">{label}</p>
         <p className="text-[16px] font-semibold font-[family-name:var(--font-outfit)] text-foreground">
           {formatMinutes(payload[0].value)}
@@ -66,7 +66,7 @@ export function StatsContent({ sessions }: StatsContentProps) {
       {/* Main Charts Grid */}
       <section className="grid grid-cols-1 lg:grid-cols-5 gap-8">
         {/* Bar Chart - 3 cols */}
-        <motion.div variants={scaleIn} className="lg:col-span-3 bg-card/30 border border-border/50 backdrop-blur-sm rounded-[32px] p-8">
+        <motion.div variants={scaleIn} className="lg:col-span-3 bg-card/45 border border-border/50 rounded-[32px] p-8">
           <div className="flex items-center justify-between mb-8">
             <div>
               <h4 className="text-sm font-bold text-foreground flex items-center gap-2">
@@ -91,7 +91,7 @@ export function StatsContent({ sessions }: StatsContentProps) {
         </motion.div>
 
         {/* Donut Chart - 2 cols */}
-        <motion.div variants={scaleIn} className="lg:col-span-2 bg-card/30 border border-border/50 backdrop-blur-sm rounded-[32px] p-8 flex flex-col">
+        <motion.div variants={scaleIn} className="lg:col-span-2 bg-card/45 border border-border/50 rounded-[32px] p-8 flex flex-col">
           <h4 className="text-sm font-bold text-foreground flex items-center gap-2 mb-8">
             <TagIcon className="w-4 h-4" strokeWidth={1.25} />
             Category Breakdown
@@ -135,7 +135,7 @@ export function StatsContent({ sessions }: StatsContentProps) {
       </motion.section>
 
       {/* Export Section */}
-      <section className="flex items-center justify-between bg-card/30 border border-border/50 backdrop-blur-sm rounded-[32px] p-6 px-10">
+      <section className="flex items-center justify-between bg-card/45 border border-border/50 rounded-[32px] p-6 px-10">
         <div className="flex flex-col gap-1">
           <h4 className="text-sm font-bold text-foreground flex items-center gap-2">
             <Download className="w-4 h-4" strokeWidth={1.25} />

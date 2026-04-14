@@ -18,7 +18,7 @@ const buttonVariants = cva(
         "3d": "bg-primary text-primary-foreground shadow-[0_6px_0_var(--color-primary-dark),0_12px_24px_rgba(0,0,0,0.2)] hover:brightness-110 active:shadow-[0_2px_0_var(--color-primary-dark)] active:translate-y-1 transition-all",
         "3d-danger":
           "bg-red-500/80 text-white border-red-400/20 shadow-[0_4px_0_rgb(153,27,27),0_10px_20px_rgba(0,0,0,0.15)] hover:bg-red-500/90 active:shadow-[0_1px_0_rgb(153,27,27)] active:translate-y-0.5 transition-all",
-        glass: "bg-white/35 border border-white/50 backdrop-blur-sm text-foreground hover:bg-white/50 transition-colors",
+        glass: "bg-white/45 border border-white/50 text-foreground hover:bg-white/50 transition-colors",
         "3d-store": "bg-primary text-primary-foreground border-b-4 border-primary-foreground/20 active:border-b-0 transition-all font-bold uppercase tracking-widest text-xs",
         "3d-secondary": "bg-secondary text-secondary-foreground border-b-4 border-secondary-foreground/10 active:border-b-0 transition-all font-bold uppercase tracking-widest text-xs",
         "3d-gold":

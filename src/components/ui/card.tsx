@@ -6,8 +6,8 @@ const cardVariants = cva("bg-card text-card-foreground rounded-xl border border-
     variant: {
       default: "",
       interactive: "cursor-pointer hover:border-primary/40 hover:bg-accent/5 hover:shadow-[0_12px_30px_rgba(0,0,0,0.04)] transition-all duration-500",
-      glass: "bg-white/70 border border-white/90 backdrop-blur-xl shadow-xl shadow-sage-900/5",
-      "glass-dark": "bg-black/40 border border-white/20 backdrop-blur-xl shadow-2xl shadow-black/20",
+      glass: "bg-white/90 border border-white/90 shadow-xl shadow-sage-900/5",
+      "glass-dark": "bg-black/80 border border-white/20 shadow-2xl shadow-black/20",
       muted: "bg-muted/30 border border-border/10",
       active: "ring-2 ring-primary border-primary/40 bg-accent/5",
     },

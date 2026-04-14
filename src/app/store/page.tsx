@@ -32,7 +32,7 @@ export default function StorePage() {
           style={{
             background: "radial-gradient(circle, var(--aura-primary) 0%, transparent 70%)",
             filter: "blur(70px)",
-            opacity: 0.50,
+            opacity: 0.5,
           }}
         />
         <div
@@ -40,7 +40,7 @@ export default function StorePage() {
           style={{
             background: "radial-gradient(circle, var(--aura-accent) 0%, transparent 70%)",
             filter: "blur(90px)",
-            opacity: 0.40,
+            opacity: 0.4,
           }}
         />
       </div>
@@ -56,10 +56,7 @@ export default function StorePage() {
           className="eco-island group relative flex items-center gap-3 px-5 py-3 rounded-2xl cursor-default"
         >
           {/* Rim light */}
-          <div
-            className="absolute inset-x-0 top-0 h-px rounded-t-2xl pointer-events-none"
-            style={{ background: "linear-gradient(90deg, transparent, var(--rim-light) 50%, transparent)" }}
-          />
+          <div className="absolute inset-x-0 top-0 h-px rounded-t-2xl pointer-events-none" style={{ background: "linear-gradient(90deg, transparent, var(--rim-light) 50%, transparent)" }} />
 
           <motion.div
             whileHover={{ rotate: 20 }}
@@ -74,13 +71,8 @@ export default function StorePage() {
           </motion.div>
 
           <div className="flex flex-col items-start">
-            <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-[0.2em] leading-none mb-0.5">
-              Clover Coins
-            </span>
-            <span
-              className="text-xl font-light tabular-nums leading-none text-foreground"
-              style={{ fontFamily: "var(--font-outfit)", letterSpacing: "-0.01em" }}
-            >
+            <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-[0.2em] leading-none mb-0.5">Clover Coins</span>
+            <span className="text-xl font-light tabular-nums leading-none text-foreground" style={{ fontFamily: "var(--font-outfit)", letterSpacing: "-0.01em" }}>
               {coins.toLocaleString()}
             </span>
           </div>
@@ -108,22 +100,17 @@ export default function StorePage() {
                 {activeTab === "Trees" ? (
                   <div className="space-y-10">
                     <div className="flex flex-col gap-2 px-4 mb-4">
-                      <h2
-                        className="text-[22px] font-light text-foreground tracking-tight"
-                        style={{ fontFamily: "var(--font-outfit)", letterSpacing: "-0.01em" }}
-                      >
+                      <h2 className="text-[22px] font-light text-foreground tracking-tight" style={{ fontFamily: "var(--font-outfit)", letterSpacing: "-0.01em" }}>
                         Featured Collection
                       </h2>
-                      <p className="text-[14px] text-muted-foreground font-light">
-                        Select your next botanical companion to start growing together.
-                      </p>
+                      <p className="text-[14px] text-muted-foreground font-light">Select your next botanical companion to start growing together.</p>
                     </div>
                     <TreeGrid activeTab="Classic" onSelect={setSelectedTree} />
                   </div>
                 ) : (
                   <div className="max-w-5xl mx-auto">
-                    {activeTab === "Sound"  && <SoundTab />}
-                    {activeTab === "Theme"  && <ThemeTab />}
+                    {activeTab === "Sound" && <SoundTab />}
+                    {activeTab === "Theme" && <ThemeTab />}
                     {activeTab === "Potion" && <PotionTab />}
                   </div>
                 )}

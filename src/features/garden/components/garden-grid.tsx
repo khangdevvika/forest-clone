@@ -34,7 +34,7 @@ export function GardenGrid() {
                 className="w-full h-full object-contain drop-shadow-sm group-hover:scale-110 transition-transform duration-300"
                 unoptimized={session.treeImage.startsWith("http")}
               />
-              <div className="absolute inset-x-0 bottom-0 py-0.5 px-1 bg-background/80 backdrop-blur-xs opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+              <div className="absolute inset-x-0 bottom-0 py-0.5 px-1 bg-background opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
                 <p className="text-[8px] font-bold text-center truncate">{session.durationMinutes}m</p>
               </div>
             </>

@@ -26,7 +26,7 @@ export default function Home() {
     leftContent: (
       <div 
         style={glassStyle}
-        className="flex h-10 w-10 items-center justify-center rounded-xl backdrop-blur-sm"
+        className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/10"
       >
         <Leaf className="h-5 w-5 text-[--timer-text]" strokeWidth={1.25} />
       </div>
@@ -38,7 +38,7 @@ export default function Home() {
         ) : (
           <div
             style={glassStyle}
-            className="flex items-center gap-2 backdrop-blur-sm rounded-xl px-4 py-2 text-[--timer-text] text-[13px] font-medium font-sans tracking-wide whitespace-nowrap"
+            className="flex items-center gap-2 bg-white/10 rounded-xl px-4 py-2 text-[--timer-text] text-[13px] font-medium font-sans tracking-wide whitespace-nowrap"
           >
             {timer.mode === "timer" ? (
               <Clock className="h-4 w-4" strokeWidth={1.25} />
@@ -54,7 +54,7 @@ export default function Home() {
       <div
         id="coin-counter"
         style={glassStyle}
-        className="flex items-center gap-2 backdrop-blur-sm rounded-xl px-4 py-2 cursor-pointer hover:bg-white/40 transition-all duration-200 active:scale-95 group"
+        className="flex items-center gap-2 bg-white/10 rounded-xl px-4 py-2 cursor-pointer hover:bg-white/40 transition-all duration-200 active:scale-95 group"
       >
         <div className="h-4.5 w-4.5 rounded-md bg-[--warm-500] flex items-center justify-center shadow-sm group-hover:rotate-12 transition-transform">
           <Coins className="h-2.5 w-2.5 text-amber-900" strokeWidth={1.5} />

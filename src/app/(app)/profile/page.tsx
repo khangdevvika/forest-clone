@@ -81,11 +81,7 @@ export default function ProfilePage() {
       </div>
 
       <PageHeader title="Nature Sanctuary" subtitle={`Member since ${sessions.length > 0 ? format(parseISO(sessions[sessions.length - 1].completedAt), "MMM yyyy") : "today"}`}>
-        <motion.div
-          whileHover={{ scale: 1.03 }}
-          whileTap={{ scale: 0.97 }}
-          className="eco-island flex items-center gap-2.5 rounded-2xl px-4 py-2.5"
-        >
+        <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} className="eco-island flex items-center gap-2.5 rounded-2xl px-4 py-2.5">
           <div className="h-5 w-5 rounded-lg flex items-center justify-center shadow-sm" style={{ background: "var(--warm-400)" }}>
             <CoinsIcon className="h-3 w-3 text-yellow-950" strokeWidth={2.5} />
           </div>
@@ -96,7 +92,6 @@ export default function ProfilePage() {
       <ScrollArea className="flex-1">
         <div className="max-w-2xl mx-auto px-6 py-8 pb-32">
           <motion.main variants={staggerContainer} initial="hidden" animate="show" className="space-y-10">
-
             {/* ── iOS 26: Practitioner Hero Card ──────────────── */}
             <motion.section variants={scaleIn} className="plate rounded-[2rem] p-8 relative overflow-hidden">
               {/* Rim light */}
@@ -150,7 +145,9 @@ export default function ProfilePage() {
                     <LevelProgress level={level} xp={currentXP} maxXp={XP_PER_LEVEL} />
                     <div className="flex items-center justify-between text-[10px] font-bold text-muted-foreground uppercase tracking-widest px-1">
                       <span>Level {level} Journey</span>
-                      <span>{XP_PER_LEVEL - currentXP} mins to level {level + 1}</span>
+                      <span>
+                        {XP_PER_LEVEL - currentXP} mins to level {level + 1}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -173,10 +170,7 @@ export default function ProfilePage() {
                     transition={spring}
                     className="plate-subtle rounded-[1.5rem] p-5 space-y-3 lift relative overflow-hidden"
                   >
-                    <div
-                      className="h-9 w-9 rounded-xl flex items-center justify-center"
-                      style={{ background: stat.bgColor, boxShadow: "var(--shadow-xs)" }}
-                    >
+                    <div className="h-9 w-9 rounded-xl flex items-center justify-center" style={{ background: stat.bgColor, boxShadow: "var(--shadow-xs)" }}>
                       <stat.icon className={cn("h-4 w-4", stat.color)} strokeWidth={1.25} />
                     </div>
                     <div>
@@ -186,10 +180,7 @@ export default function ProfilePage() {
                       <p className="text-[9px] text-muted-foreground font-black uppercase tracking-widest mt-1 opacity-60">{stat.label}</p>
                     </div>
                     {/* Aura tint per stat */}
-                    <div
-                      className="absolute -bottom-4 -right-4 w-16 h-16 rounded-full pointer-events-none"
-                      style={{ background: stat.bgColor, filter: "blur(20px)" }}
-                    />
+                    <div className="absolute -bottom-4 -right-4 w-16 h-16 rounded-full pointer-events-none" style={{ background: stat.bgColor, filter: "blur(20px)" }} />
                   </motion.div>
                 ))}
               </div>
@@ -208,19 +199,16 @@ export default function ProfilePage() {
               </div>
 
               <Link href="/achievements" className="block group">
-                <motion.div
-                  whileHover={{ y: -3 }}
-                  transition={spring}
-                  className="plate rounded-[1.75rem] p-7 flex items-center justify-between relative overflow-hidden"
-                >
-                  <div
-                    className="absolute inset-x-0 top-0 h-px pointer-events-none"
-                    style={{ background: "linear-gradient(90deg, transparent, var(--rim-light) 50%, transparent)" }}
-                  />
+                <motion.div whileHover={{ y: -3 }} transition={spring} className="plate rounded-[1.75rem] p-7 flex items-center justify-between relative overflow-hidden">
+                  <div className="absolute inset-x-0 top-0 h-px pointer-events-none" style={{ background: "linear-gradient(90deg, transparent, var(--rim-light) 50%, transparent)" }} />
                   <div className="space-y-1">
-                    <p className="text-lg font-light text-foreground" style={{ fontFamily: "var(--font-outfit)" }}>Achievement Collection</p>
+                    <p className="text-lg font-light text-foreground" style={{ fontFamily: "var(--font-outfit)" }}>
+                      Achievement Collection
+                    </p>
                     <p className="text-xs text-muted-foreground flex items-center gap-2">
-                      <span className="text-primary font-bold">{unlockedIds.length} / {achievements.length}</span>
+                      <span className="text-primary font-bold">
+                        {unlockedIds.length} / {achievements.length}
+                      </span>
                       medals collected in your sanctuary
                     </p>
                   </div>
@@ -249,10 +237,7 @@ export default function ProfilePage() {
               </div>
 
               <motion.div variants={fadeUp} className="plate-subtle rounded-[1.75rem] p-6 relative overflow-hidden">
-                <div
-                  className="absolute inset-x-0 top-0 h-px pointer-events-none"
-                  style={{ background: "linear-gradient(90deg, transparent, var(--rim-light) 50%, transparent)" }}
-                />
+                <div className="absolute inset-x-0 top-0 h-px pointer-events-none" style={{ background: "linear-gradient(90deg, transparent, var(--rim-light) 50%, transparent)" }} />
                 <div className="grid grid-cols-4 md:grid-cols-6 gap-4">
                   {STORE_TREES.map((tree) => {
                     const isOwned = unlockedTrees.includes(tree.id)
@@ -263,14 +248,16 @@ export default function ProfilePage() {
                         transition={spring}
                         className={cn(
                           "aspect-square rounded-2xl border flex items-center justify-center p-2 relative group",
-                          isOwned
-                            ? "border-primary/15 lift"
-                            : "bg-muted/10 border-dashed border-border/30 opacity-35 grayscale",
+                          isOwned ? "border-primary/15 lift" : "bg-muted/10 border-dashed border-border/30 opacity-35 grayscale",
                         )}
-                        style={isOwned ? {
-                          background: "var(--aura-primary)",
-                          boxShadow: "var(--shadow-xs)",
-                        } : {}}
+                        style={
+                          isOwned
+                            ? {
+                                background: "var(--aura-primary)",
+                                boxShadow: "var(--shadow-xs)",
+                              }
+                            : {}
+                        }
                       >
                         <Image
                           src={tree.image}
@@ -281,7 +268,7 @@ export default function ProfilePage() {
                           unoptimized={tree.image.startsWith("http")}
                         />
                         {isOwned && (
-                          <div className="absolute inset-x-0 bottom-0 py-0.5 bg-background/80 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none rounded-b-2xl">
+                          <div className="absolute inset-x-0 bottom-0 py-0.5 bg-background opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none rounded-b-2xl">
                             <p className="text-[7px] font-bold text-center truncate px-1">{tree.name}</p>
                           </div>
                         )}
@@ -300,10 +287,7 @@ export default function ProfilePage() {
               </div>
 
               <motion.div variants={fadeUp} className="plate rounded-[1.75rem] p-6 flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
-                <div
-                  className="absolute inset-x-0 top-0 h-px pointer-events-none"
-                  style={{ background: "linear-gradient(90deg, transparent, var(--rim-light) 50%, transparent)" }}
-                />
+                <div className="absolute inset-x-0 top-0 h-px pointer-events-none" style={{ background: "linear-gradient(90deg, transparent, var(--rim-light) 50%, transparent)" }} />
                 <div className="flex items-center gap-4">
                   <motion.div
                     whileHover={{ rotate: 15, scale: 1.1 }}

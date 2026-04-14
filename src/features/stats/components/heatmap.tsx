@@ -79,7 +79,7 @@ export function Heatmap({ data, className }: HeatmapProps) {
   }
 
   return (
-    <Card className={cn("overflow-hidden border border-white/40 bg-white/20 backdrop-blur-md rounded-[32px] shade-sm", className)}>
+    <Card className={cn("overflow-hidden border border-white/40 bg-white/40 rounded-[32px] shade-sm", className)}>
       <CardHeader className="flex flex-row items-center justify-between px-8 pt-8 pb-4">
         <div className="space-y-1">
           <CardTitle className="text-sm font-bold flex items-center gap-2">Focus Intensity</CardTitle>
@@ -149,7 +149,7 @@ export function Heatmap({ data, className }: HeatmapProps) {
                           <TooltipContent
                             side="top"
                             sideOffset={6}
-                            className="bg-white/90 dark:bg-black/90 backdrop-blur-sm text-foreground border border-white/40 dark:border-white/10 shadow-none px-3 py-1.5 rounded-full flex items-center gap-2 pointer-events-none"
+                            className="bg-white dark:bg-black text-foreground border border-white/40 dark:border-white/10 shadow-none px-3 py-1.5 rounded-full flex items-center gap-2 pointer-events-none"
                           >
                             <span className="text-[10px] font-medium font-(family-name:--font-inter) text-muted-foreground">{format(day, "MMM d")}</span>
                             <span className="w-[1px] h-2.5 bg-foreground/10" />

@@ -65,7 +65,7 @@ export function PotionTab() {
                      transition={{ duration: 0.7 }}
                      className={cn(
                        "h-28 w-28 rounded-[40px] flex items-center justify-center text-4xl transition-all duration-1000",
-                       "bg-card/40 backdrop-blur-sm border border-border/60 shadow-sm",
+                       "bg-card/60 border border-border/60 shadow-sm",
                        isActive ? "bg-foreground text-background" : "text-foreground"
                      )}
                    >
@@ -108,7 +108,7 @@ export function PotionTab() {
         })}
       </div>
 
-      <div className="max-w-4xl mx-auto p-12 rounded-[48px] bg-card/25 border border-border/40 backdrop-blur-sm flex flex-col sm:flex-row items-center gap-10">
+      <div className="max-w-4xl mx-auto p-12 rounded-[48px] bg-card/45 border border-border/40 flex flex-col sm:flex-row items-center gap-10">
          <div className="h-20 w-20 shrink-0 bg-card/60 rounded-[32px] shadow-sm flex items-center justify-center border border-border">
             <Info className="h-7 w-7 text-primary" strokeWidth={1.25} />
          </div>

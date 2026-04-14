@@ -27,7 +27,7 @@ export function SoundTab() {
           variants={scaleIn}
           initial="hidden"
           animate="show"
-          className={cn("flex items-center gap-7 px-8 py-7 rounded-[32px] border-border/50 backdrop-blur-sm min-w-[380px]", "bg-card/35 shadow-[0_8px_32px_rgba(0,0,0,0.03)] border")}
+          className={cn("flex items-center gap-7 px-8 py-7 rounded-[32px] border-border/50 min-w-[380px]", "bg-card/55 shadow-[0_8px_32px_rgba(0,0,0,0.03)] border")}
         >
           <div className="p-4 rounded-2xl bg-card/60 shadow-sm border border-border/80 transition-transform hover:scale-105 duration-500">
             <Volume2 className="h-5 w-5 text-primary" strokeWidth={1.25} />
@@ -96,7 +96,7 @@ export function SoundTab() {
                       "h-32 w-32 rounded-[44px] flex items-center justify-center text-5xl transition-all duration-1000 relative z-10",
                       isActive
                         ? "bg-card shadow-[0_24px_54px_-10px_rgba(0,0,0,0.08)] border border-border/50"
-                        : "bg-card/30 backdrop-blur-sm border border-border/50 shadow-[0_4px_16px_rgba(0,0,0,0.02)] text-foreground",
+                        : "bg-card/45 border border-border/50 shadow-[0_4px_16px_rgba(0,0,0,0.02)] text-foreground",
                     )}
                   >
                     <span className={cn(isActive && "animate-pulse")}>{sound.emoji}</span>
@@ -116,7 +116,7 @@ export function SoundTab() {
                         "h-14 w-14 rounded-full flex items-center justify-center transition-all duration-700 shadow-xl border-2",
                         isActive
                           ? "bg-foreground text-background border-border shadow-foreground/10 ring-4 ring-foreground/5"
-                          : "bg-card/50 backdrop-blur-sm text-primary border-border/50 hover:text-foreground hover:bg-card hover:shadow-foreground/5 hover:border-border",
+                          : "bg-card/70 text-primary border-border/50 hover:text-foreground hover:bg-card hover:shadow-foreground/5 hover:border-border",
                       )}
                     >
                       {isActive ? (

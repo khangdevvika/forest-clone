@@ -52,8 +52,7 @@ export function useTimer() {
             })
           }, 300)
 
-          addCoins(coinsEarned)
-          addSession({
+          const currentSession = {
             id: crypto.randomUUID(),
             completedAt: new Date().toISOString(),
             durationMinutes: minutes,
@@ -61,9 +60,12 @@ export function useTimer() {
             treeName: activeTree.name,
             treeImage: activeTree.image,
             coinsEarned,
-            mode: "timer",
+            mode: "timer" as const,
             tagId: selectedTagId,
-          })
+          }
+
+          addCoins(coinsEarned)
+          addSession(currentSession)
 
           setDialogState({
             isOpen: true,
@@ -71,6 +73,7 @@ export function useTimer() {
             description: `Great work! You stayed focused for ${minutes} minutes and earned ${coinsEarned} coins.${multiplier > 1 ? ` (${multiplier}x multiplier applied!)` : ""}`,
             confirmText: "Continue",
             showCancel: false,
+            session: currentSession,
           })
 
           return 0

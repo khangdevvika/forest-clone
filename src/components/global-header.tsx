@@ -27,8 +27,6 @@ export function GlobalHeader() {
       )}
       style={!config.transparent ? {
         background: "var(--plate-bg)",
-        backdropFilter: "blur(20px) saturate(180%)",
-        WebkitBackdropFilter: "blur(20px) saturate(180%)",
         boxShadow: "0 1px 0 var(--border), inset 0 -1px 0 var(--rim-shadow)",
       } : undefined}
     >
@@ -50,7 +48,7 @@ export function GlobalHeader() {
                 className={cn(
                   "flex h-10 w-10 items-center justify-center transition-all duration-300",
                   isHomePage
-                    ? "backdrop-blur-md text-[--timer-text] hover:bg-white/30"
+                    ? "bg-white/10 text-[--timer-text] hover:bg-white/30"
                     : "text-foreground hover:scale-105 active:scale-95",
                 )}
                 style={isHomePage ? {

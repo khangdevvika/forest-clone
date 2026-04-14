@@ -75,7 +75,7 @@ export function TimerDisplay({ isActive, mode, displayMinutes, setMinutes, bloom
             animate={{ opacity: 1, y: 0 }}
             className="flex items-center gap-2"
           >
-            <div className="px-3.5 py-1.5 bg-white/40 border border-white/60 backdrop-blur-md rounded-full shadow-sm shadow-black/5 flex items-center gap-2">
+            <div className="px-3.5 py-1.5 bg-white/60 border border-white/60 rounded-full shadow-sm shadow-black/5 flex items-center gap-2">
               <div className="h-1 w-1 rounded-full bg-primary" />
               <span className="text-[10px] font-bold tracking-[0.1em] text-[--timer-text] uppercase">{activeTree.name}</span>
               

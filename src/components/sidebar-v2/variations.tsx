@@ -146,9 +146,9 @@ export function FireflySidebar() {
       <div className="mb-12 flex justify-between items-start">
         <div className="flex flex-col gap-0.5">
           <span className="text-[10px] uppercase font-bold tracking-[0.4em] text-white/30">Focus Sanctuary</span>
-          <h2 className="text-2xl font-[family-name:var(--font-outfit)] font-light">Forest</h2>
+          <h2 className="text-2xl font-(family-name:--font-outfit) font-light">Forest</h2>
         </div>
-        <div className="flex flex-col items-end gap-1 px-3 py-2 rounded-2xl bg-white/[0.03] border border-white/5 backdrop-blur-md">
+        <div className="flex flex-col items-end gap-1 px-3 py-2 rounded-2xl bg-white/10 border border-white/5">
           <div className="flex items-center gap-2">
             <span className="text-xs font-light tabular-nums text-white/80">{coins.toLocaleString()}</span>
             <Sparkles className="h-3 w-3 text-primary/80 animate-pulse" strokeWidth={1.5} />

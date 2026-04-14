@@ -5,6 +5,7 @@ import { Providers } from "./providers"
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/app-sidebar"
 import { GlobalHeader } from "@/components/global-header"
+import { AmbientPlayer } from "@/features/timer/components/ambient-player"
 
 /**
  * Outfit — display/timer font
@@ -55,6 +56,7 @@ export default function RootLayout({
               <main className="flex-1 overflow-auto relative">
                 {children}
               </main>
+              <AmbientPlayer />
             </SidebarInset>
           </SidebarProvider>
         </Providers>

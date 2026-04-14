@@ -36,7 +36,7 @@ export function TagSelector({ disabled }: TagSelectorProps) {
         disabled={disabled}
         className={cn(
           "flex items-center gap-3 px-4 py-2 rounded-full transition-all duration-300",
-          "bg-card/40 border border-border/60 backdrop-blur-md shadow-sm",
+          "bg-card/60 border border-border/60 shadow-sm",
           "hover:bg-card/70 hover:border-border/90 hover:shadow-md",
           disabled && "opacity-50 cursor-not-allowed grayscale-[0.5]"
         )}
@@ -79,7 +79,7 @@ export function TagSelector({ disabled }: TagSelectorProps) {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 8, scale: 0.95 }}
               transition={spring}
-              className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 z-50 min-w-[200px] p-2 overflow-hidden rounded-[24px] bg-card/60 border border-border/60 backdrop-blur-md shadow-2xl"
+              className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 z-50 min-w-[200px] p-2 overflow-hidden rounded-[24px] bg-card/90 border border-border/60 shadow-2xl"
             >
               <div className="flex flex-col gap-1">
                 {TAGS.map((tag) => {

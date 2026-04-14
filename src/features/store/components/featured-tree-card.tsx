@@ -44,7 +44,7 @@ export function FeaturedTreeCard({ onSelect }: FeaturedTreeCardProps) {
 
       <Card
         variant="glass"
-        className="relative overflow-hidden p-10 md:p-14 rounded-[50px] border-white bg-white/80 backdrop-blur-3xl shadow-[0_0_100px_rgba(0,0,0,0.1)] flex flex-col items-center text-center gap-10"
+        className="relative overflow-hidden p-10 md:p-14 rounded-[50px] border-white bg-white/90 shadow-[0_0_100px_rgba(0,0,0,0.1)] flex flex-col items-center text-center gap-10"
       >
         {/* Floating Aura */}
         <motion.div
