@@ -1,12 +1,5 @@
-import { Briefcase, Book, Heart, BookOpen, Zap, Wind, ShieldCheck, GraduationCap, Flame, Glasses, Sparkles, Cloud, type LucideIcon } from "lucide-react"
-
-export interface Tag {
-  id: string
-  label: string
-  icon: LucideIcon
-  evolvedIcon?: LucideIcon // Icon for higher levels (Lv3+)
-  color: string // CSS variable matching Zen Organic palette
-}
+import { type Tag } from "../types/tag"
+import { Briefcase, Book, Heart, BookOpen, Zap, Wind, ShieldCheck, GraduationCap, Flame, Glasses, Sparkles, Cloud } from "lucide-react"
 
 export const TAGS: Tag[] = [
   {

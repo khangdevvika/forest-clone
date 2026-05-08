@@ -1,6 +1,10 @@
 import { DEFAULT_TAG_ID } from "@/features/timer/constants/tags"
 import { TimerMode } from "@/features/timer/enum/timer"
 import type { Session } from "@/features/timer/types/session"
+import type { NurseryPlant, GardeningInventory, LoreEntry } from "@/features/timer/types/nursery"
+import type { CustomTag } from "@/features/timer/types/tag"
+import { TAGS } from "@/features/timer/constants/tags"
+import { mapCustomTagToTag } from "@/features/timer/lib/tag-mappers"
 import { differenceInCalendarDays, parseISO, startOfDay } from "date-fns"
 import { atom } from "jotai"
 import { atomWithStorage } from "jotai/utils"
@@ -96,6 +100,45 @@ export const unlockedMusicAtom = atomWithStorage<string[]>("forest-music", ["rai
 export const unlockedThemesAtom = atomWithStorage<string[]>("forest-unlocked-themes", ["sage", "forest", "emerald"])
 export const potionsInventoryAtom = atomWithStorage<Record<string, number>>("forest-potions", { "potion-x2": 0, "potion-x3": 0 })
 export const activePotionIdAtom = atomWithStorage<string | null>("forest-active-potion", null)
+
+// ── Gardening & Nursery atoms ──────────────────────────────────
+export const gardeningInventoryAtom = atomWithStorage<GardeningInventory>("forest-gardening-inventory-v2", {
+  essence: 450,
+  water: 12,
+  fertilizer: 5,
+})
+export const nurseryPlantsAtom = atomWithStorage<NurseryPlant[]>("forest-nursery-plants-v2", [
+  {
+    id: "plant-1",
+    treeId: "balloon-flower",
+    progress: 85,
+    plantedAt: new Date(Date.now() - 1000 * 60 * 60 * 24).toISOString(),
+    slotIndex: 0,
+  },
+  {
+    id: "plant-2",
+    treeId: "golden-trumpet",
+    progress: 10,
+    plantedAt: new Date().toISOString(),
+    slotIndex: 1,
+  },
+])
+export const loreLibraryAtom = atomWithStorage<LoreEntry[]>("forest-lore-library-v2", [
+  { treeId: "balloon-flower", unlockedLevel: 2, timesGrown: 6 },
+  { treeId: "golden-trumpet", unlockedLevel: 1, timesGrown: 2 },
+])
+export const seedsInventoryAtom = atomWithStorage<string[]>("forest-seeds-inventory-v2", ["jacaranda", "cherry-blossom", "maple"])
+export const nurserySlotsCountAtom = atomWithStorage<number>("forest-nursery-slots-count-v2", 3)
+export const customTagsAtom = atomWithStorage<CustomTag[]>("forest-custom-tags-v2", [
+  { id: "custom-1", label: "Deep Work", iconName: "Terminal", color: "var(--sage-700)", isCustom: true },
+  { id: "custom-2", label: "Meditation", iconName: "Wind", color: "#A3B18A", isCustom: true },
+])
+
+export const allTagsAtom = atom((get) => {
+  const customTags = get(customTagsAtom) as CustomTag[]
+  const mappedCustomTags = customTags.map(mapCustomTagToTag)
+  return [...TAGS, ...mappedCustomTags]
+})
 
 // ── Timer state atoms (Global) ──────────────────────────────────
 export const timerModeAtom = atom<TimerMode>(TimerMode.TIMER)

@@ -586,6 +586,25 @@ body::before {
   scrollbar-width: none;
 }
 
+/* ─── Custom Scrollbar ───────────────────────────────────── */
+.custom-scrollbar::-webkit-scrollbar {
+  display: block;
+  width: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 20px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-hover);
+}
+
 /* ═══════════════════════════════════════════════════════════
    GLASS-OFF MODE  ·  [data-glass="off"] on <html>
    ───────────────────────────────────────────────────────────

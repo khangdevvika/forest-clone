@@ -13,6 +13,8 @@ export const STORE_TREES: Tree[] = [
       { label: "10m", image: "/trees/balloon-flower.png" },
       { label: "120m", image: "/trees/balloon-flower.png" },
     ],
+    requiredEssence: 60,
+    rarity: "common",
   },
   {
     id: "geraniums",
@@ -24,6 +26,8 @@ export const STORE_TREES: Tree[] = [
       { label: "10m", image: "/trees/geraniums.png" },
       { label: "120m", image: "/trees/geraniums.png" },
     ],
+    requiredEssence: 60,
+    rarity: "common",
   },
   {
     id: "jacaranda",
@@ -35,6 +39,8 @@ export const STORE_TREES: Tree[] = [
       { label: "10m", image: "/trees/jacaranda.png" },
       { label: "120m", image: "/trees/jacaranda.png" },
     ],
+    requiredEssence: 150,
+    rarity: "rare",
   },
   {
     id: "golden-trumpet",
@@ -46,6 +52,8 @@ export const STORE_TREES: Tree[] = [
       { label: "10m", image: "/trees/golden-trumpet.png" },
       { label: "120m", image: "/trees/golden-trumpet.png" },
     ],
+    requiredEssence: 150,
+    rarity: "rare",
   },
   {
     id: "chinese-banyan",
@@ -56,7 +64,9 @@ export const STORE_TREES: Tree[] = [
     growthStages: [
        { label: "10m", image: "https://images.unsplash.com/photo-1544331305-6490332840c8?q=80&w=100&auto=format&fit=crop" },
        { label: "120m", image: "https://images.unsplash.com/photo-1544331305-6490332840c8?q=80&w=100&auto=format&fit=crop" },
-    ]
+    ],
+    requiredEssence: 80,
+    rarity: "common",
   },
   {
     id: "cherry-blossom",
@@ -67,7 +77,9 @@ export const STORE_TREES: Tree[] = [
     growthStages: [
        { label: "10m", image: "https://images.unsplash.com/photo-1522383225223-f113c7674640?q=80&w=100&auto=format&fit=crop" },
        { label: "120m", image: "https://images.unsplash.com/photo-1522383225223-f113c7674640?q=80&w=100&auto=format&fit=crop" },
-    ]
+    ],
+    requiredEssence: 300,
+    rarity: "legendary",
   },
   {
     id: "maple",
@@ -78,7 +90,9 @@ export const STORE_TREES: Tree[] = [
     growthStages: [
        { label: "10m", image: "https://images.unsplash.com/photo-1471374526693-02f5a60e0350?q=80&w=100&auto=format&fit=crop" },
        { label: "120m", image: "https://images.unsplash.com/photo-1471374526693-02f5a60e0350?q=80&w=100&auto=format&fit=crop" },
-    ]
+    ],
+    requiredEssence: 120,
+    rarity: "rare",
   },
   {
     id: "cypress",
@@ -89,6 +103,8 @@ export const STORE_TREES: Tree[] = [
     growthStages: [
        { label: "10m", image: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=80&w=100&auto=format&fit=crop" },
        { label: "120m", image: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=80&w=100&auto=format&fit=crop" },
-    ]
+    ],
+    requiredEssence: 200,
+    rarity: "rare",
   },
 ]

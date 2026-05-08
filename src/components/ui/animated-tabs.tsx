@@ -10,7 +10,7 @@ const tabsContainerVariants = cva("flex", {
     variant: {
       default: "bg-muted/30 p-1 rounded-full border border-border/40",
       card: "gap-3 w-fit bg-white/40 border border-white/60 rounded-full p-1.5 items-center flex shadow-sm",
-      glass: "relative items-center p-1 rounded-full self-center mx-auto bg-white/10 dark:bg-black/20 border-solid border border-white/10",
+      glass: "relative items-center p-1 rounded-full self-center mx-auto bg-white/20 dark:bg-black/35 border-solid border border-white/50",
     },
   },
   defaultVariants: {

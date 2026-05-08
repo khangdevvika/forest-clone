@@ -1,5 +1,4 @@
-import { Session } from "@/features/timer/types/session";
-import { Tag } from "@/features/timer/constants/tags";
+import { Session, Tag } from "@/features/timer/types";
 import { 
   startOfWeek, 
   endOfWeek, 

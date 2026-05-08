@@ -41,4 +41,23 @@ export const POTION_ITEMS: StoreItem[] = [
   },
 ]
 
-export const ALL_STORE_ITEMS: StoreItem[] = [...STORE_TREES.map((t) => ({ ...t, type: "tree" as const })), ...MUSIC_ITEMS, ...THEME_ITEMS, ...POTION_ITEMS]
+export const GARDENING_ITEMS: StoreItem[] = [
+  {
+    id: "water",
+    name: "Morning Dew",
+    description: "Essential moisture to help your seedlings reach for the sky.",
+    price: 300,
+    type: "gardening",
+    emoji: "💧",
+  },
+  {
+    id: "fertilizer",
+    name: "Organic Compost",
+    description: "Nutrient-rich soil booster for rapid growth.",
+    price: 800,
+    type: "gardening",
+    emoji: "📦",
+  },
+]
+
+export const ALL_STORE_ITEMS: StoreItem[] = [...STORE_TREES.map((t) => ({ ...t, type: "tree" as const })), ...MUSIC_ITEMS, ...THEME_ITEMS, ...POTION_ITEMS, ...GARDENING_ITEMS]

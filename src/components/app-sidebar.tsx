@@ -6,7 +6,7 @@ import { useUser } from "@/hooks/use-user"
 import { cn } from "@/lib/utils"
 import { GlassToggle } from "@/components/glass-toggle"
 import { AnimatePresence, motion } from "framer-motion"
-import { Coins, Flame, Home, Leaf, ListTodo, ShoppingBag, TreeDeciduous, Trophy, User } from "lucide-react"
+import { BookOpen, Coins, Flame, Home, Leaf, ListTodo, ShoppingBag, Sprout, TreeDeciduous, Trophy, User } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import React from "react"
@@ -17,6 +17,8 @@ const gentleSpring = { type: "spring" as const, stiffness: 180, damping: 28 }
 
 const navMain = [
   { title: "Home", url: "/", icon: Home },
+  { title: "Nursery", url: "/nursery", icon: Sprout },
+  { title: "Lore", url: "/lore", icon: BookOpen },
   { title: "Garden", url: "/garden", icon: Leaf },
   { title: "Tasks", url: "/tasks", icon: ListTodo },
   { title: "Achievements", url: "/achievements", icon: Trophy },

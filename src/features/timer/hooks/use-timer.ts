@@ -11,7 +11,7 @@ import { useEffect, useState } from "react"
 const INITIAL_DIALOG: TimerDialogState = { isOpen: false, title: "", description: "" }
 
 export function useTimer() {
-  const { addCoins, addSession, selectedTreeId, activePotionId, setActivePotionId, selectedTagId } = useUser()
+  const { addCoins, selectedTreeId, activePotionId, setActivePotionId, selectedTagId, addGardeningResources, addSeed } = useUser()
 
   const activeTree: Tree = STORE_TREES.find((t) => t.id === selectedTreeId) ?? STORE_TREES[0]
 
@@ -65,14 +65,25 @@ export function useTimer() {
           }
 
           addCoins(coinsEarned)
-          addSession(currentSession)
+          
+          // Gardening rewards
+          const essenceEarned = minutes
+          const waterEarned = Math.random() > 0.5 ? 1 : 0
+          const fertilizerEarned = Math.random() > 0.8 ? 1 : 0
+          
+          addGardeningResources(essenceEarned, waterEarned, fertilizerEarned)
+          addSeed(activeTree.id)
 
           setDialogState({
             isOpen: true,
-            title: "Session complete",
-            description: `Great work! You stayed focused for ${minutes} minutes and earned ${coinsEarned} coins.${multiplier > 1 ? ` (${multiplier}x multiplier applied!)` : ""}`,
-            confirmText: "Continue",
-            showCancel: false,
+            title: "Focus Complete",
+            description: `You've earned ${coinsEarned} coins and ${essenceEarned} Growth Essence. A ${activeTree.name} seed has been added to your inventory!`,
+            confirmText: "Go to Nursery",
+            showCancel: true,
+            onConfirm: () => {
+              window.location.href = "/nursery"
+            },
+            cancelText: "Later",
             session: currentSession,
           })
 
@@ -83,7 +94,7 @@ export function useTimer() {
     }, 1000)
 
     return () => clearInterval(interval)
-  }, [isActive, mode, minutes, addCoins, addSession, activeTree, activePotionId, setActivePotionId, setIsActive, setElapsedSeconds, selectedTagId])
+  }, [isActive, mode, minutes, addCoins, activeTree, activePotionId, setActivePotionId, setIsActive, setElapsedSeconds, selectedTagId, addGardeningResources, addSeed])
 
   // ── Handlers ─────────────────────────────────────────────────
   const handleStart = () => {

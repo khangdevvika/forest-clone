@@ -3,7 +3,7 @@
 import { AnimatedTabs } from "@/components/ui/animated-tabs"
 
 
-const TABS = ["Trees", "Sound", "Theme", "Potion"] as const
+const TABS = ["Trees", "Sound", "Theme", "Potion", "Gardening"] as const
 export type StoreTab = (typeof TABS)[number]
 
 interface StoreTabBarProps {

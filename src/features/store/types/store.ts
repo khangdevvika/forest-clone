@@ -1,4 +1,4 @@
-export type StoreItemType = "tree" | "music" | "theme" | "potion"
+export type StoreItemType = "tree" | "music" | "theme" | "potion" | "gardening"
 
 export interface StoreItem {
   id: string

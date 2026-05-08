@@ -10,4 +10,6 @@ export interface Tree {
   image: string
   description: string
   growthStages: GrowthStage[]
+  requiredEssence: number
+  rarity: "common" | "rare" | "legendary"
 }

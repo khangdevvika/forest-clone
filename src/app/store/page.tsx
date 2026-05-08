@@ -14,6 +14,7 @@ import { useState } from "react"
 import { PotionTab } from "@/features/store/components/potion-tab"
 import { SoundTab } from "@/features/store/components/sound-tab"
 import { ThemeTab } from "@/features/store/components/theme-tab"
+import { GardeningTab } from "@/features/store/components/gardening-tab"
 import { fadeUp, staggerContainer } from "@/lib/animations"
 
 const gentleSpring = { type: "spring" as const, stiffness: 160, damping: 28 }
@@ -112,6 +113,7 @@ export default function StorePage() {
                     {activeTab === "Sound" && <SoundTab />}
                     {activeTab === "Theme" && <ThemeTab />}
                     {activeTab === "Potion" && <PotionTab />}
+                    {activeTab === "Gardening" && <GardeningTab />}
                   </div>
                 )}
               </motion.div>
